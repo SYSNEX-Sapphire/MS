@@ -1,13 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1">
-  <POU Name="MAIN" Id="{0615f761-e8a2-4a57-b037-55ce40e2e6cf}">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{c65bb020-a024-43e6-87d0-b2b9cfee7c16}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
-VAR
+VAR_INPUT
+	controlModeCmd : E_ControlMode := E_ControlMode.Manual;
 END_VAR
-]]>
-    </Declaration>
+VAR
+	controlMode	: E_ControlMode := controlModeCmd;
+	prevControlMode : E_ControlMode := controlMode;
+END_VAR
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[(* Modify Program *)
+
+P11_E3508(); //Temp Controller
+P12_IQ_PLUS(); //Throttle Valve Controller
+P13_LineHeater();
+P14_ThermalBath();
+P15_RotationOperation();
+P16_CoverOperation();
+P17_DOROperation();
+P20_BackgroundCom();
+P21_Background_LineHeater();
+P22_Background_ThermalBath();
+P22_Background_ThermalBath();
+
+
+IF controlMode <> E_ControlMode.Priority THEN
+	IF controlMode <> controlModeCmd THEN
+		IF controlModeCmd = E_ControlMode.Priority THEN
+			prevControlMode := controlMode;
+		END_IF
+		controlMode := controlModeCmd;
+	END_IF
+END_IF
+
+CASE controlMode OF
+	E_ControlMode.Manual:
+		P30_ManualControlExt();
+	
+	E_ControlMode.Recipe:
+		P50_RecipeControl(); //레시피 콘트론
+		
+	E_ControlMode.Priority:
+		P31_PriorityControl();
+		IF P31_PriorityControl.complete = TRUE THEN
+			controlMode := prevControlMode;
+			controlModeCmd := controlMode;
+		END_IF
+END_CASE
+
+P70_Interface();
+P90_Interlock();
+P91_Monitoring();
+P92_Maintenance();
+
+
+(* Interlock Condtion *)
+// DOR Operation Condition
+]]></ST>
     </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="535" Count="17" />
+      <LineId Id="584" Count="1" />
+      <LineId Id="553" Count="5" />
+      <LineId Id="560" Count="8" />
+      <LineId Id="583" Count="0" />
+      <LineId Id="569" Count="7" />
+      <LineId Id="579" Count="2" />
+      <LineId Id="220" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
