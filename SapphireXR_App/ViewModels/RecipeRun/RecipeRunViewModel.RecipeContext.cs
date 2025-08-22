@@ -374,10 +374,6 @@ namespace SapphireXR_App.ViewModels
                 CurrentHoldTime = null;
                 TotalHoldTime = null;
                 PauseTime = null;
-                CurrentLoopStep = null;
-                CurrentLoopNumber = null;
-                TotalLoopNumber = null;
-                TotalLoopStep = null;
                 CurrentWaitTemp = null;
                 TotalWaitTemp = null;
 
@@ -472,14 +468,6 @@ namespace SapphireXR_App.ViewModels
             private int? _totalHoldTime = null;
             [ObservableProperty]
             private int? _pauseTime = null;
-            [ObservableProperty]
-            private int? _currentLoopStep = null;
-            [ObservableProperty]
-            private int? _totalLoopStep = null;
-            [ObservableProperty]
-            private int? _currentLoopNumber = null;
-            [ObservableProperty]
-            private int? _totalLoopNumber = null;
             [ObservableProperty]
             private int? _currentWaitTemp = null;
             [ObservableProperty]

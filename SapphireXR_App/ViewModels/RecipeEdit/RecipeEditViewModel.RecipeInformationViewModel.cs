@@ -68,19 +68,6 @@ namespace SapphireXR_App.ViewModels
                     case nameof(Recipe.M09):
                     case nameof(Recipe.M10):
                     case nameof(Recipe.M11):
-                    case nameof(Recipe.M14):
-                    case nameof(Recipe.M15):
-                    case nameof(Recipe.M16):
-                    case nameof(Recipe.M17):
-                    case nameof(Recipe.V30):
-                    case nameof(Recipe.V29):
-                    case nameof(Recipe.V31):
-                    case nameof(Recipe.V23):
-                    case nameof(Recipe.V24):
-                    case nameof(Recipe.V25):
-                    case nameof(Recipe.V26):
-                    case nameof(Recipe.V27):
-                    case nameof(Recipe.V28):
                         refreshTotalFlowRate();
                         break;
                 }
@@ -159,44 +146,7 @@ namespace SapphireXR_App.ViewModels
                 float totalFlowRate = 0;
                 totalFlowRate += currentStep.M01;
                 totalFlowRate += currentStep.M02;
-                if(currentStep.V30 == true)
-                {
-                    totalFlowRate += currentStep.M03;
-                }
-                if (currentStep.V29 == true)
-                {
-                    totalFlowRate += currentStep.M04;
-                }
-                if (currentStep.V31 == true)
-                {
-                    totalFlowRate += currentStep.M07;
-                }
-                if (currentStep.V23 == true)
-                {
-                    totalFlowRate += currentStep.M08;
-                }
-                if (currentStep.V24 == true)
-                {
-                    totalFlowRate += currentStep.M09;
-                }
-                if (currentStep.V25 == true)
-                {
-                    totalFlowRate += currentStep.M10;
-                }
-                if (currentStep.V26 == true)
-                {
-                    totalFlowRate += currentStep.M11;
-                }
-                if (currentStep.V27 == true)
-                {
-                    totalFlowRate += currentStep.M14;
-                }
-                if (currentStep.V28 == true)
-                {
-                    totalFlowRate += currentStep.M15;
-                }
-                totalFlowRate += currentStep.M16;
-                totalFlowRate += currentStep.M17;
+                
 
                 TotalFlowRate = (int)totalFlowRate;
             }

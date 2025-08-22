@@ -71,27 +71,6 @@ namespace SapphireXR_App.ViewModels.BottomDashBoard
                     case "MFC12":
                         return recipe.M12;
 
-                    case "MFC13":
-                        return recipe.M13;
-
-                    case "MFC14":
-                        return recipe.M14;
-
-                    case "MFC15":
-                        return recipe.M15;
-
-                    case "MFC16":
-                        return recipe.M04;
-
-                    case "MFC17":
-                        return recipe.M17;
-
-                    case "MFC18":
-                        return recipe.M18;
-
-                    case "MFC19":
-                        return recipe.M19;
-
                     case "EPC01":
                         return recipe.E01;
 
@@ -103,15 +82,6 @@ namespace SapphireXR_App.ViewModels.BottomDashBoard
 
                     case "EPC04":
                         return recipe.E04;
-
-                    case "EPC05":
-                        return recipe.E05;
-
-                    case "EPC06":
-                        return recipe.E06;
-
-                    case "EPC07":
-                        return recipe.E07;
 
                     case "Temperature":
                         return recipe.STemp;
