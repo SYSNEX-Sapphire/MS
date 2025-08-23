@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="P13_LineHeater" Id="{39a0ad06-755a-4fd9-b8ed-65d02fe2261a}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P13_LineHeater
 VAR
@@ -60,153 +60,104 @@ VAR
 	bLineHeaterCP		: BYTE;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//LH: Line Heater x 8EA -> 8Channel TIC 1EA
-//Maker: HANYOUNG NUX
-//Model: MC9-8RD0SS32
-//Temp Range: -15 ~200℃
-//RS485: 9600, DataBit(8), Parity(None), StopBit(1)
-//BCC Check X
+      <ST><![CDATA[_DIgitalInput();
 
-(* Read from Device Value *)
-// Line Heater CP
-bLineHeaterCB	:= GVL_IO.aDigitalInputIO[5].2;
-bLineHeaterCP 	:= GVL_IO.aDigitalInputIO[6]; //LineHeaterCP1   := bLineHeaterCP.0, Until CP8
+TimeOnDelay(IN:= GVL_IO_GAS_CABINET.DI_02_LineHeatersELCB, PT :=T#5S); //Time Delay after a Thermal Bath MC ON
 
-// make a sending string
-TimeOnDelay(IN:= P90_Interlock.bLineHeaterMC, PT :=T#5S); //Time Delay after a Thermal Bath MC ON
 IF TimeOnDelay.Q THEN
 	TimeOnDelay(IN:=FALSE);
-	// Make a sending string Set value or Request value 
-	IF bSendingEnable = FALSE THEN
-		bSendingEnable := TRUE;
-		bSendingOK := FALSE;
-		bReceivedOK := FALSE;
-		
-		IF nComMode <>1 THEN
-			sSendString := '$0201DRS,08,0001$0D$0A'; //Request PV
-			nComMode := 1;
-		ELSE
-			sSendString := '$0201DRS,08,0111$0D$0A'; //Request State
-			nComMode := 2;
-		END_IF
-	
-		FOR nHeaterNumber:= 1 TO 8 DO
-			IF (rTemperatureTV[nHeaterNumber] <> rTemperatureSV[nHeaterNumber]) THEN
-				// if SetValue are different to TargetValue, change Target vale to setvalue
-				rTemperatureTV[nHeaterNumber] := rTemperatureSV[nHeaterNumber];
-				sSendString := Real_To_String_LineHeater(rTemperatureTV[nHeaterNumber]*10, nHeaterNumber); //Move the decimal point by 1
-			END_IF
-			IF (bAutoTuneSV[nHeaterNumber] <> bAutoTuneTV[nHeaterNumber]) THEN
-				bAutoTuneTV[nHeaterNumber] := bAutoTuneSV[nHeaterNumber];
-				sSendString := BOOL_TO_STRING_LHeaterON(nHeaterNumber,bAutoTuneTV[nHeaterNumber]);
-			END_IF
+	FOR nHeaterNumber:= 1 TO 8 DO
+		IF (rTemperatureTV[nHeaterNumber] <> rTemperatureSV[nHeaterNumber]) THEN
+			// if SetValue are different to TargetValue, change Target vale to setvalue
+			rTemperatureTV[nHeaterNumber] := rTemperatureSV[nHeaterNumber];
 			
-				TimeWaitSend(IN:=TRUE, PT:=T#10MS);
-				IF TimeWaitSend.Q THEN
-					TimeWaitSend(IN:=FALSE);
-					IF fbSend.Busy THEN
-						fbSend(	SendString:= sSendString,
-							TXbuffer:= TxBufferLH,
-							Busy=> bSendBusy,
-							Error=> );
-						IF fbSend.Error <> COMERROR_NOERROR THEN
-							eSendErrorID := fbSend.Error;
-							bSendingOK := FALSE;
-						ELSE
-							eSendErrorID := COMERROR_NOERROR;
-							bSendingOK := TRUE;
-						END_IF
-					END_IF
-				END_IF
-
-		END_FOR
-		
-	END_IF
-	
-	TimeWaitSend(IN:=bSendingEnable AND bSendingOK = FALSE, PT:=T#10MS);
-	IF TimeWaitSend.Q OR fbSend.Busy THEN
-		bSendingOK := TRUE;
-		fbSend(
-			SendString := sSendString,
-			TXBuffer := TXBufferLH,
-			Busy => bSendBusy,
-			Error =>
-			);
-		IF fbSend.Error <> COMERROR_NOERROR THEN
-			eSendErrorID := fbSend.Error;
-			bSendingOK := FALSE;
-		ELSE
-			bSendingOK := TRUE;
-			bSendingOK := TRUE;
+			_SendTemp();
 		END_IF
-	END_IF
-	
-	fbReceive(
-		Prefix := '$02',
-		Suffix:= '$0D$0A',
-		Timeout:= T#1S,
-		ReceivedString:= sReceivedString,
-		RXbuffer:=RXbufferLH,
-		StringReceived=> bStringReceived,
-		Busy=> bReceiveBusy,
-		Error=>
-		);
-	IF bStringReceived THEN
-		bStringReceived := FALSE;
-		bReceivedOK:= TRUE;
-		
-		IF nComMode =1 THEN
-			nStrPosition := 11;			
-			FOR nHeaterNumber := 1 TO 8 DO
-				hStrReceivedPV := MID(STR:=sReceivedString, LEN:=4, POS:=nStrPosition);
-				rTemperaturePV[nHeaterNumber] := (HEXSTR_TO_REAL_LHeaterPV(hStrReceivedPV))/10; //Move the decimal point by 1
-				nStrPosition := nStrPosition + 5;
-			END_FOR
-		ELSE
-			nStrPosition := 11;		
-			FOR nHeaterNumber := 1 TO 8 DO
-				hStrReceivedST := MID(STR:=sReceivedString, LEN:=4, POS:=nStrPosition);						
-				IF hStrReceivedST = '0002' THEN
-					isLineHeater_Run[nHeaterNumber] 	:= TRUE;
-					isLineHeater_ATune[nHeaterNumber] 	:= FALSE;
-					isLineHeater_Err[nHeaterNumber] 	:= FALSE;
-				ELSIF hStrReceivedST = '0004' THEN
-					isLineHeater_Run[nHeaterNumber] 	:= FALSE;
-					isLineHeater_ATune[nHeaterNumber] 	:= TRUE;
-					isLineHeater_Err[nHeaterNumber] 	:= FALSE;
-				ELSIF hStrReceivedST = '0080' THEN
-					isLineHeater_Run[nHeaterNumber] 	:= FALSE;
-					isLineHeater_ATune[nHeaterNumber] 	:= FALSE;
-					isLineHeater_Err[nHeaterNumber] 	:= TRUE;
-				ELSE
-					isLineHeater_Run[nHeaterNumber] 	:= FALSE;
-					isLineHeater_ATune[nHeaterNumber] 	:= FALSE;
-					isLineHeater_Err[nHeaterNumber] 	:= FALSE;
-				END_IF
-				nStrPosition := nStrPosition + 5;		
-			END_FOR
-		END_IF
-	END_IF
-	
-	TimeWaitReceive(IN:=bReceivedOK,PT:=T#1S);
-	TimeCycle(IN:=TRUE, PT:=T#2S);
-	IF TimeWaitReceive.Q OR TimeCycle.Q THEN
-		TimeWaitReceive(IN:= TRUE);
-		TimeCycle(IN:= FALSE);
-		bSendingEnable := FALSE;
-	END_IF
+	END_FOR
 END_IF
-GVL_IO.aLineHeater_rTemperaturePV := rTemperaturePV;]]></ST>
+
+rTemperaturePV[1] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_1_PV_VALUE;
+rTemperaturePV[2] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_2_PV_VALUE;
+rTemperaturePV[3] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_3_PV_VALUE;
+rTemperaturePV[4] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_4_PV_VALUE;
+
+rTemperaturePV[5] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_1_PV_VALUE;
+rTemperaturePV[6] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_2_PV_VALUE;
+rTemperaturePV[7] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_3_PV_VALUE;
+rTemperaturePV[8] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_4_PV_VALUE;
+
+GVL_IO.aLineHeater_rTemperaturePV := rTemperaturePV;
+]]></ST>
     </Implementation>
+    <Action Name="_DigitalInput" Id="{2361a466-4910-4461-afdc-6cafae2346a8}">
+      <Implementation>
+        <ST><![CDATA[bLineHeaterCB	:= GVL_IO_GAS_CABINET.DI_02_LineHeatersELCB;
+
+bLineHeaterCP.0 	:= GVL_IO_GAS_CABINET.DI_03_LineHeater_1CP;
+bLineHeaterCP.1 	:= GVL_IO_GAS_CABINET.DI_03_LineHeater_2CP;
+bLineHeaterCP.2 	:= GVL_IO_GAS_CABINET.DI_03_LineHeater_3CP;
+bLineHeaterCP.3 	:= GVL_IO_GAS_CABINET.DI_03_LineHeater_4CP;
+bLineHeaterCP.4 	:= GVL_IO_GAS_CABINET.DI_03_LineHeater_5CP;
+bLineHeaterCP.5 	:= GVL_IO_GAS_CABINET.DI_04_LineHeater_6CP;
+bLineHeaterCP.6 	:= GVL_IO_GAS_CABINET.DI_04_LineHeater_7CP;
+bLineHeaterCP.7 	:= GVL_IO_GAS_CABINET.DI_04_LineHeater_8CP;]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="_SendTemp" Id="{6923cb2d-46df-49ee-941e-35090a9ce3ea}">
+      <Implementation>
+        <ST><![CDATA[CASE nHeaterNumber OF
+	1:
+		GVL.fbLineHeater_Manager._SendModbusCommand(sendMessage:=F_Temp_Write_Set_Point(Module_Number:=1,CommandIndex:=16#0
+																,Write_Value:=REAL_TO_WORD(rTemperatureSV[nHeaterNumber])));
+	2:
+		GVL.fbLineHeater_Manager._SendModbusCommand(sendMessage:=F_Temp_Write_Set_Point(Module_Number:=1,CommandIndex:=16#03E8
+																,Write_Value:=REAL_TO_WORD(rTemperatureSV[nHeaterNumber])));
+	3:
+		GVL.fbLineHeater_Manager._SendModbusCommand(sendMessage:=F_Temp_Write_Set_Point(Module_Number:=1,CommandIndex:=16#07D0
+																,Write_Value:=REAL_TO_WORD(rTemperatureSV[nHeaterNumber])));
+	4:
+		GVL.fbLineHeater_Manager._SendModbusCommand(sendMessage:=F_Temp_Write_Set_Point(Module_Number:=1,CommandIndex:=16#0BB8
+																,Write_Value:=REAL_TO_WORD(rTemperatureSV[nHeaterNumber])));
+																
+	(*Change Module Number*)															
+	5:
+		GVL.fbLineHeater_Manager._SendModbusCommand(sendMessage:=F_Temp_Write_Set_Point(Module_Number:=2,CommandIndex:=16#0
+																,Write_Value:=REAL_TO_WORD(rTemperatureSV[nHeaterNumber])));
+	6:
+		GVL.fbLineHeater_Manager._SendModbusCommand(sendMessage:=F_Temp_Write_Set_Point(Module_Number:=2,CommandIndex:=16#03E8
+																,Write_Value:=REAL_TO_WORD(rTemperatureSV[nHeaterNumber])));
+	7:
+		GVL.fbLineHeater_Manager._SendModbusCommand(sendMessage:=F_Temp_Write_Set_Point(Module_Number:=2,CommandIndex:=16#07D0
+																,Write_Value:=REAL_TO_WORD(rTemperatureSV[nHeaterNumber])));
+	8:
+		GVL.fbLineHeater_Manager._SendModbusCommand(sendMessage:=F_Temp_Write_Set_Point(Module_Number:=2,CommandIndex:=16#0BB8
+																,Write_Value:=REAL_TO_WORD(rTemperatureSV[nHeaterNumber])));
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
     <LineIds Name="P13_LineHeater">
-      <LineId Id="61" Count="5" />
-      <LineId Id="254" Count="0" />
-      <LineId Id="251" Count="1" />
-      <LineId Id="315" Count="0" />
-      <LineId Id="67" Count="0" />
-      <LineId Id="253" Count="0" />
-      <LineId Id="68" Count="123" />
+      <LineId Id="550" Count="0" />
+      <LineId Id="552" Count="25" />
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="P13_LineHeater._DigitalInput">
+      <LineId Id="2" Count="8" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P13_LineHeater._SendTemp">
+      <LineId Id="1" Count="1" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="5" Count="2" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="19" Count="10" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="3" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

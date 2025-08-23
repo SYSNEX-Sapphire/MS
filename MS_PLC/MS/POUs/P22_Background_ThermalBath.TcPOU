@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="P22_Background_ThermalBath" Id="{27d25087-1ce6-4ad2-8f07-c7ca1b2cfb80}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P22_Background_ThermalBath
 VAR
@@ -13,8 +13,7 @@ VAR
 	eConfigErrorID: ComError_t;
 	bConfigExe	: BOOL := TRUE;
 	(* 	I/O variables for a KL6031 terminal*)
-	stIn_KL6031_TB AT %I*	: KL6inData22B;	(* linked to the KL6001 in the TwinCAT System Manager *)
-	stOut_KL6031_TB AT %Q*	: KL6outData22B;	(* linked to the KL6001 in the TwinCAT System Manager *)
+
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(*
@@ -34,20 +33,24 @@ BCC Check : X
 
 fbCtrl(
 	Mode:= SERIALLINEMODE_KL6_22B_STANDARD,
-	pComIn:= ADR(stIn_KL6031_TB),
-	pComOut:= ADR(stOut_KL6031_TB),
-	SizeComIn:= SIZEOF(stIn_KL6031_TB),
+	pComIn:= ADR(GVL_Serial.stIn_KL6031_TB),
+	pComOut:= ADR(GVL_Serial.stOut_KL6031_TB),
+	SizeComIn:= SIZEOF(GVL_Serial.stIn_KL6031_TB),
 	Error=> ,
 	ErrorID=> ,
-	TxBuffer:= TxBufferTB,
-	RxBuffer:= RxBufferTB );
+	TxBuffer:= GVL_Serial.TxBufferTB,
+	RxBuffer:= GVL_Serial.RxBufferTB );
+	
 IF fbCtrl.Error THEN
 	bCtrlError := TRUE;
 	eCtrlErrorID := fbCtrl.ErrorID;
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="P22_Background_ThermalBath">
-      <LineId Id="20" Count="26" />
+      <LineId Id="61" Count="22" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="86" Count="2" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

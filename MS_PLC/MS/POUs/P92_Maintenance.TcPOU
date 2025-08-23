@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="P92_Maintenance" Id="{17478ea4-373a-4676-aa4e-f86e85a19514}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P92_Maintenance
 VAR
@@ -38,27 +38,28 @@ END_VAR
     <Implementation>
       <ST><![CDATA[(* Read from Device Value *)
 //Lamp
-bReactorCabientMagnet 	:= GVL_IO.aDigitalInputIO[3].6;
-bGasCabinetMagnet 		:= GVL_IO.aDigitalInputIO[3].7;
-bPowerDistributeMagnet	:= GVL_IO.aDigitalInputIO[4].0;
+bReactorCabientMagnet 	:= GVL_IO_REACTOR_CABINET.DI_03_ReactorCabinetDoorClose;
+bGasCabinetMagnet 		:= GVL_IO_GAS_CABINET.DI_01_GasCabinetDoorClose;
+bPowerDistributeMagnet	:= GVL_IO_GAS_CABINET.DI_01_ControlCabinetDoorClose;
 
 //SMPS
-bSMPS24V480WFault	:= NOT(GVL_IO.aDigitalInputIO[4].3);
-bSMPS24V72WFault	:= NOT(GVL_IO.aDigitalInputIO[4].4);
-bSMPS15VPlusFault	:= NOT(GVL_IO.aDigitalInputIO[4].5);
-bSMPS15VMinusFault	:= NOT(GVL_IO.aDigitalInputIO[4].6);
+bSMPS24V480WFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_1Alarm);
+bSMPS24V72WFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_2Alarm);
+bSMPS15VPlusFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_3Alarm);
+bSMPS15VMinusFault	:= NOT(GVL_IO_GAS_CABINET.DI_02_SMPS_4Alarm);
+
 
 // Reactor Cabinet Lamp
-rTrigReactorCabinetSwitch(CLK:=GVL_IO.aDigitalInputIO[1].2);
-rTrigReactorCabinetMagnet(CLK:=GVL_IO.aDigitalInputIO[3].6);
-fTrigReactorCabinetMagnet(CLK:=GVL_IO.aDigitalInputIO[3].6);
+rTrigReactorCabinetSwitch(CLK:=GVL_IO_REACTOR_CABINET.DI_01_ReactorCabinetLampButton);
+fTrigReactorCabinetMagnet(CLK:=GVL_IO_REACTOR_CABINET.DI_03_ReactorCabinetDoorClose);
+
 IF rTrigReactorCabinetSwitch.Q OR rTrigReactorCabinetMagnet.Q OR fTrigReactorCabinetMagnet.Q THEN
 	bReactorCabinetLamp := NOT(bReactorCabinetLamp);
 END_IF
 // Gas Delivery Cabinet Lamp
-rTrigGasCabinetSwitch(CLK:= GVL_IO.aDigitalInputIO[1].3);
-rTrigGasCabinetMagnet(CLK:= GVL_IO.aDigitalInputIO[3].7);
-fTrigGasCabinetMagnet(CLK:= GVL_IO.aDigitalInputIO[3].7);
+rTrigGasCabinetSwitch(CLK:= GVL_IO_GAS_CABINET.DI_01_GasCabinetLampButton);
+rTrigGasCabinetMagnet(CLK:= GVL_IO_GAS_CABINET.DI_01_GasCabinetDoorClose);
+
 IF rTrigGasCabinetSwitch.Q THEN
 	bGasCabinetLamp := NOT(bGasCabinetLamp);
 ELSIF fTrigGasCabinetMagnet.Q THEN
@@ -114,34 +115,48 @@ CASE GVL_IO.nCaseSignalTower OF
 END_CASE
 
 (* Write to Device Value *)
-GVL_IO.aDigitalOutputIO[2].5 	:= bReactorCabinetLamp;
-GVL_IO.aDigitalOutputIO[2].6 	:= bGasCabinetLamp;
-GVL_IO.aDigitalOutputIO[2].7 	:= bPowerDistributeLamp;
+GVL_IO_REACTOR_CABINET.DO_06_ReactorCabinetLamp := bReactorCabinetLamp;
+GVL_IO_GAS_CABINET.DO_07_GasCabinetLamp := bGasCabinetLamp;
+GVL_IO_GAS_CABINET.DO_07_ControlCabinetLamp := bPowerDistributeLamp;
 
-//SignalTower
-GVL_IO.aDigitalOutputIO[1].0 	:= bSignalTower.0; //0:RED-Alarm,
-GVL_IO.aDigitalOutputIO[1].1 	:= bSignalTower.1; //1:YELLOW,-Warning 
-GVL_IO.aDigitalOutputIO[1].2 	:= bSignalTower.2; //2:GREEN-Running
-GVL_IO.aDigitalOutputIO[1].3 	:= bSignalTower.3; //3:BLUE-Idle
-GVL_IO.aDigitalOutputIO[1].4 	:= bSignalTower.4; //4:WHITE-Maint
-GVL_IO.aDigitalOutputIO[1].5 	:= bBuzzer; //5:BUZZER-Alarm
+
+GVL_IO_REACTOR_CABINET.DO_04_SignalTowerRed:=bSignalTower.0; //0:RED-Alarm,
+GVL_IO_REACTOR_CABINET.DO_04_SignalTowerOrange:=bSignalTower.1; //1:YELLOW,-Warning
+GVL_IO_REACTOR_CABINET.DO_04_SignalTowerGreen:=bSignalTower.2; //2:GREEN-Running
+GVL_IO_REACTOR_CABINET.DO_04_SignalTowerBlue:=bSignalTower.3; //3:BLUE-Idle
+GVL_IO_REACTOR_CABINET.DO_04_SignalTowerWhite:=bSignalTower.4; //4:WHITE-Maint
+GVL_IO_REACTOR_CABINET.DO_04_SignalTowerBuzzer:=bBuzzer; //5:BUZZER-Alarm
+
+
+////SignalTower
+//GVL_IO.aDigitalOutputIO[1].0 	:= bSignalTower.0; //0:RED-Alarm,
+//GVL_IO.aDigitalOutputIO[1].1 	:= bSignalTower.1; //1:YELLOW,-Warning 
+//GVL_IO.aDigitalOutputIO[1].2 	:= bSignalTower.2; //2:GREEN-Running
+//GVL_IO.aDigitalOutputIO[1].3 	:= bSignalTower.3; //3:BLUE-Idle
+//GVL_IO.aDigitalOutputIO[1].4 	:= bSignalTower.4; //4:WHITE-Maint
+//GVL_IO.aDigitalOutputIO[1].5 	:= bBuzzer; //5:BUZZER-Alarm
 ]]></ST>
     </Implementation>
     <LineIds Name="P92_Maintenance">
       <LineId Id="5" Count="0" />
       <LineId Id="10" Count="0" />
-      <LineId Id="65" Count="2" />
+      <LineId Id="540" Count="1" />
+      <LineId Id="538" Count="0" />
       <LineId Id="395" Count="0" />
-      <LineId Id="391" Count="3" />
-      <LineId Id="389" Count="0" />
+      <LineId Id="391" Count="0" />
+      <LineId Id="543" Count="2" />
+      <LineId Id="542" Count="0" />
+      <LineId Id="546" Count="0" />
       <LineId Id="55" Count="1" />
       <LineId Id="93" Count="0" />
-      <LineId Id="92" Count="0" />
       <LineId Id="104" Count="0" />
+      <LineId Id="547" Count="0" />
       <LineId Id="85" Count="1" />
       <LineId Id="80" Count="0" />
       <LineId Id="54" Count="0" />
-      <LineId Id="106" Count="4" />
+      <LineId Id="106" Count="1" />
+      <LineId Id="548" Count="0" />
+      <LineId Id="109" Count="1" />
       <LineId Id="299" Count="0" />
       <LineId Id="301" Count="2" />
       <LineId Id="42" Count="0" />
@@ -176,9 +191,12 @@ GVL_IO.aDigitalOutputIO[1].5 	:= bBuzzer; //5:BUZZER-Alarm
       <LineId Id="178" Count="1" />
       <LineId Id="159" Count="0" />
       <LineId Id="144" Count="0" />
-      <LineId Id="23" Count="1" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="61" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="553" Count="2" />
+      <LineId Id="551" Count="0" />
+      <LineId Id="550" Count="0" />
+      <LineId Id="556" Count="5" />
+      <LineId Id="549" Count="0" />
       <LineId Id="387" Count="0" />
       <LineId Id="134" Count="0" />
       <LineId Id="132" Count="0" />

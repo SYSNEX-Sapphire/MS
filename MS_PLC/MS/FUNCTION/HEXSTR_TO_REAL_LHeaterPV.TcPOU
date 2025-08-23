@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="HEXSTR_TO_REAL_LHeaterPV" Id="{07cfba14-5fdf-48c5-9c53-d8abb8f4ad05}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION HEXSTR_TO_REAL_LHeaterPV : REAL
 VAR_INPUT
@@ -14,17 +14,17 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Convert to Data Array from HexString
-hData := HEXSTR_TO_DATA(hStrTemperaturePV, ADR(aData), SIZEOF(aData));
+      <ST><![CDATA[//// Convert to Data Array from HexString
+//hData := HEXSTR_TO_DATA(hStrTemperaturePV, ADR(aData), SIZEOF(aData));
 
-//Swap Data
-bSwap := aData[0];
-aData[0] := aData[1];
-aData[1] := bSwap;
+////Swap Data
+//bSwap := aData[0];
+//aData[0] := aData[1];
+//aData[1] := bSwap;
 
-ptStrTemperature := ADR(aData);
-nTemperaturePV := ptStrTemperature^;
-HEXSTR_TO_REAL_LHeaterPV := INT_TO_REAL(nTemperaturePV);]]></ST>
+//ptStrTemperature := ADR(aData);
+//nTemperaturePV := ptStrTemperature^;
+//HEXSTR_TO_REAL_LHeaterPV := INT_TO_REAL(nTemperaturePV);]]></ST>
     </Implementation>
     <LineIds Name="HEXSTR_TO_REAL_LHeaterPV">
       <LineId Id="7" Count="0" />

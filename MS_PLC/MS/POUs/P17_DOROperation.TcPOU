@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="P17_DOROperation" Id="{47a43ac8-2dfa-477f-bf65-90da71792e7e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P17_DOROperation
 VAR
@@ -51,18 +51,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[// Double O-Ring Vacuum Condition
 
-(* Read from Device Value *)
-// DOR Operation Switch
-bVacSwitch 			:= GVL_IO.aDigitalInputIO[1].4; //Switch Input
-bAtmSwitch 			:= GVL_IO.aDigitalInputIO[1].5; //Switch Input
-nPressurePV 		:= GVL_IO.aAnalogInputIO[29];
-rPressurePV_kPa 	:= (nPressurePV-3256)*SlopeFactor;
-
-fTresholdPressure 	:= GVL_IO.aInterlockSet[15];
-fTresholdCount 		:= GVL_IO.aInterlockSet[16];
-bPressureEnable 	:= GVL_IO.aInterlockEnable[1].5;
-bCountEnable 		:= GVL_IO.aInterlockEnable[1].6;
-nTresholdCount 		:= REAL_TO_INT(fTresholdCount); //Try One more Vacuum 
+_DigitalInput();
 
 (* If Vacuum 'ON' Switch Press, Change DOR Vacuum State *)
 //DOR Operation Signal generation
@@ -185,24 +174,73 @@ IF GVL_IO.aInterlockEnable[1].0 OR GVL_IO.aInterlockEnable[1].1 THEN
 	bError := 0;
 END_IF
 
+_DigitalOutput();]]></ST>
+    </Implementation>
+    <Action Name="_DigitalInput" Id="{af3bf05e-06da-431e-8ed8-ac69982b3f5c}">
+      <Implementation>
+        <ST><![CDATA[(* Read from Device Value *)
+// DOR Operation Switch
+
+
+bVacSwitch 			:= GVL_IO_REACTOR_CABINET.DI_01_DORVACButton; //Switch Input
+bAtmSwitch 			:= GVL_IO_REACTOR_CABINET.DI_01_DORATMButton; //Switch Input
+nPressurePV 		:= GVL_IO_REACTOR_CABINET.AI_07_S05_DORPressurePV;
+rPressurePV_kPa 	:= (nPressurePV-3256)*SlopeFactor;
+
+//jhkang_ 인터락 부분은 재 확인 필요
+fTresholdPressure 	:= GVL_IO.aInterlockSet[15];
+fTresholdCount 		:= GVL_IO.aInterlockSet[16];
+bPressureEnable 	:= GVL_IO.aInterlockEnable[1].5;
+bCountEnable 		:= GVL_IO.aInterlockEnable[1].6;
+nTresholdCount 		:= REAL_TO_INT(fTresholdCount); //Try One more Vacuum 
+
+
+//(* Read from Device Value *)
+//// DOR Operation Switch
+//bVacSwitch 			:= GVL_IO.aDigitalInputIO[1].4; //Switch Input
+//bAtmSwitch 			:= GVL_IO.aDigitalInputIO[1].5; //Switch Input
+//nPressurePV 		:= GVL_IO.aAnalogInputIO[29];
+//rPressurePV_kPa 	:= (nPressurePV-3256)*SlopeFactor;
+
+//fTresholdPressure 	:= GVL_IO.aInterlockSet[15];
+//fTresholdCount 		:= GVL_IO.aInterlockSet[16];
+//bPressureEnable 	:= GVL_IO.aInterlockEnable[1].5;
+//bCountEnable 		:= GVL_IO.aInterlockEnable[1].6;
+//nTresholdCount 		:= REAL_TO_INT(fTresholdCount); //Try One more Vacuum 
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="_DigitalOutput" Id="{c005c8c9-4f22-4829-87e7-986e1253676c}">
+      <Implementation>
+        <ST><![CDATA[
 (* Write to Device Value *)
 // Cover Operation Switch Lamp
-GVL_IO.aOutputSolValve[2].18 := bV_DORVac; //V34
-GVL_IO.aOutputSolValve[2].19 := bV_DORFill; //V35
-GVL_IO.aDigitalOutputIO[4].0 := bVacLED;
-GVL_IO.aDigitalOutputIO[4].1 := bAtmLED;
+GVL_IO.aOutputSolValve[2].5:= bV_DORVac; //V34
+GVL_IO.aOutputSolValve[2].6:= bV_DORFill; //V35
+
+GVL_IO_REACTOR_CABINET.DO_05_DORVACButtonLamp := bVacLED;
+GVL_IO_REACTOR_CABINET.DO_06_DORATMButtonLamp := bAtmLED;
 
 GVL_IO.nDorOperationError := bError;
 GVL_IO.bDorState := isDOROnState;
+
+//(* Write to Device Value *)
+//// Cover Operation Switch Lamp
+//GVL_IO.aOutputSolValve[2].18 := bV_DORVac; //V34
+//GVL_IO.aOutputSolValve[2].19 := bV_DORFill; //V35
+//GVL_IO.aDigitalOutputIO[4].0 := bVacLED;
+//GVL_IO.aDigitalOutputIO[4].1 := bAtmLED;
+
+//GVL_IO.nDorOperationError := bError;
+//GVL_IO.bDorState := isDOROnState;
+
+
 ]]></ST>
-    </Implementation>
+      </Implementation>
+    </Action>
     <LineIds Name="P17_DOROperation">
-      <LineId Id="21" Count="5" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="69" Count="0" />
-      <LineId Id="628" Count="0" />
-      <LineId Id="458" Count="0" />
-      <LineId Id="629" Count="3" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="695" Count="0" />
       <LineId Id="643" Count="0" />
       <LineId Id="123" Count="0" />
       <LineId Id="122" Count="0" />
@@ -250,14 +288,24 @@ GVL_IO.bDorState := isDOROnState;
       <LineId Id="635" Count="0" />
       <LineId Id="634" Count="0" />
       <LineId Id="636" Count="1" />
-      <LineId Id="41" Count="2" />
-      <LineId Id="51" Count="1" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="647" Count="0" />
-      <LineId Id="646" Count="0" />
-      <LineId Id="648" Count="0" />
+      <LineId Id="41" Count="0" />
       <LineId Id="645" Count="0" />
+    </LineIds>
+    <LineIds Name="P17_DOROperation._DigitalInput">
+      <LineId Id="70" Count="1" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="72" Count="3" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="76" Count="19" />
+      <LineId Id="55" Count="0" />
+    </LineIds>
+    <LineIds Name="P17_DOROperation._DigitalOutput">
+      <LineId Id="20" Count="4" />
+      <LineId Id="27" Count="4" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="35" Count="11" />
+      <LineId Id="32" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

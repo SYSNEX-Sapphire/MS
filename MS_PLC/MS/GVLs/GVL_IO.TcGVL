@@ -5,21 +5,21 @@
 VAR_GLOBAL
 	(* Digital IO to Byte *)
 	aDigitalInputIO AT %I* 	: ARRAY[1..9]OF BYTE; //KL1408 9EA
-	aDigitalOutputIO AT %Q* : ARRAY[1..4]OF BYTE; //KL2408 4EA
+	aDigitalOutputIO AT %Q* : ARRAY[1..5]OF BYTE; //KL2408 4EA
 	
 	(* Analog Input to INT*)
 	aAnalogInputIO AT %I* 	: ARRAY[1..40]OF INT;
-	aAnalogOutputIO AT %Q* 	: ARRAY[1..NumAnalogController ] OF INT;
+	aAnalogOutputIO AT %Q* 	: ARRAY[1..GVL_CONSTANT.NumAnalogController ] OF INT;
 	aAnalogInputIO2 AT %I*	: ARRAY[1..2]OF UINT;
 	
 	(*Solenoid Valve*)
-	aOutputSolValve AT %Q* 	: ARRAY[1..3]OF DWORD; //Solenoid Valve
+	aOutputSolValve AT %Q* 	: ARRAY[0..3]OF DWORD; //Solenoid Valve
 	
 	(* Read and Write of Device Control Value*)
-	aMaxValueController		: ARRAY[1..NumAnalogController] OF REAL ; //Device Max Value from UI
-	aController 			: ARRAY[1..NumAnalogController] OF FB_ControlRampGenerator; //MFC, EPC 0 ~ 5V
-	aController_PV 			: ARRAY[1..NumAnalogController] OF REAL; //Present Value from Device
-	aController_CV 			: ARRAY[1..NumAnalogController] OF REAL; //Current Value from RampingController
+	aMaxValueController		: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF REAL ; //Device Max Value from UI
+	aController 			: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF FB_ControlRampGenerator; //MFC, EPC 0 ~ 5V
+	aController_PV 			: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF REAL; //Present Value from Device
+	aController_CV 			: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF REAL; //Current Value from RampingController
 	
 	(* Present Value Meter Display*)
 	aMonitoring_PV 			: ARRAY[1..17] OF REAL; //Gauge Monitoring Value to UI
@@ -28,6 +28,15 @@ VAR_GLOBAL
 	aInterlock				: ARRAY[1..5] OF DWORD; // Interlock
 	aInterlockSet			: ARRAY[1..16] OF REAL; // UI Interlokc Setting Value
 	aInterlockEnable		: ARRAY[1..6] OF DWORD; // UI Interlock Enable Setting
+	
+	//jhkang
+	
+	aInterlock_Alarm: ARRAY[1..E_AlarmList.E_AlarmList_END]OF BOOL;// Interlock
+	aInterlock_Warning: ARRAY[1..E_WarningList.E_WarningList_END]OF BOOL;// Interlock
+	aInterlock_jh:ARRAY[1..E_Interlock.E_Interlock_END]OF BOOL;
+	aInterlockSet_jh: ARRAY[1..E_AlarmSetValue.E_AS_END] OF REAL; // UI Interlokc Setting Value
+	aInterlockEnable_jh:ARRAY[1..6]OF BOOL;
+	
 	
 	nCaseSignalTower		: INT;
 	nDorOperationError		: INT;
@@ -51,15 +60,6 @@ VAR_GLOBAL
 	isCoverClosed 			: BOOL;
 	isPumpRunning 			: BOOL;
 END_VAR
-
-VAR_GLOBAL CONSTANT
-	KL3464MaxValueH	: REAL := 16383; //0~5V Half Input
-	KL3464MaxValue 	: REAL := 32767; //0~10V
-	KL4404MaxValueH	: REAL := 16383; //0~5V Half Output
-	KL3054MaxValue 	: REAL := 32767; //4~20mA
-	KL3152MaxValue	: REAL := 65535; //4~20mA
-	KL3204MaxValue 	: REAL := 32767; //4~20mA
-	NumAnalogController : UINT := 29;
-END_VAR]]></Declaration>
+]]></Declaration>
   </GVL>
 </TcPlcObject>

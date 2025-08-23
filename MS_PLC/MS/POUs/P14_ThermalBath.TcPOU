@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="P14_ThermalBath" Id="{2c2b0e51-5635-46ea-83dc-d55165a0b5b4}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P14_ThermalBath
 VAR
@@ -59,22 +59,7 @@ END_VAR]]></Declaration>
 //BCC Check X
 
 (* Read from Power Distribution Pannel *)
-bThermalBathCB := GVL_IO.aDigitalInputIO[5].0;
-
-(* Read from SMC Bath Device Value *)
-TimeOnDelay(IN:= P90_Interlock.bThermalBathMC, PT :=T#1S); //Time Delay after a Thermal Bath MC ON
-bTempDeviationAlarm[1]	:= GVL_IO.aDigitalInputIO[8].0;
-bTempDeviationAlarm[2]	:= GVL_IO.aDigitalInputIO[8].2;
-bTempDeviationAlarm[3]	:= GVL_IO.aDigitalInputIO[8].4;
-bTempDeviationAlarm[4]	:= GVL_IO.aDigitalInputIO[8].6;
-bTempDeviationAlarm[5]	:= GVL_IO.aDigitalInputIO[9].0;
-bTempDeviationAlarm[6]	:= GVL_IO.aDigitalInputIO[9].2;
-bCutOffAlarm[1] := NOT(GVL_IO.aDigitalInputIO[8].1); //Normally Contact
-bCutOffAlarm[2] := NOT(GVL_IO.aDigitalInputIO[8].3);
-bCutOffAlarm[3] := NOT(GVL_IO.aDigitalInputIO[8].5);
-bCutOffAlarm[4] := NOT(GVL_IO.aDigitalInputIO[8].7);
-bCutOffAlarm[5] := NOT(GVL_IO.aDigitalInputIO[9].1);
-bCutOffAlarm[6] := NOT(GVL_IO.aDigitalInputIO[9].3);
+_DigitalInput();
 
 // make a sending string
 TimeCycle(IN := TimeOnDelay.Q, PT := T#1S); //Cycle for Serial Communication
@@ -90,7 +75,9 @@ IF TimeCycle.Q = TRUE THEN
 		
 		//Target value(Bath) Set value
 		IF (rTemperatureTV[nBathNumber] <> rTemperatureSV[nBathNumber])  OR isBath_Err[nBathNumber] THEN
+			
 			rTemperatureTV[nBathNumber] := rTemperatureSV[nBathNumber];
+			
 			sSendString := Real_To_String_ThermalBath(rTemperatureTV[nBathNumber],nBathNumber); //Send a SetValue=10.0 '$0201WSV100100$03'
 			bSetValueMode := TRUE;
 		ELSE
@@ -101,7 +88,8 @@ IF TimeCycle.Q = TRUE THEN
 		
 		// Send string	
 		fbSend(	SendString:= sSendString,
-			TXbuffer:= TxBufferTB,
+			TXbuffer:= GVL_Serial.TxBufferTB,
+			
 			Busy=> bSendBusy,
 			Error=> );
 		IF fbSend.Error <> COMERROR_NOERROR THEN
@@ -124,7 +112,8 @@ IF TimeCycle.Q = TRUE THEN
 			Suffix:= '$03',
 			Timeout:= T#1S,
 			ReceivedString:= sReceivedString,
-			RXbuffer:= RxBufferTB,
+			RXbuffer:= GVL_Serial.RxBufferTB,
+			
 			StringReceived=> bStringReceived,
 			Busy=> bReceiveBusy,
 			Error=> ,
@@ -176,33 +165,42 @@ IF TimeCycle.Q = TRUE THEN
 	
 	//Change the Next Bath
 	nBathNumber := nBathNumber + 1;
-	IF nBathNumber > 6 THEN
+	IF nBathNumber > 4 THEN
 		nBathNumber := 1;
 	END_IF
 	bSendingEnable := TRUE;
-END_IF
-
-]]></ST>
+END_IF]]></ST>
     </Implementation>
+    <Action Name="_DigitalInput" Id="{0f3ed832-dd9c-4045-81e8-0db2135ee042}">
+      <Implementation>
+        <ST><![CDATA[//bThermalBathCB := GVL_IO.aDigitalInputIO[5].0;
+bThermalBathCB := GVL_IO_GAS_CABINET.DI_02_ThermalBathsELCB;
+
+(* Read from SMC Bath Device Value *)
+//TimeOnDelay(IN:= P90_Interlock.bThermalBathMC, PT :=T#1S); //Time Delay after a Thermal Bath MC ON
+TimeOnDelay(IN:= GVL_IO_GAS_CABINET.DI_02_ThermalBathsELCB, PT :=T#1S); //Time Delay after a Thermal Bath MC ON
+
+bTempDeviationAlarm[1]	:= GVL_IO_GAS_CABINET.DI_05_ThermalBath_1DeviationAlarm;
+bTempDeviationAlarm[2]	:= GVL_IO_GAS_CABINET.DI_05_ThermalBath_2DeviationAlarm;
+bTempDeviationAlarm[3]	:= GVL_IO_GAS_CABINET.DI_06_ThermalBath_3DeviationAlarm;
+bTempDeviationAlarm[4]	:= GVL_IO_GAS_CABINET.DI_06_ThermalBath_4DeviationAlarm;
+
+bCutOffAlarm[1] := NOT(GVL_IO_GAS_CABINET.DI_05_ThermalBath_1CutOffAlarm); //Normally Contact
+bCutOffAlarm[2] := NOT(GVL_IO_GAS_CABINET.DI_05_ThermalBath_2CutOffAlarm); 
+bCutOffAlarm[3] := NOT(GVL_IO_GAS_CABINET.DI_06_ThermalBath_3CutOffAlarm); 
+bCutOffAlarm[4] := NOT(GVL_IO_GAS_CABINET.DI_06_ThermalBath_4CutOffAlarm); 
+]]></ST>
+      </Implementation>
+    </Action>
     <LineIds Name="P14_ThermalBath">
-      <LineId Id="45" Count="7" />
-      <LineId Id="203" Count="0" />
-      <LineId Id="53" Count="0" />
-      <LineId Id="270" Count="0" />
-      <LineId Id="321" Count="0" />
-      <LineId Id="273" Count="0" />
-      <LineId Id="55" Count="0" />
-      <LineId Id="205" Count="0" />
-      <LineId Id="254" Count="10" />
-      <LineId Id="204" Count="0" />
-      <LineId Id="58" Count="0" />
-      <LineId Id="206" Count="0" />
-      <LineId Id="59" Count="89" />
-      <LineId Id="322" Count="2" />
-      <LineId Id="149" Count="8" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="202" Count="0" />
+      <LineId Id="509" Count="9" />
+      <LineId Id="547" Count="1" />
+      <LineId Id="655" Count="107" />
       <LineId Id="201" Count="0" />
+    </LineIds>
+    <LineIds Name="P14_ThermalBath._DigitalInput">
+      <LineId Id="56" Count="15" />
+      <LineId Id="55" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

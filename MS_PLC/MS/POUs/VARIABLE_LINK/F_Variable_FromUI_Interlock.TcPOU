@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="F_Variable_FromUI_Interlock" Id="{24dd70c4-f47e-49a1-9f71-9d56635c4d74}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_Variable_FromUI_Interlock: BOOL
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_Alarm_Deviation]:=GVL_IO.aInterlockSet[1];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_Warning_Deviation]:=GVL_IO.aInterlockSet[2];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_DelayTime_Analog]:=GVL_IO.aInterlockSet[3];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_DelayTime_Digital]:=GVL_IO.aInterlockSet[4];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_Process_Gas_Pressure_Alarm]:=GVL_IO.aInterlockSet[5];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_Process_Gas_Pressure_Warning]:=GVL_IO.aInterlockSet[6];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_CWTemp_SH_ALARM]:=GVL_IO.aInterlockSet[7];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_CWTemp_SH_WARNING]:=GVL_IO.aInterlockSet[8];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_CWTemp_COIL_ALARM]:=GVL_IO.aInterlockSet[9];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_CWTemp_COIL_WARNING]:=GVL_IO.aInterlockSet[10];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_SUSCEPTOR_OVER_TEMP]:=GVL_IO.aInterlockSet[11];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_REACTOR_OVRE_PRESSURE]:=GVL_IO.aInterlockSet[12];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_CAN_OPEN_TEMP]:=GVL_IO.aInterlockSet[13];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_CAN_OPEN_REACTOR_PRESSURE]:=GVL_IO.aInterlockSet[14];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_DOR_Pressure_Limit]:=GVL_IO.aInterlockSet[15];
+ GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_DOR_RerayCount]:=GVL_IO.aInterlockSet[16];]]></ST>
+    </Implementation>
+    <LineIds Name="F_Variable_FromUI_Interlock">
+      <LineId Id="84" Count="14" />
+      <LineId Id="82" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
