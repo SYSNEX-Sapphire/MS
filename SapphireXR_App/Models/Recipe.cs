@@ -15,7 +15,6 @@ namespace SapphireXR_App.Models
         {
             Name = rhs.Name;
             cTemp = rhs.cTemp;
-            No = rhs.No;
             HTime = rhs.HTime;
             LoopEndStep = rhs.LoopEndStep;
             RPress = rhs.RPress;
@@ -27,9 +26,6 @@ namespace SapphireXR_App.Models
             E02 = rhs.E02;
             E03 = rhs.E03;
             E04 = rhs.E04;
-            E05 = rhs.E05;
-            E06 = rhs.E06;
-            E07 = rhs.E07;
             M01 = rhs.M01;
             M02 = rhs.M02;
             M03 = rhs.M03;
@@ -42,45 +38,32 @@ namespace SapphireXR_App.Models
             M10 = rhs.M10;
             M11 = rhs.M11;
             M12 = rhs.M12;
-            M13 = rhs.M13;
-            M14 = rhs.M14;
-            M15 = rhs.M15;
-            M16 = rhs.M16;
-            M17 = rhs.M17;
-            M18 = rhs.M18;
-            M19 = rhs.M19;
             V01 = rhs.V01;
             V02 = rhs.V02;
             V03 = rhs.V03;
             V04 = rhs.V04;
             V05 = rhs.V05;
+            V06 = rhs.V06;
             V07 = rhs.V07;
             V08 = rhs.V08;
+            V09 = rhs.V09;
             V10 = rhs.V10;
             V11 = rhs.V11;
+            V12 = rhs.V12;
             V13 = rhs.V13;
             V14 = rhs.V14;
+            V15 = rhs.V15;
             V16 = rhs.V16;
             V17 = rhs.V17;
+            V18 = rhs.V18;
             V19 = rhs.V19;
             V20 = rhs.V20;
-            V22 = rhs.V22;
-            V23 = rhs.V23;
-            V24 = rhs.V24;
-            V25 = rhs.V25;
-            V26 = rhs.V26;
-            V27 = rhs.V27;
-            V28 = rhs.V28;
-            V29 = rhs.V29;
-            V30 = rhs.V30;
-            V31 = rhs.V31;
-            V32 = rhs.V32;
-            Background = rhs.Background;
         }
 
         public string Name { get; set; } = "";
         // RecipeInt Array
-        public short No { get; set; }
+        [ObservableProperty]
+        public short no;
         [ObservableProperty]
         private short _rTime;
         [ObservableProperty]
@@ -120,20 +103,6 @@ namespace SapphireXR_App.Models
         [ObservableProperty]
         private float _m12;
         [ObservableProperty]
-        private float _m13;
-        [ObservableProperty]
-        private float _m14;
-        [ObservableProperty]
-        private float _m15;
-        [ObservableProperty]
-        private float _m16;
-        [ObservableProperty]
-        private float _m17;
-        [ObservableProperty]
-        private float _m18;
-        [ObservableProperty]
-        private float _m19;
-        [ObservableProperty]
         private float _e01;
         [ObservableProperty]
         private float _e02;
@@ -141,12 +110,6 @@ namespace SapphireXR_App.Models
         private float _e03;
         [ObservableProperty]
         private float _e04;
-        [ObservableProperty]
-        private float _e05;
-        [ObservableProperty]
-        private float _e06;
-        [ObservableProperty]
-        private float _e07;
         //RecipeDouble Array
         [ObservableProperty]
         private bool _v01;
@@ -159,47 +122,35 @@ namespace SapphireXR_App.Models
         [ObservableProperty]
         private bool _v05;  //TEB
         [ObservableProperty]
+        private bool _v06;  //TEB
+        [ObservableProperty]
         private bool _v07;
         [ObservableProperty]
         private bool _v08; //TMAl
+        [ObservableProperty]
+        private bool _v09;  //TEB
         [ObservableProperty]
         private bool _v10;
         [ObservableProperty]
         private bool _v11; //TMIn
         [ObservableProperty]
+        private bool _v12;  //TEB
+        [ObservableProperty]
         private bool _v13;
         [ObservableProperty]
         private bool _v14; //TMGa
+        [ObservableProperty]
+        private bool _v15;  //TEB
         [ObservableProperty]
         private bool _v16;
         [ObservableProperty]
         private bool _v17; //DTMGa
         [ObservableProperty]
+        private bool _v18;  //TEB
+        [ObservableProperty]
         private bool _v19;
         [ObservableProperty]
         private bool _v20; //Cp2Mg
-        [ObservableProperty]
-        private bool _v22;
-        [ObservableProperty]
-        private bool _v23; //TEB Manifold
-        [ObservableProperty]
-        private bool _v24; //TMAlManifold
-        [ObservableProperty]
-        private bool _v25; //TMIn Manifold
-        [ObservableProperty]
-        private bool _v26; //TMGa Manifold
-        [ObservableProperty]
-        private bool _v27; //DTMGa Manifold
-        [ObservableProperty]
-        private bool _v28; //Cp2Mg Manifold
-        [ObservableProperty]
-        private bool _v29; //NH3_1 Manifold
-        [ObservableProperty]
-        private bool _v30; //NH3_2 Manifold
-        [ObservableProperty]
-        private bool _v31; //SiH4 Manifold
-        [ObservableProperty]
-        private bool _v32; //_vent
 
         public static readonly Brush DefaultBackground = Application.Current.FindResource("DefaultRecipeListBackground") as Brush ?? new SolidColorBrush(Color.FromRgb(0x16, 0x16, 0x16));
         public static readonly Brush DefaultForeground = Application.Current.FindResource("DefaultRecipeListForeground") as Brush ?? new SolidColorBrush(Color.FromRgb(0xC2, 0xC2, 0xC2));
@@ -271,48 +222,32 @@ namespace SapphireXR_App.Models
             aRecipeFloat[9] = rhs.M10;
             aRecipeFloat[10] = rhs.M11;
             aRecipeFloat[11] = rhs.M12;
-            aRecipeFloat[12] = rhs.M13;
-            aRecipeFloat[13] = rhs.M14;
-            aRecipeFloat[14] = rhs.M15;
-            aRecipeFloat[15] = rhs.M16;
-            aRecipeFloat[16] = rhs.M17;
-            aRecipeFloat[17] = rhs.M18;
-            aRecipeFloat[18] = rhs.M19;
             aRecipeFloat[19] = rhs.E01;
             aRecipeFloat[20] = rhs.E02;
             aRecipeFloat[21] = rhs.E03;
             aRecipeFloat[22] = rhs.E04;
-            aRecipeFloat[23] = rhs.E05;
-            aRecipeFloat[24] = rhs.E06;
-            aRecipeFloat[25] = rhs.E07;
             //BitArray from Valve Data
             BitArray aRecipeBit = new BitArray(32);
-            aRecipeBit[0] = rhs.V01 ? true : false;
-            aRecipeBit[1] = rhs.V02 ? true : false;
-            aRecipeBit[2] = rhs.V03 ? true : false;
-            aRecipeBit[3] = rhs.V04 ? true : false;
-            aRecipeBit[4] = rhs.V05 ? true : false;
-            aRecipeBit[5] = rhs.V07 ? true : false;
-            aRecipeBit[6] = rhs.V08 ? true : false;
-            aRecipeBit[7] = rhs.V10 ? true : false;
-            aRecipeBit[8] = rhs.V11 ? true : false;
-            aRecipeBit[9] = rhs.V13 ? true : false;
-            aRecipeBit[10] = rhs.V14 ? true : false;
-            aRecipeBit[11] = rhs.V16 ? true : false;
-            aRecipeBit[12] = rhs.V17 ? true : false;
-            aRecipeBit[13] = rhs.V19 ? true : false;
-            aRecipeBit[14] = rhs.V20 ? true : false;
-            aRecipeBit[15] = rhs.V22 ? true : false;
-            aRecipeBit[16] = rhs.V23 ? true : false;
-            aRecipeBit[17] = rhs.V24 ? true : false;
-            aRecipeBit[18] = rhs.V25 ? true : false;
-            aRecipeBit[19] = rhs.V26 ? true : false;
-            aRecipeBit[20] = rhs.V27 ? true : false;
-            aRecipeBit[21] = rhs.V28 ? true : false;
-            aRecipeBit[22] = rhs.V29 ? true : false;
-            aRecipeBit[23] = rhs.V30 ? true : false;
-            aRecipeBit[24] = rhs.V31 ? true : false;
-            aRecipeBit[25] = rhs.V32 ? true : false;
+            aRecipeBit[0] = rhs.V01;
+            aRecipeBit[1] = rhs.V02;
+            aRecipeBit[2] = rhs.V03;
+            aRecipeBit[3] = rhs.V04;
+            aRecipeBit[4] = rhs.V05;
+            aRecipeBit[5] = rhs.V06;
+            aRecipeBit[6] = rhs.V07;
+            aRecipeBit[7] = rhs.V08;
+            aRecipeBit[8] = rhs.V09;
+            aRecipeBit[9] = rhs.V10;
+            aRecipeBit[10] = rhs.V11;
+            aRecipeBit[11] = rhs.V12;
+            aRecipeBit[12] = rhs.V13;
+            aRecipeBit[13] = rhs.V14;
+            aRecipeBit[14] = rhs.V15;
+            aRecipeBit[15] = rhs.V16;
+            aRecipeBit[16] = rhs.V17;
+            aRecipeBit[17] = rhs.V18;
+            aRecipeBit[18] = rhs.V19;
+            aRecipeBit[19] = rhs.V20;
 
             sName = rhs.Name;
 
