@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Windows;
 
 namespace SapphireXR_App.Models
 {
@@ -8,6 +9,8 @@ namespace SapphireXR_App.Models
         [ObservableProperty]
         private string? _name;
         public string? Description { get; set; }
+        [ObservableProperty]
+        private Visibility isVisible = Visibility.Visible;
     }
     public partial class WarningAlarmDevice: Device
     {
@@ -20,27 +23,14 @@ namespace SapphireXR_App.Models
     public partial class AnalogDeviceIO : WarningAlarmDevice
     {
         public int MaxValue { get; set; }
-    }
-
-    public class GasDO : Device
-    {
-        public bool IsOn { get; set; }
-        public bool NormallyClose { get; set; }
-        public bool UserState1 { get; set; }
-        public bool UserState2 { get; set; }
-        public bool UserState3 { get; set; }
-        public bool UserState4 { get; set; }
-
+       
     }
 
     public partial class SwitchDI : WarningAlarmDevice
     {
         public bool IsOn { get; set; }
     }
-    public class SwitchDO : Device
-    {
-        public bool IsOn { get; set; }
-    }
+   
     public partial class InterLockA: ObservableObject
     {
         [ObservableProperty]

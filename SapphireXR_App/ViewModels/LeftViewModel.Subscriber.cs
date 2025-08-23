@@ -429,14 +429,6 @@ namespace SapphireXR_App.ViewModels
                     case "Source4":
                         leftViewModel.Source4 = value.Item2;
                         break;
-
-                    case "Source5":
-                        leftViewModel.Source5 = value.Item2;
-                        break;
-
-                    case "Source6":
-                        leftViewModel.Source6 = value.Item2;
-                        break;
                 }
             }
 

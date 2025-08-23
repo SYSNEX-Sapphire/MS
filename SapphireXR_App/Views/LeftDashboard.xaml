@@ -119,7 +119,7 @@
             <!-- Source Valve Current Status -->
             <Grid Grid.Row="2" VerticalAlignment="Center">
                 <Border Style="{StaticResource Tab}">
-                    <StackPanel Orientation="Vertical" Height="229" VerticalAlignment="Top">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Top">
                         <StackPanel.Margin>
                             <Thickness Bottom="{StaticResource p_4}" Left="{StaticResource p_2}" Right="{StaticResource p_2}" />
                         </StackPanel.Margin>
@@ -132,8 +132,6 @@
                             <Image Grid.Column="0" Source="/Resources/icons/icon=control_knobs.png"  Stretch="Fill"/>
                             <TextBlock Grid.Column="2" Foreground="{DynamicResource Gray_950}" FontSize="14" FontFamily="Segoe UI" FontWeight="Bold" HorizontalAlignment="Left"  VerticalAlignment="Center"><Bold><Run Text="Source Status"/></Bold></TextBlock>
                         </Grid>
-
-
                         <Grid VerticalAlignment="Top">
                             <Grid.Resources>
                                 <Style TargetType="Border" x:Key="SourceStatusIndicator">
@@ -175,8 +173,6 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="Carrier" HorizontalAlignment="Center" Margin="0,6,0,0" Foreground="{DynamicResource Gray_900}" FontSize="12"/>
                             <TextBlock Grid.Row="0" Grid.Column="2" Text="Source" HorizontalAlignment="Center" Margin="0,6,0,0" Foreground="{DynamicResource Gray_900}" FontSize="12"/>
@@ -188,8 +184,6 @@
                             <TextBlock Grid.Row="5" Grid.Column="0" Text="{Binding Source2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Style="{StaticResource SourceStatusLabelText}" />
                             <TextBlock Grid.Row="6" Grid.Column="0" Text="{Binding Source3, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Style="{StaticResource SourceStatusLabelText}" />
                             <TextBlock Grid.Row="7" Grid.Column="0" Text="{Binding Source4, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Style="{StaticResource SourceStatusLabelText}" />
-                            <TextBlock Grid.Row="8" Grid.Column="0" Text="{Binding Source5, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Style="{StaticResource SourceStatusLabelText}" />
-                            <TextBlock Grid.Row="9" Grid.Column="0" Text="{Binding Source6, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Style="{StaticResource SourceStatusLabelText}" />
                             <!--Background="{}" {}-->
                             <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource SourceStatusIndicator}" >
                                 <TextBlock Text="{Binding CurrentSourceStatusViewModel.NH3_1Carrier, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Foreground="{Binding CurrentSourceStatusViewModel.NH3_1CarrierColor}" Style="{StaticResource SourceStatusIndicatorText}" />
@@ -253,24 +247,6 @@
                             </Border>
                             <Border Grid.Row="7" Grid.Column="3" Style="{StaticResource SourceStatusIndicator}">
                                 <TextBlock Text="{Binding CurrentSourceStatusViewModel.TMGaVent}" Foreground="{Binding CurrentSourceStatusViewModel.TMGaVentColor}" Style="{StaticResource SourceStatusIndicatorText}" />
-                            </Border>
-                            <Border Grid.Row="8" Grid.Column="1" Style="{StaticResource SourceStatusIndicator}">
-                                <TextBlock Text="{Binding CurrentSourceStatusViewModel.DTMGaCarrier, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Foreground="{Binding CurrentSourceStatusViewModel.DTMGaCarrierColor}" Style="{StaticResource SourceStatusIndicatorText}" />
-                            </Border>
-                            <Border Grid.Row="8" Grid.Column="2" Style="{StaticResource SourceStatusIndicator}">
-                                <TextBlock Text="{Binding CurrentSourceStatusViewModel.DTMGaSource}" Foreground="{Binding CurrentSourceStatusViewModel.DTMGaSourceColor}" Style="{StaticResource SourceStatusIndicatorText}" />
-                            </Border>
-                            <Border Grid.Row="8" Grid.Column="3" Style="{StaticResource SourceStatusIndicator}">
-                                <TextBlock Text="{Binding CurrentSourceStatusViewModel.DTMGaVent}" Foreground="{Binding CurrentSourceStatusViewModel.DTMGaVentColor}" Style="{StaticResource SourceStatusIndicatorText}" />
-                            </Border>
-                            <Border Grid.Row="9" Grid.Column="1" Style="{StaticResource SourceStatusIndicator}">
-                                <TextBlock Text="{Binding CurrentSourceStatusViewModel.Cp2MgCarrier}" Foreground="{Binding CurrentSourceStatusViewModel.Cp2MgCarrierColor}" Style="{StaticResource SourceStatusIndicatorText}" />
-                            </Border>
-                            <Border Grid.Row="9" Grid.Column="2" Style="{StaticResource SourceStatusIndicator}">
-                                <TextBlock Text="{Binding CurrentSourceStatusViewModel.Cp2MgSource}" Foreground="{Binding CurrentSourceStatusViewModel.Cp2MgSourceColor}" Style="{StaticResource SourceStatusIndicatorText}" />
-                            </Border>
-                            <Border Grid.Row="9" Grid.Column="3" Style="{StaticResource SourceStatusIndicator}">
-                                <TextBlock Text="{Binding CurrentSourceStatusViewModel.Cp2MgVent}" Foreground="{Binding CurrentSourceStatusViewModel.Cp2MgVentColor}" Style="{StaticResource SourceStatusIndicatorText}" />
                             </Border>
                         </Grid>
                     </StackPanel>

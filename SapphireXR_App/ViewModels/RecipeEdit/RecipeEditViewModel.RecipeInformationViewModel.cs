@@ -63,11 +63,18 @@ namespace SapphireXR_App.ViewModels
                     case nameof(Recipe.M02):
                     case nameof(Recipe.M03):
                     case nameof(Recipe.M04):
+                    case nameof(Recipe.M05):
+                    case nameof(Recipe.M06):
                     case nameof(Recipe.M07):
                     case nameof(Recipe.M08):
                     case nameof(Recipe.M09):
                     case nameof(Recipe.M10):
-                    case nameof(Recipe.M11):
+                    case nameof(Recipe.V14):
+                    case nameof(Recipe.V15):
+                    case nameof(Recipe.V16):
+                    case nameof(Recipe.V17):
+                    case nameof(Recipe.V18):
+                    case nameof(Recipe.V19):
                         refreshTotalFlowRate();
                         break;
                 }
@@ -146,7 +153,33 @@ namespace SapphireXR_App.ViewModels
                 float totalFlowRate = 0;
                 totalFlowRate += currentStep.M01;
                 totalFlowRate += currentStep.M02;
-                
+                if(currentStep.V17 == true)
+                {
+                    totalFlowRate += currentStep.M03;
+                }
+                if (currentStep.V18 == true)
+                {
+                    totalFlowRate += currentStep.M04;
+                }
+                if (currentStep.V14 == true)
+                {
+                    totalFlowRate += currentStep.M05;
+                }
+                if (currentStep.V15 == true)
+                {
+                    totalFlowRate += currentStep.M06;
+                }
+                if (currentStep.V16 == true)
+                {
+                    totalFlowRate += currentStep.M07;
+                }
+                if (currentStep.V19 == true)
+                {
+                    totalFlowRate += currentStep.M08;
+                }
+                totalFlowRate += currentStep.M09;
+                totalFlowRate += currentStep.M10;
+
 
                 TotalFlowRate = (int)totalFlowRate;
             }

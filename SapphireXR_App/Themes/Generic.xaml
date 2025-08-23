@@ -324,6 +324,10 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="DataGridRow" x:Key="EventLogRow">
+        <Setter Property="Height" Value="26"/>
+        <Setter Property="Background" Value="{StaticResource Gray_50}" />
+    </Style>
     <Style TargetType="DataGrid" x:Key="EventLog">
         <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource Gray_300}" />
         <Setter Property="VerticalGridLinesBrush" Value="{StaticResource Gray_50}" />
@@ -364,14 +368,7 @@
                 </Style>
             </Setter.Value>
         </Setter>
-        <Setter Property="RowStyle">
-            <Setter.Value>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="Height" Value="26"/>
-                    <Setter Property="Background" Value="{StaticResource Gray_50}" />
-                </Style>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="RowStyle" Value="{StaticResource EventLogRow}" />
     </Style>
     <Style TargetType="TextBlock" x:Key="EventLogElement">
         <Setter Property="VerticalAlignment" Value="Center"/>

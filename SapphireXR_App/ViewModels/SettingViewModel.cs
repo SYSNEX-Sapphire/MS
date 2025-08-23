@@ -1,13 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SapphireXR_App.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.IO;
 using SapphireXR_App.Common;
-using System.ComponentModel;
-using System.Collections;
 using SapphireXR_App.Enums;
+using SapphireXR_App.Models;
+using System.Collections;
+using System.ComponentModel;
+using System.IO;
 using System.Windows;
 
 namespace SapphireXR_App.ViewModels
@@ -190,7 +190,7 @@ namespace SapphireXR_App.ViewModels
             {
                 ValveDeviceIO = CreateDefaultValveDeviceIO();
             }
-            foreach(var io in ValveDeviceIO)
+            foreach (var io in ValveDeviceIO)
             {
                 io.PropertyChanged += (object? sender, PropertyChangedEventArgs args) =>
                 {
@@ -219,19 +219,20 @@ namespace SapphireXR_App.ViewModels
         {
             AlarmSettingLoad();
             IOList = new List<IOSetting> {
-                new() { Name= "Power Reset Switch", OnOff = true },new() { Name= "Cover - Upper Limit", OnOff = true }, new() { Name= "Cover - Lower Limit", OnOff = true },
-                new() { Name= "SMPS - 24V 480", OnOff = true }, new() { Name= "SMPS - 24V 72", OnOff = true },  new() { Name= "SMPS - 15V Plus", OnOff = true },
-                new() { Name= "SMPS - 15V Minus", OnOff = true },  new() { Name= "CP - Induction Heater", OnOff = true }, new() { Name= "CP - Thermal Bath", OnOff = true },
-                new() { Name= "CP - Vacuum Pump", OnOff = true },  new() { Name= "CP - Line Heater", OnOff = true }, new() { Name= "CP - Rotation Motor", OnOff = true },
-                new() { Name= "CP - Cover Motor", OnOff = true },  new() { Name= "CP - Throttle Valve", OnOff = true }, new() { Name= "CP - Lamp", OnOff = true },
-                new() { Name= "CP - SMPS15CP", OnOff = true },  new() { Name= "Line Heater 1", OnOff = true }, new() { Name= "Line Heater 2", OnOff = true },
-                new() { Name= "Line Heater 3", OnOff = true }, new() { Name= "Line Heater 4", OnOff = true },  new() { Name= "Line Heater 5", OnOff = true },
-                new() { Name= "Line Heater 6", OnOff = true },  new() { Name= "Line Heater 7", OnOff = true },  new() { Name= "Line Heater 8", OnOff = true },
-                new() { Name= "Thermal Bath - Deviation Alaram #1", OnOff = true }, new() { Name= "Thermal Bath - Deviation Alaram #2", OnOff = true },
-                new() { Name= "Thermal Bath - Deviation Alaram #3", OnOff = true }, new() { Name= "Thermal Bath - Deviation Alaram #4", OnOff = true },
-                new() { Name= "Thermal Bath - Deviation Alaram #5", OnOff = true }, new() { Name= "Thermal Bath - Deviation Alaram #6", OnOff = true },
-                new() { Name= "Singal Tower - RED", OnOff = true }, new() { Name= "Singal Tower - YELLOW", OnOff = true }, new() { Name= "Singal Tower - GREEN", OnOff = true },
-                new() { Name= "Singal Tower - BLUE", OnOff = true },  new() { Name= "Singal Tower - WHITE", OnOff = true }, new() { Name= "Singal Tower - BUZZWER", OnOff = true }
+                new() { Name= "Reset Button", OnOff = true },new() { Name= "Gas Cabinet Lamp Button", OnOff = true }, new() { Name= "Pneumatic Pressure Sensor", OnOff = true },
+                new() { Name= "Gas Cabinet Door Close", OnOff = true }, new() { Name= "SMPS#1 Alarm", OnOff = true },  new() { Name= "SMPS#2 Alarm", OnOff = true },
+                new() { Name= "SMPS#3 Alarm", OnOff = true },  new() { Name= "SMPS#4 Alarm", OnOff = true }, new() { Name= "Graphite Heater ELCB - Q2", OnOff = true },
+                new() { Name= "Thermal Baths ELCB - Q3", OnOff = true },  new() { Name= "Vacuum Pump ELCB - Q4", OnOff = true }, new() { Name= "Line Heaters ELCB - Q5", OnOff = true },
+                new() { Name= "Rotation Motor CP - F6", OnOff = true },  new() { Name= "Cover Lift Motor CP - F8", OnOff = true }, new() { Name= "T/V CP - F9", OnOff = true },
+                new() { Name= "Gas Detector CP - F10", OnOff = true },  new() { Name= "Cabinet Lamps CP - F11", OnOff = true }, new() { Name= "MFC Power CP - F14", OnOff = true },
+                new() { Name= "Line Heater#1 CP", OnOff = true }, new() { Name= "Line Heater#2 CP", OnOff = true },  new() { Name= "Line Heater#3 CP", OnOff = true },
+                new() { Name= "Line Heater#4 CP", OnOff = true },  new() { Name= "Line Heater#5 CP", OnOff = true },  new() { Name= "Line Heater#6 CP", OnOff = true },
+                new() { Name= "Line Heater#7 CP", OnOff = true }, new() { Name= "Line Heater#8 CP", OnOff = true },
+                new() { Name= "Gas Detector H2", OnOff = true }, new() { Name= "Gas Detector H2S", OnOff = true },
+                new() { Name= "Gas Detector H2Se", OnOff = true }, new() { Name= "Fire Sensor", OnOff = true },
+                new() { Name= "External Scrubber Fault", OnOff = true }, new() { Name= "External H2 Gas Cabinet Fault", OnOff = true }, new() { Name= "External H2S Gas Cabinet Fault", OnOff = true },
+                new() { Name= "External H2Se Gas Cabinet Fault", OnOff = true },  new() { Name= "External User Input Alarm", OnOff = true }, new() { Name= "Thermal Bath#1 Deviation Alarm", OnOff = true },
+                new() { Name= "Thermal Bath#2 Deviation Alarm", OnOff = true }, new() { Name= "Thermal Bath#3 Deviation Alarm", OnOff = true }, new() { Name= "Thermal Bath#4 Cut-Off Alarm", OnOff = true }
             };
 
             ObservableManager<BitArray>.Subscribe("DeviceIOList", iOStateListSubscriber = new IOStateListSubscriber(this));
@@ -352,7 +353,7 @@ namespace SapphireXR_App.ViewModels
                         break;
                 }
             };
-          
+
             lAnalogDeviceIO = dAnalogDeviceIO?.Values.ToList();
             if (lAnalogDeviceIO != null)
             {
@@ -523,11 +524,11 @@ namespace SapphireXR_App.ViewModels
         private void updateIOState(BitArray ioStateList)
         {
             int io = 0;
-            IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.PowerResetSwitch];
-            IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.Cover_UpperLimit];
-            IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.Cover_LowerLimit];
-            IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.SMPS_24V480];
-            IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.SMPS_24V72];
+            //IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.PowerResetSwitch];
+            //IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.Cover_UpperLimit];
+            //IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.Cover_LowerLimit];
+            //IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.SMPS_24V480];
+            //IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.SMPS_24V72];
             IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.SMPS_15VPlus];
             IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.SMPS_15VMinus];
             IOList[io++].OnOff = ioStateList[(int)PLCService.IOListIndex.CP_InudctionHeater];
