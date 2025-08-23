@@ -368,3 +368,12 @@ FodyWeavers.xsd
 /MS_PLC/_Boot/TwinCAT RT (x64)/CurrentConfig
 /MS_PLC/_Boot/TwinCAT RT (x64)/Plc
 /MS_PLC/_Boot/TwinCAT RT (x64)
+/MS_PLC/MS/_Libraries/beckhoff automation gmbh
+/MS_PLC/_Boot/TwinCAT CE7 (ARMV7)/Plc
+/MS_PLC/_Boot/TwinCAT CE7 (ARMV7)/CurrentConfig
+/MS_PLC/TrialLicense.tclrs
+/MS_PLC/MS_PLC.tsproj
+/MS_PLC/MS_PLC.sln
+/MS_PLC/_Boot/CurrentConfig
+/MS_PLC/_Boot
+/MS_PLC/_Boot/TargetDescription.xml
