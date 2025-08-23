@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="P91_Monitoring" Id="{4f91223e-09c8-40bc-a729-040528b0179c}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P91_Monitoring
 VAR
@@ -11,7 +11,9 @@ VAR
 	bUtilityFault		: BYTE;	
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[(* Read from Utility Device*)
+      <ST><![CDATA[//jhkang
+
+(* Read from Utility Device*)
 bUtilityFault		:= GVL_IO.aDigitalInputIO[7]; // 1~5 BYTE Operation, Normally Contacted
 
 TimeCycle(IN:=TRUE, PT:=T#100MS); // 100MS Refresh Reading Time
@@ -19,19 +21,19 @@ IF TimeCycle.Q THEN
 	TimeCycle(IN:=FALSE);
 	
 	// Reactor Ultimate Pressure Gauge
-	GVL_IO.aMonitoring_PV[1] := GVL_IO.aAnalogInputIO[27] / GVL_IO.KL3464MaxValue * 10; //10Torr, 0~10V, Cal. x10
+	GVL_IO.aMonitoring_PV[1] := GVL_IO.aAnalogInputIO[27] / GVL_CONSTANT.EL3064MaxValue * 10; //10Torr, 0~10V, Cal. x10
 	
 	// Exhaust Pressure Gauge
-	GVL_IO.aMonitoring_PV[2] := GVL_IO.aAnalogInputIO[28] / GVL_IO.KL3464MaxValue * 1000; //1,000Torr, 0~10V, Cal. x1000
+	GVL_IO.aMonitoring_PV[2] := GVL_IO.aAnalogInputIO[28] / GVL_CONSTANT.EL3064MaxValue * 1000; //1,000Torr, 0~10V, Cal. x1000
 	GVL_IO.aAnalogOutputIO[27] := GVL_IO.aAnalogInputIO[28]; // Panel Meter Display
 	
 	// Double O-Ring(DOR) Gauge
-	GVL_IO.aMonitoring_PV[3] := GVL_IO.aAnalogInputIO[29] / GVL_IO.KL3464MaxValueH * 100; //100kPa, 0~5V, Cal. x100
+	GVL_IO.aMonitoring_PV[3] := GVL_IO.aAnalogInputIO[29] / GVL_CONSTANT.EL3064MaxValueH * 100; //100kPa, 0~5V, Cal. x100
 		
 	//Gas Pressure 4 : N2, 5 : H2, 6 : NH3, 7 : SiH4
 	FOR i:=4 TO 7 DO
 		idx := i + 29;
-		GVL_IO.aMonitoring_PV[i] := GVL_IO.aAnalogInputIO[idx] / GVL_IO.KL3054MaxValue * 6.89; // Cal. 6.89 bar
+		GVL_IO.aMonitoring_PV[i] := GVL_IO.aAnalogInputIO[idx] / GVL_CONSTANT.EL3064MaxValue * 6.89; // Cal. 6.89 bar
 	END_FOR	
 	
 	// Cooling Water Temperature
@@ -41,6 +43,7 @@ IF TimeCycle.Q THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="P91_Monitoring">
+      <LineId Id="211" Count="1" />
       <LineId Id="184" Count="0" />
       <LineId Id="187" Count="0" />
       <LineId Id="65" Count="0" />

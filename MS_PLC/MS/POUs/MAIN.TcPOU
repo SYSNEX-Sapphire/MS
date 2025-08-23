@@ -11,7 +11,14 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[(* Modify Program *)
+      <ST><![CDATA[F_Variable_Valve();
+F_Variable_DeviceLink();
+F_Variable_FromUI();
+F_Variable_FromUI_Interlock();
+F_Variable_TODevice();
+F_Variable_ToUI_InputState();
+GVL.fbLineHeater_Manager(RData_Module_1=>GVL_Serial.LineHeater_data_1,RData_Module_2=>GVL_Serial.LineHeater_data_2);
+
 
 P11_E3508(); //Temp Controller
 P12_IQ_PLUS(); //Throttle Valve Controller
@@ -20,9 +27,6 @@ P14_ThermalBath();
 P15_RotationOperation();
 P16_CoverOperation();
 P17_DOROperation();
-P20_BackgroundCom();
-P21_Background_LineHeater();
-P22_Background_ThermalBath();
 P22_Background_ThermalBath();
 
 
@@ -61,7 +65,16 @@ P92_Maintenance();
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="535" Count="17" />
+      <LineId Id="600" Count="0" />
+      <LineId Id="536" Count="0" />
+      <LineId Id="595" Count="1" />
+      <LineId Id="598" Count="1" />
+      <LineId Id="609" Count="0" />
+      <LineId Id="597" Count="0" />
+      <LineId Id="594" Count="0" />
+      <LineId Id="537" Count="6" />
+      <LineId Id="546" Count="0" />
+      <LineId Id="548" Count="4" />
       <LineId Id="584" Count="1" />
       <LineId Id="553" Count="5" />
       <LineId Id="560" Count="8" />

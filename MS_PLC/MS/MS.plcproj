@@ -18,6 +18,84 @@
     <LibraryReferences>{cf2dea6c-b629-42bd-a981-ea58df1127a6}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DATA TYPES\MODUELS\ST_GAS_CABINET.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\MODUELS\ST_MAIN_MODULE.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\MODUELS\ST_NOTIFICATION.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\MODUELS\ST_NOTIFICATION_MESSAGE.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\MODUELS\ST_REACTOR_CABINET.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\MODUELS\ST_SEQUENCE.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\MODUELS\ST_SOL_VALVE.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\MODUELS\ST_TEMP_CONTROLLER.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\MODUELS\ST_THROTTLE_VALVE.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\PARTS\ST_ANALOG_PART.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\PARTS\ST_DIGITAL_PART.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DATA TYPES\PARTS\ST_SEQUENCE_PART.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DEVICE\LINE HEATER\FB_LINE_HEATER_MANAGER.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DEVICE\LINE HEATER\FB_Modbus_Send_FIFO.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DEVICE\LINE HEATER\FB_TEMP_RAMPING.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DEVICE\LINE HEATER\FUNCTION\F_Temp_Write_Set_Point.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DEVICE\LINE HEATER\FUNCTION\F_Temp_Write_Value.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DEVICE\ST_LineHeater_Data.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DEVICE\ST_Modbus_Send_Frame.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\DUTs\ENUM\E_aAnalogInputIO_Index.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\DUTs\ENUM\E_AlarmList.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\DUTs\ENUM\E_AlarmSetValue.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\DUTs\ENUM\E_InputState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\DUTs\ENUM\E_Interlock.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\DUTs\ENUM\E_Morning_Index.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\DUTs\ENUM\E_WarningList.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\E_ControlMode.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -75,10 +153,45 @@
     <Compile Include="FUNCTION\USINT_TO_WORD_Bit.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FUNCTION\USINT_TO_WORD_jh.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FUNCTION\WORD_TO_USINT_Bit.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GVLs\GVL_COMMAND_FROM_UI.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="GVLs\GVL_CONSTANT.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\GVL_DEVICE_NET_E3508.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="GVLs\GVL_DEVICE_NET_IQ_PLUS.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="GVLs\GVL_IO.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="GVLs\GVL.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="GVLs\GVL_IO_GAS_CABINET.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\GVL_IO_REACTOR_CABINET.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\GVL_IO_VALVE.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\GVL_SEQUENCE.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -108,25 +221,16 @@
     <Compile Include="POUs\FB_OverLimitCheck.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_RampGenerator.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_RampGenerator_1.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\FB_RecipeAnalogControlInputSequencer.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_RecipeSequencer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_SensorLimitCheck.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_TON_Pausable_1.TcPOU">
+    <Compile Include="POUs\FB_ValveControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_ValveControl.TcPOU">
+    <Compile Include="POUs\FUNCTION\F_StateAllValve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\F_ResetTimersAndRCPTimes.TcPOU">
@@ -156,12 +260,6 @@
     <Compile Include="POUs\P17_DOROperation.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\P20_BackgroundCom.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\P21_Background_LineHeater.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\P22_Background_ThermalBath.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -189,12 +287,40 @@
     <Compile Include="POUs\P92_Maintenance.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\VARIABLE_LINK\F_Variable_DeviceLink.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\VARIABLE_LINK\F_Variable_Valve.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\VARIABLE_LINK\F_Variable_FromUI.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\VARIABLE_LINK\F_Variable_FromUI_Interlock.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\VARIABLE_LINK\F_Variable_TODevice.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\VARIABLE_LINK\F_Variable_ToUI_InputState.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DATA TYPES\MODUELS" />
+    <Folder Include="DATA TYPES\PARTS" />
+    <Folder Include="DEVICE" />
+    <Folder Include="DEVICE\LINE HEATER" />
+    <Folder Include="DEVICE\LINE HEATER\FUNCTION" />
     <Folder Include="DUTs" />
+    <Folder Include="DUTs\DUTs" />
+    <Folder Include="DUTs\DUTs\ENUM" />
     <Folder Include="GVLs" />
     <Folder Include="FUNCTION" />
+    <Folder Include="DATA TYPES" />
     <Folder Include="POUs" />
+    <Folder Include="POUs\FUNCTION" />
+    <Folder Include="POUs\VARIABLE_LINK" />
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_ControllerToolbox">
