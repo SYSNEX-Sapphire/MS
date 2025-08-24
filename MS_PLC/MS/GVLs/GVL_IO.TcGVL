@@ -13,7 +13,7 @@ VAR_GLOBAL
 	aAnalogInputIO2 AT %I*	: ARRAY[1..2]OF UINT;
 	
 	(*Solenoid Valve*)
-	aOutputSolValve AT %Q* 	: ARRAY[0..3]OF DWORD; //Solenoid Valve
+	aOutputSolValve AT %Q* 	: DWORD; //Solenoid Valve
 	
 	(* Read and Write of Device Control Value*)
 	aMaxValueController		: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF REAL ; //Device Max Value from UI

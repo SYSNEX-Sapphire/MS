@@ -57,15 +57,24 @@ END_CASE
 P70_Interface();
 P90_Interlock();
 P91_Monitoring();
-P92_Maintenance();
-
-
-(* Interlock Condtion *)
-// DOR Operation Condition
-]]></ST>
+P92_Maintenance();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="1" Count="51" />
+      <LineId Id="600" Count="0" />
+      <LineId Id="536" Count="0" />
+      <LineId Id="595" Count="1" />
+      <LineId Id="598" Count="1" />
+      <LineId Id="609" Count="0" />
+      <LineId Id="597" Count="0" />
+      <LineId Id="594" Count="0" />
+      <LineId Id="537" Count="6" />
+      <LineId Id="546" Count="0" />
+      <LineId Id="548" Count="4" />
+      <LineId Id="584" Count="1" />
+      <LineId Id="553" Count="5" />
+      <LineId Id="560" Count="8" />
+      <LineId Id="583" Count="0" />
+      <LineId Id="569" Count="6" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -9,44 +9,44 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* Solenoid Valve Mapping *)
-GVL_IO.aOutputSolValve[0].0 := valveSetting.0; //V01 B/G N2 In
-GVL_IO.aOutputSolValve[0].1 := valveSetting.1;
-GVL_IO.aOutputSolValve[0].2 := valveSetting.2;
-GVL_IO.aOutputSolValve[0].3 := valveSetting.3;
-GVL_IO.aOutputSolValve[0].4 := valveSetting.4;
-GVL_IO.aOutputSolValve[0].5 := valveSetting.5;
-GVL_IO.aOutputSolValve[0].6 := valveSetting.6;
-GVL_IO.aOutputSolValve[0].7 := valveSetting.7;
+GVL_IO.aOutputSolValve.0 := valveSetting.0; //V01 B/G N2 In
+GVL_IO.aOutputSolValve.1 := valveSetting.1;
+GVL_IO.aOutputSolValve.2 := valveSetting.2;
+GVL_IO.aOutputSolValve.3 := valveSetting.3;
+GVL_IO.aOutputSolValve.4 := valveSetting.4;
+GVL_IO.aOutputSolValve.5 := valveSetting.5;
+GVL_IO.aOutputSolValve.6 := valveSetting.6;
+GVL_IO.aOutputSolValve.7 := valveSetting.7;
 
-GVL_IO.aOutputSolValve[1].0 := valveSetting.8;
-GVL_IO.aOutputSolValve[1].1 := valveSetting.9;
-GVL_IO.aOutputSolValve[1].2 := valveSetting.10;
-GVL_IO.aOutputSolValve[1].3 := valveSetting.11;
-GVL_IO.aOutputSolValve[1].4 := valveSetting.12;
-GVL_IO.aOutputSolValve[1].5 := valveSetting.13;
-GVL_IO.aOutputSolValve[1].6 := valveSetting.14;
-GVL_IO.aOutputSolValve[1].7 := valveSetting.15;
+GVL_IO.aOutputSolValve.8 := valveSetting.8;
+GVL_IO.aOutputSolValve.9 := valveSetting.9;
+GVL_IO.aOutputSolValve.10 := valveSetting.10;
+GVL_IO.aOutputSolValve.11 := valveSetting.11;
+GVL_IO.aOutputSolValve.12 := valveSetting.12;
+GVL_IO.aOutputSolValve.13 := valveSetting.13;
+GVL_IO.aOutputSolValve.14 := valveSetting.14;
+GVL_IO.aOutputSolValve.15 := valveSetting.15;
 
-GVL_IO.aOutputSolValve[2].0 := valveSetting.16; 
-GVL_IO.aOutputSolValve[2].1 := valveSetting.17;
-GVL_IO.aOutputSolValve[2].2 := valveSetting.18;
-GVL_IO.aOutputSolValve[2].3 := valveSetting.19;
-GVL_IO.aOutputSolValve[2].4 := valveSetting.20;
-GVL_IO.aOutputSolValve[2].5 := valveSetting.21;
-GVL_IO.aOutputSolValve[2].6 := valveSetting.22;
-GVL_IO.aOutputSolValve[2].7 := valveSetting.23;
+GVL_IO.aOutputSolValve.16 := valveSetting.16; 
+GVL_IO.aOutputSolValve.17 := valveSetting.17;
+GVL_IO.aOutputSolValve.18 := valveSetting.18;
+GVL_IO.aOutputSolValve.19 := valveSetting.19;
+GVL_IO.aOutputSolValve.20 := valveSetting.20;
+GVL_IO.aOutputSolValve.21 := valveSetting.21;
+GVL_IO.aOutputSolValve.22 := valveSetting.22;
+GVL_IO.aOutputSolValve.23 := valveSetting.23;
 
-GVL_IO.aOutputSolValve[3].0 := valveSetting.24;
-GVL_IO.aOutputSolValve[3].1 := valveSetting.25;
-GVL_IO.aOutputSolValve[3].2 := valveSetting.26;
-GVL_IO.aOutputSolValve[3].3 := valveSetting.27;
-GVL_IO.aOutputSolValve[3].4 := valveSetting.28;
-GVL_IO.aOutputSolValve[3].5 := valveSetting.29;
-GVL_IO.aOutputSolValve[3].6 := valveSetting.30;
-GVL_IO.aOutputSolValve[3].7 := valveSetting.31;]]></ST>
+GVL_IO.aOutputSolValve.24 := valveSetting.24;
+GVL_IO.aOutputSolValve.25 := valveSetting.25;
+GVL_IO.aOutputSolValve.26 := valveSetting.26;
+GVL_IO.aOutputSolValve.27 := valveSetting.27;
+GVL_IO.aOutputSolValve.28 := valveSetting.28;
+GVL_IO.aOutputSolValve.29 := valveSetting.29;
+GVL_IO.aOutputSolValve.30 := valveSetting.30;
+GVL_IO.aOutputSolValve.31 := valveSetting.31;]]></ST>
     </Implementation>
     <LineIds Name="FB_ValveControl">
-      <LineId Id="170" Count="34" />
+      <LineId Id="280" Count="34" />
       <LineId Id="27" Count="0" />
     </LineIds>
   </POU>
