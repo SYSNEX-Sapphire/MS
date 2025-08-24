@@ -151,6 +151,10 @@ namespace SapphireXR_App.Models
             { "V25", 24 }, { "V26", 25 },  { "V27", 26 }, { "V28", 27 }, { "V29", 28 }, { "V30", 29 }, { "V31", 30 }, { "V32", 31 }
         };
 
+        public static readonly List<string> RecipeFlowControllers = ["M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "E01", "E02", "E03", "E04",
+            "STemp", "RPress", "SRotation"];
+        public static readonly List<string> RecipeValves = ["V01", "V02", "V03", "V04", "V05", "V06", "V07", "V08", "V09", "V10", "V11", "V12", "V13", "V14", "V15", "V16", "V17", "V18", "V19", "V20"];
+
         public static readonly Dictionary<string, int> dIndexController = new Dictionary<string, int>
         {
             { "MFC01", 0 }, { "MFC02", 1 }, { "MFC03", 2 }, { "MFC04", 3 }, { "MFC05", 4 },

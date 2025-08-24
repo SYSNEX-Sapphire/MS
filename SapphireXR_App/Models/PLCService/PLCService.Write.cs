@@ -6,24 +6,32 @@ namespace SapphireXR_App.Models
 {
     public static partial class PLCService
     {
+        private static void DoWriteValveState(BitArray valveUpdate)
+        {
+            uint[] sentBuffer = new uint[1];
+            valveUpdate.CopyTo(sentBuffer, 0);
+            Ads.WriteAny(hReadValveStatePLC, sentBuffer, [1]);
+        }
         public static void WriteValveState(string valveID, bool onOff)
         {
             int index;
             if (baReadValveStatePLC != null && ValveIDtoOutputSolValveIdx.TryGetValue(valveID, out index) == true)
             {
                 baReadValveStatePLC[index] = onOff;
-
-                uint[] sentBuffer = new uint[1];
-                baReadValveStatePLC.CopyTo(sentBuffer, 0);
-                Ads.WriteAny(hReadValveStatePLC, sentBuffer, [1]);
+                DoWriteValveState(baReadValveStatePLC);
             }
         }
 
         public static void WriteValveState(BitArray valveUpdate)
         {
-            uint[] buffer = new uint[1];
-            valveUpdate.CopyTo(buffer, 0);
-            Ads.WriteAny(hReadValveStatePLC, buffer, [1]);
+            if (baReadValveStatePLC != null)
+            {
+                for(int bit = 0; bit < valveUpdate.Count; ++bit)
+                {
+                    baReadValveStatePLC[bit] = valveUpdate[bit];
+                }
+                DoWriteValveState(baReadValveStatePLC);
+            }
         }
 
         public static void WriteDeviceMaxValue(List<AnalogDeviceIO>? analogDeviceIOs)
