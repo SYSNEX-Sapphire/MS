@@ -206,6 +206,8 @@ nTresholdCount 		:= REAL_TO_INT(fTresholdCount); //Try One more Vacuum ]]></ST>
 GVL_IO.aOutputSolValve.21:= bV_DORVac; //V34
 GVL_IO.aOutputSolValve.22:= bV_DORFill; //V35
 
+GVL_IO.aInputState[4].10 :=bV_DORVac;
+
 GVL_IO_REACTOR_CABINET.DO_05_DORVACButtonLamp := bVacLED;
 GVL_IO_REACTOR_CABINET.DO_06_DORATMButtonLamp := bAtmLED;
 
@@ -282,7 +284,10 @@ GVL_IO.bDorState := isDOROnState;
       <LineId Id="49" Count="0" />
       <LineId Id="47" Count="0" />
       <LineId Id="23" Count="1" />
-      <LineId Id="27" Count="4" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="28" Count="3" />
       <LineId Id="1" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="46" Count="0" />

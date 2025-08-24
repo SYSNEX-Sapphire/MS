@@ -158,7 +158,12 @@ IF TimeCycle.Q = TRUE THEN
 				END_IF
 			END_IF
 			index := nReceivedBathNumber + 11;
-			GVL_IO.aMonitoring_PV[index] := rTemperature_PV[nReceivedBathNumber];
+			CASE index OF
+				1:GVL_IO.aMonitoring_PV[12] := rTemperature_PV[1];
+				2:GVL_IO.aMonitoring_PV[13] := rTemperature_PV[2];
+				3:GVL_IO.aMonitoring_PV[14] := rTemperature_PV[3];
+				4:GVL_IO.aMonitoring_PV[15] := rTemperature_PV[4];
+			END_CASE
 			
 		END_IF
 	END_IF
@@ -195,7 +200,11 @@ bCutOffAlarm[4] := NOT(GVL_IO_GAS_CABINET.DI_06_ThermalBath_4CutOffAlarm);
     <LineIds Name="P14_ThermalBath">
       <LineId Id="509" Count="9" />
       <LineId Id="547" Count="1" />
-      <LineId Id="655" Count="107" />
+      <LineId Id="655" Count="96" />
+      <LineId Id="809" Count="1" />
+      <LineId Id="813" Count="2" />
+      <LineId Id="811" Count="0" />
+      <LineId Id="753" Count="9" />
       <LineId Id="201" Count="0" />
     </LineIds>
     <LineIds Name="P14_ThermalBath._DigitalInput">

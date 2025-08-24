@@ -76,6 +76,7 @@ IF TimeOnDelay.Q THEN
 	END_FOR
 END_IF
 
+
 rTemperaturePV[1] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_1_PV_VALUE;
 rTemperaturePV[2] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_2_PV_VALUE;
 rTemperaturePV[3] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_3_PV_VALUE;
@@ -86,8 +87,7 @@ rTemperaturePV[6] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_2_PV_VALUE;
 rTemperaturePV[7] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_3_PV_VALUE;
 rTemperaturePV[8] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_4_PV_VALUE;
 
-GVL_IO.aLineHeater_rTemperaturePV := rTemperaturePV;
-]]></ST>
+GVL_IO.aLineHeater_rTemperaturePV := rTemperaturePV;]]></ST>
     </Implementation>
     <Action Name="_DigitalInput" Id="{2361a466-4910-4461-afdc-6cafae2346a8}">
       <Implementation>
@@ -137,8 +137,9 @@ END_CASE]]></ST>
     </Action>
     <LineIds Name="P13_LineHeater">
       <LineId Id="550" Count="0" />
-      <LineId Id="552" Count="25" />
-      <LineId Id="5" Count="0" />
+      <LineId Id="552" Count="13" />
+      <LineId Id="635" Count="0" />
+      <LineId Id="566" Count="11" />
     </LineIds>
     <LineIds Name="P13_LineHeater._DigitalInput">
       <LineId Id="2" Count="8" />

@@ -87,11 +87,16 @@ GVL_IO.aInterlock[1].11 := bReactorOpenEnable;
 GVL_IO.aInterlock[1].12 := bHeaterOnEnable;
 GVL_IO.aInterlock[1].13 := bPumpOnEnable;
 
+GVL_IO.aInputState[6].1 := bRecipeStartAvailable;
+GVL_IO.aInputState[6].2 := bReactorOpenEnable;
+
+
+
 //GVL_IO.aInterlock_jh[E_Interlock.WarningTrig] := bRecipeStartAvailable;
 
 //알람 지연 시간 변환
-tAlarmDelay_A := REAL_TO_TIME(GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_DelayTime_Analog]*1000); // UI Setting Analog Delay Time Value(Miliseconde)
-tAlarmDelay_D := REAL_TO_TIME(GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_DelayTime_Digital]*1000); // UI Setting Analog Delay Time Value(Miliseconde)
+tAlarmDelay_A := REAL_TO_TIME(GVL_IO.aInterlockSet[3]*1000); // UI Setting Analog Delay Time Value(Miliseconde)
+tAlarmDelay_D := REAL_TO_TIME(GVL_IO.aInterlockSet[4]*1000); // UI Setting Analog Delay Time Value(Miliseconde)
 
 //Controller Deviation Monitoring - MFC/EPC
 IF bMaintKey THEN //bMaintKey 변경
@@ -531,8 +536,8 @@ GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
 			fCurrentValue := GVL_IO.aController_PV[i],
 			fControlValue := GVL_IO.aController_CV[i],
 			fMaxValue := GVL_IO.aMaxValueController[i],
-			fAlarmTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_Alarm_Deviation],
-			fWarningTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_Warning_Deviation],
+			fAlarmTreshold := GVL_IO.aInterlockSet[1],
+			fWarningTreshold := GVL_IO.aInterlockSet[2],
 			tAlarmDelay := tAlarmDelay_A,
 			bDeviationAlarm => bDeviationAlarm, //알람 출력
 			bDeviationWarning => bDeviationWarning // 주의(Warning) 출력
@@ -574,20 +579,20 @@ GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
 				bAlarmEnable := GVL_IO.aInterlockEnable[4].4;
 				bWarningEnable := GVL_IO.aInterlockEnable[5].4;
 				fDeviceCurrentValue := GVL_IO.aMonitoring_PV[8];
-				fDeviceAlarmTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_CWTemp_SH_ALARM];
-				fDeviceWarningTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_CWTemp_SH_WARNING];
+				fDeviceAlarmTreshold := GVL_IO.aInterlockSet[7];
+				fDeviceWarningTreshold := GVL_IO.aInterlockSet[8];
 			2: //CW Temperature High Coil
 				bAlarmEnable := GVL_IO.aInterlockEnable[4].5;
 				bWarningEnable := GVL_IO.aInterlockEnable[5].5;
 				fDeviceCurrentValue := GVL_IO.aMonitoring_PV[9];
-				fDeviceAlarmTreshold :=GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_CWTemp_COIL_ALARM];
-				fDeviceWarningTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_CWTemp_COIL_WARNING];
+				fDeviceAlarmTreshold :=GVL_IO.aInterlockSet[9];
+				fDeviceWarningTreshold := GVL_IO.aInterlockSet[10];
 			3: //Susceptor Over Temperature
 				bAlarmEnable := GVL_IO.aInterlockEnable[4].6;
 				bWarningEnable := GVL_IO.aInterlockEnable[5].6;
 				fDeviceCurrentValue := GVL_IO.aController_PV[27];
-				fDeviceAlarmTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_SUSCEPTOR_OVER_TEMP];
-				fDeviceWarningTreshold := (GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_SUSCEPTOR_OVER_TEMP] - 20.0); //20도 아래에서 Warning 발생				
+				fDeviceAlarmTreshold := GVL_IO.aInterlockSet[11];
+				fDeviceWarningTreshold := (GVL_IO.aInterlockSet[11] - 20.0); //20도 아래에서 Warning 발생				
 			4: //Reactor Over Pressure Alarm
 				bAlarmEnable := GVL_IO.aInterlockEnable[4].7;
 				bWarningEnable := GVL_IO.aInterlockEnable[5].7;
@@ -644,8 +649,8 @@ GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
 			fCurrentValue := GVL_IO.aController_PV[i],
 			fControlValue := GVL_IO.aController_CV[i],
 			fMaxValue := GVL_IO.aMaxValueController[i],
-			fAlarmTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_Alarm_Deviation],
-			fWarningTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_Warning_Deviation],
+			fAlarmTreshold := GVL_IO.aInterlockSet[1],
+			fWarningTreshold := GVL_IO.aInterlockSet[2],
 			tAlarmDelay := tAlarmDelay_A,
 			bDeviationAlarm => bDeviationAlarm, //알람 출력
 			bDeviationWarning => bDeviationWarning // 주의(Warning) 출력
@@ -682,8 +687,8 @@ GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
 			bWarningEnable := wLimitWarningEnable.0,
 			fCurrentValue := GVL_IO.aMonitoring_PV[(i+3)],
 			
-			fAlarmTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_Process_Gas_Pressure_Alarm],
-			fWarningTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_Process_Gas_Pressure_Warning],
+			fAlarmTreshold := GVL_IO.aInterlockSet[5],
+			fWarningTreshold := GVL_IO.aInterlockSet[6],
 			
 			tAlarmDelay := tAlarmDelay_D,
 			bLimitAlarm => bLimitAlarm, //알람 출력
@@ -847,12 +852,12 @@ bMainPowerMonitor := GVL_IO.aDigitalInputIO[7].5; /// ??????? 이게 뭐지 ?]]>
         <ST><![CDATA[bDorOnEnable :=	NOT(AlarmTrig) AND GVL_IO.isCoverClosed AND	GVL_IO.bDorState AND GVL_IO.isPumpRunning;
 
 // DOR Off Conditions
-IF  GVL_IO.aController_PV[27] < GVL_IO.aInterlockSet[13] THEN
+IF  GVL_IO.aController_PV[27] < GVL_IO.aInterlockSet[13] THEN  // Can Open Temp
 	bOpenEnableTemp := TRUE;
 ELSE
 	bOpenEnableTemp := FALSE;
 END_IF
-IF  GVL_IO.aController_PV[28] < GVL_IO.aInterlockSet[14] THEN
+IF  GVL_IO.aController_PV[28] < GVL_IO.aInterlockSet[14] THEN  //Can Open Reactor Pressure
 	bOpenEnablePress := TRUE;
 ELSE
 	bOpenEnablePress := FALSE;
@@ -891,11 +896,19 @@ GVL_IO.bDorOnEnable := bDorOnEnable;]]></ST>
 // 	P11_E3508.bManAuto_E3508 AND //Temperature Controller Auto : True
 // 	P12_IQ_PLUS.ingPressureControl //Throttle Valve Pressure Control Mode : True 
 // 	;
-bRecipeStartAvailable := TRUE; // 테스트용 변수]]></ST>
+bRecipeStartAvailable := TRUE; // 테스트용 변수
+
+
+]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="P90_Interlock">
-      <LineId Id="1549" Count="46" />
+      <LineId Id="1549" Count="10" />
+      <LineId Id="1670" Count="0" />
+      <LineId Id="1669" Count="0" />
+      <LineId Id="1671" Count="0" />
+      <LineId Id="1673" Count="1" />
+      <LineId Id="1560" Count="35" />
       <LineId Id="1505" Count="0" />
       <LineId Id="1507" Count="1" />
       <LineId Id="1506" Count="0" />
@@ -1110,6 +1123,8 @@ bRecipeStartAvailable := TRUE; // 테스트용 변수]]></ST>
     <LineIds Name="P90_Interlock._Enable_RunRecipe">
       <LineId Id="2" Count="13" />
       <LineId Id="1" Count="0" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="16" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
