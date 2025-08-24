@@ -3,13 +3,10 @@
   <POU Name="FB_RecipeAnalogControlInputSequencer" Id="{baa4a425-4968-4360-81b7-f83562b782ba}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_RecipeAnalogControlInputSequencer
 VAR_INPUT
-	tempRecipe: REAL;
-	pressRecipe: REAL;
-	rotRecipe: REAL;
 	rampTime: UINT;
 END_VAR
 VAR_IN_OUT
-	rRecipe: ARRAY[1..26] OF REAL;
+	rRecipe: ARRAY[1..30] OF REAL;
 END_VAR
 VAR
 	i: UINT;
@@ -24,23 +21,16 @@ END_FOR
 
 GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp].input.restart := TRUE;
 GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp].input.rampTime := rampTime;
-GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp].input.targetValue := tempRecipe;
+GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp].input.targetValue := rRecipe[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp];
 GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure].input.restart := TRUE;
 GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure].input.rampTime := rampTime;
-GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure].input.targetValue := pressRecipe;
+GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure].input.targetValue := rRecipe[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure];
 GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.restart := TRUE;
 GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.rampTime := rampTime;
-GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.targetValue := rotRecipe;]]></ST>
+GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.targetValue := rRecipe[E_aAnalogInputIO_Index.E_PV_susceptorRotation];]]></ST>
     </Implementation>
     <LineIds Name="FB_RecipeAnalogControlInputSequencer">
-      <LineId Id="53" Count="4" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="58" Count="2" />
-      <LineId Id="65" Count="0" />
-      <LineId Id="61" Count="1" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="63" Count="0" />
-      <LineId Id="11" Count="0" />
+      <LineId Id="1" Count="14" />
     </LineIds>
   </POU>
 </TcPlcObject>
