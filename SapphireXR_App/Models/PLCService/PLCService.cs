@@ -146,10 +146,7 @@ namespace SapphireXR_App.Models
             hDeviceControlValuePLC = Ads.CreateVariableHandle("GVL_IO.aController_CV");
             hDeviceCurrentValuePLC = Ads.CreateVariableHandle("GVL_IO.aController_PV");
             hDeviceMaxValuePLC = Ads.CreateVariableHandle("GVL_IO.aMaxValueController");
-
-            hReadValveStatePLC1 = Ads.CreateVariableHandle("GVL_IO.aOutputSolValve[1]");
-            hReadValveStatePLC2 = Ads.CreateVariableHandle("GVL_IO.aOutputSolValve[2]");
-
+            hReadValveStatePLC = Ads.CreateVariableHandle("GVL_IO.aOutputSolValve");
             hMonitoring_PV = Ads.CreateVariableHandle("GVL_IO.aMonitoring_PV");
             hInputState = Ads.CreateVariableHandle("GVL_IO.aInputState");
             hInputState4 = Ads.CreateVariableHandle("GVL_IO.aInputState[4]");
@@ -170,7 +167,6 @@ namespace SapphireXR_App.Models
             {
                 hInterlock[arrayIndex] = Ads.CreateVariableHandle("GVL_IO.aInterlock[" + (arrayIndex + 1) + "]");
             }
-
             hRcp = Ads.CreateVariableHandle("RCP.aRecipe");
             hRcpTotalStep = Ads.CreateVariableHandle("RCP.iRcpTotalStep");
             hCmd_RcpOperation = Ads.CreateVariableHandle("RCP.cmd_RcpOperation");
@@ -188,6 +184,9 @@ namespace SapphireXR_App.Models
             {
                 hAControllerInput[analogDevice] = Ads.CreateVariableHandle("GVL_IO.aController[" + (analogDevice + 1)+ "].input");
             }
+            hTemperatureTV = Ads.CreateVariableHandle("GVL_IO.temperatureTV");
+            hPressureTV = Ads.CreateVariableHandle("GVL_IO.pressureTV");
+            hRotationTV = Ads.CreateVariableHandle("GVL_IO.rotationTV");
         }
 
         private static void IntializePubSub()
@@ -218,11 +217,7 @@ namespace SapphireXR_App.Models
                 aMonitoringCurrentValueIssuers.Add(kv.Key, ObservableManager<float>.Get("MonitoringPresentValue." + kv.Key + ".CurrentValue"));
             }
             dValveStateIssuers = new Dictionary<string, ObservableManager<bool>.Publisher>();
-            foreach ((string valveID, int valveIndex) in ValveIDtoOutputSolValveIdx1)
-            {
-                dValveStateIssuers.Add(valveID, ObservableManager<bool>.Get("Valve.OnOff." + valveID + ".CurrentPLCState"));
-            }
-            foreach ((string valveID, int valveIndex) in ValveIDtoOutputSolValveIdx2)
+            foreach ((string valveID, int valveIndex) in ValveIDtoOutputSolValveIdx)
             {
                 dValveStateIssuers.Add(valveID, ObservableManager<bool>.Get("Valve.OnOff." + valveID + ".CurrentPLCState"));
             }
@@ -243,40 +238,10 @@ namespace SapphireXR_App.Models
             dLogicalInterlockStateIssuer = ObservableManager<BitArray>.Get("LogicalInterlockState");
             dPLCConnectionPublisher = ObservableManager<PLCConnection>.Get("PLCService.Connected");
             dControlModeChangingPublisher = ObservableManager<ControlMode>.Get("ControlModeChanging");
-
             ObservableManager<bool>.Subscribe("Leak Test Mode", leakTestModeSubscriber = new LeakTestModeSubscriber());
-        }
-
-        private static (BitArray, int, uint) GetBuffer(string valveID)
-        {
-            int index = -1;
-            if (ValveIDtoOutputSolValveIdx1.TryGetValue(valveID, out index) == true)
-            {
-                if (baReadValveStatePLC1 == null)
-                {
-                    throw new ReadValveStateException("PLC Service: BaReadValveStatePLC1 accessed without initialization \r\n Call ReadValveStateFromPLC first");
-                }
-                else
-                {
-                    return (baReadValveStatePLC1, index, hReadValveStatePLC1);
-                }
-            }
-            else
-                if (ValveIDtoOutputSolValveIdx2.TryGetValue(valveID, out index) == true)
-            {
-                if (baReadValveStatePLC2 == null)
-                {
-                    throw new ReadValveStateException("PLC Service: baReadValveStatePLC1 accessed without initialization \r\n Call ReadValveStateFromPLC first");
-                }
-                else
-                {
-                    return (baReadValveStatePLC2, index, hReadValveStatePLC2);
-                }
-            }
-            else
-            {
-                throw new ReadValveStateException("PLC Service: non-exsiting valve ID entered to GetReadValveStateBuffer()");
-            }
+            temperatureTVPublisher = ObservableManager<short>.Get("TemperatureTV");
+            pressureTVPublisher = ObservableManager<short>.Get("PressureTV");
+            rotationTVPublisher = ObservableManager<short>.Get("RotationTV");
         }
 
         public static void AddPLCStateUpdateTask(Action task)

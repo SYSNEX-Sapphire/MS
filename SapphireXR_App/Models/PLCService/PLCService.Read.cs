@@ -47,7 +47,7 @@ namespace SapphireXR_App.Models
                     baHardWiringInterlockStateIssuers?.Publish(new BitArray(BitConverter.IsLittleEndian == true ? BitConverter.GetBytes(value) : BitConverter.GetBytes(value).Reverse().ToArray()));
                     dThrottleValveStatusIssuer?.Publish(aInputState[4]);
 
-                    bool[] ioList = new bool[64];
+                    bool[] ioList = new bool[80];
                     for (int inputState = 1; inputState < aInputState.Length; ++inputState)
                     {
                         new BitArray(BitConverter.IsLittleEndian == true ? BitConverter.GetBytes(aInputState[inputState]) : BitConverter.GetBytes(aInputState[inputState]).Reverse().ToArray()).CopyTo(ioList, (inputState - 1) * sizeof(short) * 8);
@@ -55,18 +55,11 @@ namespace SapphireXR_App.Models
                     dIOStateList?.Publish(new BitArray(ioList));
                 }
 
-                if (baReadValveStatePLC1 != null)
+                if (baReadValveStatePLC != null)
                 {
-                    foreach ((string valveID, int index) in ValveIDtoOutputSolValveIdx1)
+                    foreach ((string valveID, int index) in ValveIDtoOutputSolValveIdx)
                     {
-                        dValveStateIssuers?[valveID].Publish(baReadValveStatePLC1[index]);
-                    }
-                }
-                if (baReadValveStatePLC2 != null)
-                {
-                    foreach ((string valveID, int index) in ValveIDtoOutputSolValveIdx2)
-                    {
-                        dValveStateIssuers?[valveID].Publish(baReadValveStatePLC2[index]);
+                        dValveStateIssuers?[valveID].Publish(baReadValveStatePLC[index]);
                     }
                 }
                 dLineHeaterTemperatureIssuers?.Publish(Ads.ReadAny<float[]>(hTemperaturePV, [(int)LineHeaterTemperature]));
@@ -83,6 +76,10 @@ namespace SapphireXR_App.Models
 
                 int iterlock1 = Ads.ReadAny<int>(hInterlock[0]);
                 dLogicalInterlockStateIssuer?.Publish(new BitArray(BitConverter.IsLittleEndian == true ? BitConverter.GetBytes(iterlock1) : BitConverter.GetBytes(iterlock1).Reverse().ToArray()));
+
+                temperatureTVPublisher?.Publish(Ads.ReadAny<short>(hTemperatureTV));
+                pressureTVPublisher?.Publish(Ads.ReadAny<short>(hPressureTV));
+                rotationTVPublisher?.Publish(Ads.ReadAny<short>(hRotationTV));
 
                 foreach (Action task in AddOnPLCStateUpdateTask)
                 {
@@ -110,21 +107,13 @@ namespace SapphireXR_App.Models
                     }
                     exceptionStr += "aMonitoring_PVs is null in OnTick PLCService";
                 }
-                if (baReadValveStatePLC1 == null)
+                if (baReadValveStatePLC == null)
                 {
                     if (exceptionStr != string.Empty)
                     {
                         exceptionStr += "\r\n";
                     }
                     exceptionStr += "baReadValveStatePLC1 is null in OnTick PLCService";
-                }
-                if (baReadValveStatePLC2 == null)
-                {
-                    if (exceptionStr != string.Empty)
-                    {
-                        exceptionStr += "\r\n";
-                    }
-                    exceptionStr += "baReadValveStatePLC2 is null in OnTick PLCService";
                 }
                 if (exceptionStr != string.Empty)
                 {
@@ -147,11 +136,8 @@ namespace SapphireXR_App.Models
 
         private static void ReadValveStateFromPLC()
         {
-            uint aReadValveStatePLC1 = (uint)Ads.ReadAny(hReadValveStatePLC1, typeof(uint)); // Convert to Array
-            uint aReadValveStatePLC2 = (uint)Ads.ReadAny(hReadValveStatePLC2, typeof(uint)); // Convert to Array
-
-            baReadValveStatePLC1 = new BitArray([(int)aReadValveStatePLC1]);
-            baReadValveStatePLC2 = new BitArray([(int)aReadValveStatePLC2]);
+            int valveState = (int)Ads.ReadAny(hReadValveStatePLC, typeof(int));
+            baReadValveStatePLC = new BitArray([(int)Ads.ReadAny(hReadValveStatePLC, typeof(int))]);
         }
 
         private static void ReadInitialStateValueFromPLC()
@@ -165,7 +151,7 @@ namespace SapphireXR_App.Models
             aDeviceCurrentValues = Ads.ReadAny<float[]>(hDeviceCurrentValuePLC, [NumControllers]);
             aDeviceControlValues = Ads.ReadAny<float[]>(hDeviceControlValuePLC, [NumControllers]);
             aMonitoring_PVs = Ads.ReadAny<float[]>(hMonitoring_PV, [18]);
-            aInputState = Ads.ReadAny<short[]>(hInputState, [5]);
+            aInputState = Ads.ReadAny<short[]>(hInputState, [6]);
             ReadValveStateFromPLC();
         }
 

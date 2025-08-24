@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SapphireXR_App.Common;
-using SapphireXR_App.Enums;
 using SapphireXR_App.Models;
 using System.Collections;
 using System.Windows;

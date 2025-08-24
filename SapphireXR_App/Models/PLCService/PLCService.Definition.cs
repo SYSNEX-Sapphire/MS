@@ -47,8 +47,7 @@ namespace SapphireXR_App.Models
                     {
                         try
                         {
-                            DoWriteValveState(valveID, false);
-                            DoWriteValveState(coupled, false);
+                          
                         }
                         catch (Exception exception)
                         {
@@ -98,15 +97,18 @@ namespace SapphireXR_App.Models
         const int NumShortBits = sizeof(short) * 8;
         internal enum IOListIndex
         {
-            PowerResetSwitch = 2, Cover_UpperLimit = 3, Cover_LowerLimit = 4, SMPS_24V480 = 5, SMPS_24V72 = 6, SMPS_15VPlus = 7, SMPS_15VMinus = 8, CP_InudctionHeater = 9,
-            CP_ThermalBath = 10, CP_VaccumPump = 11, CP_LineHeater = 12, CP_RotationMotor = 13, CP_CoverMotor = 14, CP_ThrottleValve = 15, CP_Lamp = NumShortBits * 1,
-            CP_SM515CP = NumShortBits * 1 + 1, LineHeader1 = NumShortBits * 1 + 2, LineHeader2 = NumShortBits * 1 + 3, LineHeader3 = NumShortBits * 1 + 4, LineHeader4 = NumShortBits * 1 + 5,
-            LineHeader5 = NumShortBits * 1 + 6, LineHeader6 = NumShortBits * 1 + 7, LineHeader7 = NumShortBits * 1 + 8, LineHeader8 = NumShortBits * 1 + 9,
-            Bath_DeviationAlaram1 = NumShortBits * 1 + 10, Bath_DeviationAlaram2 = NumShortBits * 1 + 11, Bath_DeviationAlaram3 = NumShortBits * 1 + 12,
-            Bath_DeviationAlaram4 = NumShortBits * 1 + 13, Bath_DeviationAlaram5 = NumShortBits * 1 + 14, Bath_DeviationAlaram6 = NumShortBits * 1 + 15,
+            PowerResetSwitch = 2, Cover_UpperLimit = 3, Cover_LowerLimit = 4, SMPS_24V480 = 5, SMPS_24V72 = 6, SMPS_15VPlus = 7, SMPS_15VMinus = 8, CB_GraphiteHeater = 9,
+            CB_ThermalBath = 10, CB_VaccumPump = 11, CB_LineHeater = 12, CB_RotationMotor = 13, CB_CoverLiftMotor = 14, CB_ThrottleValve = 15, CB_Lamp = NumShortBits * 1,
+            CB_SM515CP = NumShortBits * 1 + 1, LineHeader1 = NumShortBits * 1 + 2, LineHeader2 = NumShortBits * 1 + 3, LineHeader3 = NumShortBits * 1 + 4, LineHeader4 = NumShortBits * 1 + 5,
+            LineHeader5 = NumShortBits * 1 + 6, LineHeader6 = NumShortBits * 1 + 7, LineHeader7 = NumShortBits * 1 + 8, LineHeader8 = NumShortBits * 1 + 9, ThernamBath1 = NumShortBits * 1 + 10, 
+            ThernamBath2 = NumShortBits * 1 + 11, ThernamBath3 = NumShortBits * 1 + 12, ThernamBath4 = NumShortBits * 1 + 13, GasDetectorCP = NumShortBits * 1 + 14,
             SingalTower_RED = NumShortBits * 2, SingalTower_YELLOW = NumShortBits * 2 + 1, SingalTower_GREEN = NumShortBits * 2 + 2, SingalTower_BLUE = NumShortBits * 2 + 3,
-            SingalTower_WHITE = NumShortBits * 2 + 4, SingalTower_BUZZER = NumShortBits * 2 + 5, DOR_Vaccum_State = NumShortBits * 2 + 6, Temp_Controller_Alarm = NumShortBits * 2 + 7
+            SingalTower_WHITE = NumShortBits * 2 + 4, SingalTower_BUZZER = NumShortBits * 2 + 5, GasDetectorH2 = NumShortBits * 2 + 6, GasDetectorH2S = NumShortBits * 2 + 7,
+            GasDetectorH2Se = NumShortBits * 2 + 8, FireSensor = NumShortBits * 2 + 9, DOR_Vaccum_State = NumShortBits * 2 + 10, Temp_Controller_Alarm = NumShortBits * 2 + 11,
+            ExternalScrubberFault = NumShortBits * 4 + 5, ExternalH2GasCabinetFault = NumShortBits * 4 + 6, 
+            ExternalH2SGasCabinetFault = NumShortBits * 4 + 7, ExternalH2SeGasCabinetFault = NumShortBits * 4 + 8, ExternalUserInputAlarm = NumShortBits * 4 + 9
         };
+
 
         internal enum DigitalOutput2Index
         {
@@ -141,23 +143,12 @@ namespace SapphireXR_App.Models
 
         public enum TriggerType { Alarm = 0, Warning };
 
-        public static readonly Dictionary<string, int> ValveIDtoOutputSolValveIdx1 = new Dictionary<string, int>
+        public static readonly Dictionary<string, int> ValveIDtoOutputSolValveIdx = new Dictionary<string, int>
         {
-            { "V01", 0 }, { "V02", 1 }, { "V03", 2 }, { "V04", 3 }, { "V05", 4 },
-            { "V06", 5 }, { "V07", 6 }, { "V08", 7 }, { "V09", 8 }, { "V10", 9 },
-            { "V11", 10 }, { "V12", 11 }, { "V13", 12 }, { "V14", 13 }, { "V15", 14 },
-            { "V16", 15 }, { "V37", 16 }, { "V38", 17 }, { "V39", 18 }, { "V40", 19 },
-            { "V41", 20 }, { "V42", 21 }, { "V43", 22 }, { "V44", 23 },  { "V45", 24 },
-            { "V46", 25 }
-        };
-        public static readonly Dictionary<string, int> ValveIDtoOutputSolValveIdx2 = new Dictionary<string, int>
-        {
-            { "V17", 0 }, { "V18", 1 }, { "V19", 2 }, { "V20", 3 }, { "V21", 4 },
-            { "V22", 5 }, { "V23", 6 }, { "V24", 7 }, { "V25", 8 }, { "V26", 9 },
-            { "V27", 10 }, { "V28", 11 }, { "V29", 12 }, { "V30", 13 }, { "V31", 14 },
-            { "V32", 15 }, { "V33", 16 }, { "V34", 17 }, { "V35", 18 }, { "V36", 19 },
-            { "V47", 20 }, { "V48", 21 }, { "V49", 22 }, { "V50", 23 },  { "V51", 24 },
-            { "V52", 25 }, { "V53", 26 }
+            { "V01", 0 }, { "V02", 1 }, { "V03", 2 }, { "V04", 3 }, { "V05", 4 }, { "V06", 5 }, { "V07", 6 }, { "V08", 7 },
+            { "V09", 8 }, { "V10", 9 },  { "V11", 10 }, { "V12", 11 }, { "V13", 12 }, { "V14", 13 }, { "V15", 14 }, { "V16", 15 },
+            { "V17", 16 }, { "V18", 17 },  { "V19", 18 }, { "V20", 19 }, { "V21", 20 }, { "V22", 21 }, { "V23", 22 }, { "V24", 23 },
+            { "V25", 24 }, { "V26", 25 },  { "V27", 26 }, { "V28", 27 }, { "V29", 28 }, { "V30", 29 }, { "V31", 30 }, { "V32", 31 }
         };
 
         public static readonly Dictionary<string, int> dIndexController = new Dictionary<string, int>
@@ -187,7 +178,7 @@ namespace SapphireXR_App.Models
         private static readonly Dictionary<string, int> dDigitalDeviceAlarmWarningBit = new Dictionary<string, int>
         {
             { "A01", 0 }, { "A02", 1 }, { "A03", 2 },  { "A04", 3 }, { "A05", 4 }, { "A06", 5 },  { "A07", 6 }, { "A08", 7 }, { "A09", 8 }, { "A10", 9 }, { "A11", 10 }, { "A12", 11 },
-            { "A13", 12 }, { "A14", 13 }, { "A15", 14 }
+            { "A13", 12 }, { "A14", 13 }, { "A15", 14 }, { "A16", 15  }
         };
 
         public const uint LineHeaterTemperature = 8;
@@ -198,8 +189,7 @@ namespace SapphireXR_App.Models
         public const uint NumAnalogDevice = 29;
 
         // Variable handles to be connected plc variables
-        private static BitArray? baReadValveStatePLC1 = null;
-        private static BitArray? baReadValveStatePLC2 = null;
+        private static BitArray? baReadValveStatePLC = null;
         private static float[]? aDeviceCurrentValues = null;
         private static float[]? aDeviceControlValues = null;
         private static float[]? aMonitoring_PVs = null;
@@ -232,6 +222,9 @@ namespace SapphireXR_App.Models
         private static ObservableManager<BitArray>.Publisher? dLogicalInterlockStateIssuer;
         private static ObservableManager<PLCConnection>.Publisher? dPLCConnectionPublisher;
         private static ObservableManager<ControlMode>.Publisher? dControlModeChangingPublisher;
+        private static ObservableManager<short>.Publisher? temperatureTVPublisher;
+        private static ObservableManager<short>.Publisher? pressureTVPublisher; 
+        private static ObservableManager<short>.Publisher? rotationTVPublisher;
 
         private static LeakTestModeSubscriber? leakTestModeSubscriber = null;
 
@@ -265,8 +258,7 @@ namespace SapphireXR_App.Models
         private static DispatcherTimer? connectionTryTimer = null;
 
         // Read from PLC State
-        private static uint hReadValveStatePLC1;
-        private static uint hReadValveStatePLC2;
+        private static uint hReadValveStatePLC;
         private static uint hDeviceMaxValuePLC;
         private static uint hDeviceControlValuePLC;
         private static uint hDeviceCurrentValuePLC;
@@ -291,6 +283,9 @@ namespace SapphireXR_App.Models
         private static uint hOutputSetType;
         private static uint hOutputMode;
         private static uint hRecipeRunET;
+        private static uint hTemperatureTV;
+        private static uint hPressureTV;
+        private static uint hRotationTV;
         private static uint[] hInterlockEnable = new uint[NumAlarmWarningArraySize];
         private static uint[] hInterlockset = new uint[NumInterlockSet];
         private static uint[] hInterlock = new uint[NumInterlock];

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
   <GVL Name="GVL_CONSTANT" Id="{98785915-f5a2-4621-8795-7e3f35033e2f}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
@@ -9,8 +9,6 @@ VAR_GLOBAL CONSTANT
 	EL4004MaxValue 	: REAL := 32767; //4~20mA
 	
 	NumAnalogController :UINT:=29;
-	nNumController	: INT := 18 ; //MFC 12EA, EPC 4ea
-	nNumMFC			: INT := 12;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

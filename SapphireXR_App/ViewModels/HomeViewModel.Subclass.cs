@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SapphireXR_App.Common;
-using SapphireXR_App.Enums;
 using SapphireXR_App.Models;
 using System.Collections;
 
@@ -114,6 +113,32 @@ namespace SapphireXR_App.ViewModels
                 homeViewModel.loadBatchOnRecipeEnd();
             }
             private HomeViewModel homeViewModel;
+        }
+
+        private class ReactorTargetValueSubscriber : IObserver<short>
+        {
+            internal ReactorTargetValueSubscriber(Action<string> onNewValueAct)
+            {
+                onNewValue = onNewValueAct;
+            }
+            void IObserver<short>.OnCompleted()
+            {
+                throw new NotImplementedException();
+            }
+            void IObserver<short>.OnError(Exception error)
+            {
+                throw new NotImplementedException();
+            }
+            void IObserver<short>.OnNext(short value)
+            {
+                if (prevTemperatureTV != value)
+                {
+                    onNewValue(0 <= value ? value.ToString() : "");
+                    prevTemperatureTV = value;
+                }
+            }
+            private Action<string> onNewValue;
+            private float? prevTemperatureTV = null;
         }
     }
 }

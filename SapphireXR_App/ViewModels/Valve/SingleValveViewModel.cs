@@ -32,7 +32,7 @@ namespace SapphireXR_App.ViewModels
                                     case Controls.SingleValve.Interlock.Right:
                                         OnColor = Brushes.OrangeRed; 
                                         OffColor = Brushes.White;
-                                        PLCService.AddCoupledValves((string)argArray[3], ValveID!);
+                                        
                                         popUpMessage = CreateDefaultPopupMessage(ValveID!);
                                         break;
 

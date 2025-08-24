@@ -6,65 +6,24 @@ namespace SapphireXR_App.Models
 {
     public static partial class PLCService
     {
-        private static void DoWriteValveState(string valveID, bool onOff)
-        {
-            (BitArray buffer, int index, uint variableHandle) = GetBuffer(valveID);
-            buffer[index] = onOff;
-
-            uint[] sentBuffer = new uint[1];
-            buffer.CopyTo(sentBuffer, 0);
-            Ads.WriteAny(variableHandle, sentBuffer);
-        }
-
-        public static void AddCoupledValves(string leftValveID, string rightValveID)
-        {
-            LeftCoupled[rightValveID] = leftValveID;
-            RightCoupled[leftValveID] = rightValveID;
-        }
-
         public static void WriteValveState(string valveID, bool onOff)
         {
-            if (LeakTestMode == false)
+            int index;
+            if (baReadValveStatePLC != null && ValveIDtoOutputSolValveIdx.TryGetValue(valveID, out index) == true)
             {
-                string? coupled = null;
-                if (RightCoupled.TryGetValue(valveID, out coupled) == true)
-                {
-                    DoWriteValveState(coupled, onOff);
-                }
+                baReadValveStatePLC[index] = onOff;
+
+                uint[] sentBuffer = new uint[1];
+                baReadValveStatePLC.CopyTo(sentBuffer, 0);
+                Ads.WriteAny(hReadValveStatePLC, sentBuffer, [1]);
             }
-            else
-            {
-                string? coupled = null;
-                if (LeftCoupled.TryGetValue(valveID, out coupled) == true)
-                {
-                    if (onOff == true)
-                    {
-                        DoWriteValveState(coupled, onOff);
-                    }
-                }
-                else
-                    if (RightCoupled.TryGetValue(valveID, out coupled) == true)
-                {
-                    if (onOff == false)
-                    {
-                        DoWriteValveState(coupled, onOff);
-                    }
-                }
-            }
-            DoWriteValveState(valveID, onOff);
         }
 
-        public static void WriteValveState(BitArray firstValveParts, BitArray secondValveParts)
+        public static void WriteValveState(BitArray valveUpdate)
         {
-            var doWrite = (uint variableHandle, BitArray valveParts) =>
-            {
-                uint[] buffer = new uint[1];
-                valveParts.CopyTo(buffer, 0);
-                Ads.WriteAny(variableHandle, buffer);
-            };
-
-            doWrite(hReadValveStatePLC1, firstValveParts);
-            doWrite(hReadValveStatePLC2, secondValveParts);
+            uint[] buffer = new uint[1];
+            valveUpdate.CopyTo(buffer, 0);
+            Ads.WriteAny(hReadValveStatePLC, buffer, [1]);
         }
 
         public static void WriteDeviceMaxValue(List<AnalogDeviceIO>? analogDeviceIOs)
@@ -97,10 +56,14 @@ namespace SapphireXR_App.Models
                 }
                 Ads.WriteAny(hDeviceMaxValuePLC, maxValue, [dIndexController.Count]);
 
-                float KL3464MaxValueH = Ads.ReadAny<float>(Ads.CreateVariableHandle("GVL_IO.KL3464MaxValueH"));
-                for(uint mapping = 0; mapping < aTargetValueMappingFactor.Length; ++mapping)
+                float KL3464MaxValueH = Ads.ReadAny<float>(Ads.CreateVariableHandle("GVL_CONSTANT.EL3064MaxValueH"));
+                for(uint mapping = 0; mapping < (aTargetValueMappingFactor.Length - 3); ++mapping)
                 {
                     aTargetValueMappingFactor[mapping] = KL3464MaxValueH / maxValue[mapping];
+                }
+                for(uint mapping = (uint)(aTargetValueMappingFactor.Length - 3); mapping < aTargetValueMappingFactor.Length; ++mapping)
+                {
+                    aTargetValueMappingFactor[mapping] = 1.0f;
                 }
 
                 // List Analog Device Input / Output
