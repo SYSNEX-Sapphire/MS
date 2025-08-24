@@ -232,17 +232,17 @@ namespace SapphireXR_App.ViewModels
             {
                 MessageBox.Show(BatchFIlePath + "로 Batch파일을 저장하면서 문제가 발생하였습니다. 문제는 다음과 같습니다: " + ex.Message);
             }
-
         }
 
         public ICommand AddCommand => new RelayCommand(() =>
         {
             Batch newBatch = new Batch() { Name = "UserState" };
-            foreach((string flowController, string fullName) in Util.RecipeFlowControlFieldToControllerID)
+            foreach(string flowController in PLCService.RecipeFlowControllers)
             {
-                newBatch.AnalogIOUserStates.Add(new AnalogIOUserState() { ID = flowController, MaxValue = (int)SettingViewModel.ReadMaxValue(fullName)!, FullIDName = Util.RecipeFlowControlFieldToControllerID[flowController] });
+                string fullName = Util.RecipeFlowControlFieldToControllerID[flowController];
+                newBatch.AnalogIOUserStates.Add(new AnalogIOUserState() { ID = flowController, MaxValue = (int)SettingViewModel.ReadMaxValue(fullName)!, FullIDName = fullName });
             }
-            foreach((string valve, int idx) in PLCService.ValveIDtoOutputSolValveIdx)
+            foreach(string valve in PLCService.RecipeValves)
             {
                 newBatch.DigitalIOUserStates.Add(new DigitalIOUserState() { ID = valve });
             }

@@ -215,12 +215,11 @@ namespace SapphireXR_App.Common
             {
                 PLCService.WriteFlowControllerTargetValue(batch.AnalogIOUserStates.Select((AnalogIOUserState analogIOUserState) => (analogIOUserState.ID, analogIOUserState.Value)).ToArray(),
                     (short)batch.RampingTime);
-                int totalValves = sizeof(int) * 8;
-                BitArray valveStates = new BitArray(totalValves);
+                BitArray valveStates = new BitArray(PLCService.RecipeValves.Count);
                 foreach (DigitalIOUserState digitalIOUserState in batch.DigitalIOUserStates)
                 {
                     int index;
-                    if (PLCService.ValveIDtoOutputSolValveIdx.TryGetValue(digitalIOUserState.ID, out index) == true)
+                    if (PLCService.ValveIDtoOutputSolValveIdx.TryGetValue(digitalIOUserState.ID, out index) == true && index < valveStates.Count)
                     {
                         valveStates[index] = digitalIOUserState.On;
                     }
