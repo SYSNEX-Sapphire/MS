@@ -16,11 +16,18 @@ VAR
 	(* Input *)
 	bUpSwitch	: BOOL;
 	bDownSwitch 	: BOOL;
+	bClamp_Lock_switch: BOOL;
+	bClamp_Release_switch: BOOL;
 	(* Output *)
 	bUpLED 		: BOOL;
 	bDownLED 	: BOOL;
 	bOnUpRelay 	: BOOL;
-	bOnDownRelay : BOOL;		
+	bOnDownRelay : BOOL;
+	bOnClamp_Lock_Relay:BOOL;
+	bOnClamp_Release_Relay:BOOL;		
+	
+	bClampLock: BOOL;
+	bClampRelease: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -28,10 +35,34 @@ END_VAR
 
 TimerDownDelayOff(IN:=bLowerLimit, PT:=T#500MS);
 
+//Cover Open 조건
+//공정 중이지 않을것
+//Dor Pressure down
+//Clamp Releaae
+//Susceptor down
+//CDG 700 torr 이상
+//모든 벨브 ff
+
 // Cover Operation Condition
 IF P90_Interlock.bReactorOpenEnable THEN
-	bOnUpRelay := (bDownSwitch = FALSE AND bUpSwitch = TRUE AND bUpperLimit = FALSE);
-	bOnDownRelay := (bDownSwitch = TRUE AND bUpSwitch = FALSE AND (bLowerLimit = FALSE OR TimerDownDelayOff.Q = FALSE ));
+	(*Cover*)
+	IF bClampRelease THEN
+		bOnUpRelay := (bDownSwitch = FALSE AND bUpSwitch = TRUE AND bUpperLimit = FALSE );
+		bOnDownRelay := (bDownSwitch = TRUE AND bUpSwitch = FALSE AND (bLowerLimit = FALSE OR TimerDownDelayOff.Q = FALSE ));
+	ELSE
+		bOnUpRelay:=FALSE;
+		bOnDownRelay:=FALSE;
+	END_IF
+	(*clamp*)
+	bOnClamp_Lock_Relay:=(bClamp_Lock_switch = TRUE AND bClamp_Release_switch = FALSE);
+	bOnClamp_Release_Relay:=(bClamp_Lock_switch = FALSE AND bClamp_Release_switch = TRUE);
+ELSE
+	(*Cover*)
+	bOnUpRelay:=FALSE;
+	bOnDownRelay:=FALSE;
+	(*clamp*)
+	bOnClamp_Lock_Relay:=FALSE;
+	bOnClamp_Release_Relay:=FALSE;
 END_IF
 
 //LED Blinking
@@ -61,6 +92,14 @@ bDownSwitch 	:=GVL_IO_REACTOR_CABINET.DI_01_ReactorDoorDownButton;
 bUpperLimit 	:=GVL_IO_REACTOR_CABINET.DI_02_ReactorDoorUpLimitSensor;
 bLowerLimit 	:=GVL_IO_REACTOR_CABINET.DI_03_ReactorDoorDownLimitSensor;
 bCoverCP 		:= GVL_IO_GAS_CABINET.DI_02_CoverLiftMotorCP;
+
+bClampLock := GVL_IO_REACTOR_CABINET.DI_03_CylinderAutoSwitch_Closed;
+bClampRelease :=GVL_IO_REACTOR_CABINET.DI_03_CylinderAutoSwitch_Opened;
+
+bClamp_Lock_switch:=GVL_IO_REACTOR_CABINET.DI_01_ClampLock;
+bClamp_Release_switch:=GVL_IO_REACTOR_CABINET.DI_01_ClampRelease;
+
+
 ]]></ST>
       </Implementation>
     </Action>
@@ -73,49 +112,66 @@ bCoverCP 		:= GVL_IO_GAS_CABINET.DI_02_CoverLiftMotorCP;
 //Status Output
 GVL_IO.isCoverClosed := bLowerLimit;
 
-(* Write to Device Value *)
-// Cover Operation Switch Lamp
-//GVL_IO.aDigitalOutputIO[4].2 := bUpLED;
-//GVL_IO.aDigitalOutputIO[4].3 := bDownLED;
-//GVL_IO.aDigitalOutputIO[1].6 := bOnUpRelay;
-//GVL_IO.aDigitalOutputIO[1].7 := bOnDownRelay;
-
-
-//GVL_IO.aDigitalOutputIO[4].2 := bUpLED;
-//GVL_IO.aDigitalOutputIO[4].3 := bDownLED;
-//GVL_IO.aDigitalOutputIO[1].6 := bOnUpRelay;
-//GVL_IO.aDigitalOutputIO[1].7 := bOnDownRelay;
-
 GVL_IO_REACTOR_CABINET.DO_06_ReactorCoverUpButtonLamp := bUpLED;
 GVL_IO_REACTOR_CABINET.DO_06_ReactorCoverDownButtonLamp := bDownLED;
+
 GVL_IO_REACTOR_CABINET.DO_04_ReactorCoverUpRelay :=bOnUpRelay;
 GVL_IO_REACTOR_CABINET.DO_04_ReactorCoverDownRelay :=bOnDownRelay;
 
+GVL_IO_REACTOR_CABINET.DO_06_ClampLockButtonLamp := GVL_IO_REACTOR_CABINET.DI_03_CylinderAutoSwitch_Closed;
+GVL_IO_REACTOR_CABINET.DO_06_ClampReleaseButtonLamp := GVL_IO_REACTOR_CABINET.DI_03_CylinderAutoSwitch_Opened;
 
-]]></ST>
+GVL_IO_REACTOR_CABINET.DO_05_ClampLock := bOnClamp_Lock_Relay;
+GVL_IO_REACTOR_CABINET.DO_05_ClampRelease := bOnClamp_Release_Relay;]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="P16_CoverOperation">
       <LineId Id="38" Count="0" />
       <LineId Id="85" Count="0" />
-      <LineId Id="39" Count="16" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="133" Count="4" />
+      <LineId Id="139" Count="2" />
+      <LineId Id="40" Count="2" />
+      <LineId Id="147" Count="1" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="149" Count="1" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="113" Count="1" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="45" Count="10" />
       <LineId Id="86" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="P16_CoverOperation._DigitalInput">
       <LineId Id="70" Count="6" />
       <LineId Id="79" Count="5" />
+      <LineId Id="91" Count="1" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="87" Count="0" />
       <LineId Id="55" Count="0" />
     </LineIds>
     <LineIds Name="P16_CoverOperation._DigitalOutput">
       <LineId Id="6" Count="1" />
-      <LineId Id="21" Count="9" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="8" Count="1" />
-      <LineId Id="11" Count="8" />
-      <LineId Id="1" Count="0" />
+      <LineId Id="21" Count="4" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="39" Count="2" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="37" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

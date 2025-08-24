@@ -7,7 +7,6 @@ VAR_GLOBAL
 	(*Input*)
 	aInputPVBytes 			AT %I*: ARRAY[1..2]OF USINT; //Loop1 PV
 	aInputSVBytes 			AT %I*: ARRAY[1..2]OF USINT; //Loop1 Working PV
-	aInputTVBytes 			AT %I*: ARRAY[1..2]OF USINT; //Loop1 Main.TargetSP
 	aInputActiveOut 		AT %I*: ARRAY[1..2]OF USINT; //Loop1 Main.ActiveOut
 	aInputAlarmStatus 		AT %I*: ARRAY[1..2]OF USINT; //Alarm status
 	aInputManAutoBytes 		AT %I*: ARRAY[1..2]OF USINT; // Loop1 Main.AutoMan
@@ -30,6 +29,26 @@ VAR_GLOBAL
 	aOutputAutoTune_Enable 		AT %Q*: ARRAY[1..2]OF USINT; //Auto Tune
 	
 END_VAR
-]]></Declaration>
+
+
+//EUROTHERM input
+//1 PV1  
+//2 PV2
+//3 SV1
+//4 SV2   / 10
+//5 Active Out /10
+//6 Active Out /10
+//7 alarm
+//8 alarm
+//9  manual auto
+//10 manual auto
+//11 PID STATUE
+//12 PID STATUE
+//13 PID p / 10
+//14 PID p / 10 
+//15 PID I 360
+//16 PID I 360
+//17 PID D 60
+//18 PID D 60]]></Declaration>
   </GVL>
 </TcPlcObject>

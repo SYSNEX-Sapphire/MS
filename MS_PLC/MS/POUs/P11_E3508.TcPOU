@@ -53,7 +53,7 @@ bHeaterOn := GVL_COMMAND_FROM_UI.CMD_HEATER_MAIN_MC_ON;
 
 //jhkang 에전에는 인덕션 콘트롤러가 있었고 현재는 ssr다이렉트여서 io가 없어짐
 //bHeaterReset := GVL_IO.aOutputCmd[1].5;
-GVL_DEVICE_NET_E3508.nOutputManAutoBytes[1].1 := GVL_COMMAND_FROM_UI.CMD_E3508_MAN_AUTO; //Temp Controller Mode Command
+GVL_DEVICE_NET_E3508.nOutputManAutoBytes[1].0 := GVL_COMMAND_FROM_UI.CMD_E3508_MAN_AUTO; //Temp Controller Mode Command
 
 (* Read from Power Distribution Pannel *)
 bInductionHeaterCB		:= GVL_IO_GAS_CABINET.DI_02_GraphiteHeaterELCB;
@@ -66,7 +66,7 @@ bInductionHeaterCB		:= GVL_IO_GAS_CABINET.DI_02_GraphiteHeaterELCB;
 wE3508_PV				:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputPVBytes[1], GVL_DEVICE_NET_E3508.aInputPVBytes[2]);
 wE3508_SV				:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputSVBytes[1], GVL_DEVICE_NET_E3508.aInputSVBytes[2]);
 //jhkang Power Rate 는 Eurotherm input 에 없다
-//wE3508_PowerRate		:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputCVBytes[1], GVL_DEVICE_NET_E3508.aInputCVBytes[2]); //divided to 10
+wE3508_PowerRate		:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputActiveOut[1], GVL_DEVICE_NET_E3508.aInputActiveOut[2]); //divided to 10
 
 wE3508_P 				:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputProportional[1], GVL_DEVICE_NET_E3508.aInputProportional[2]);
 wE3508_I 				:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputIntegral[1], GVL_DEVICE_NET_E3508.aInputIntegral[2]);
@@ -91,7 +91,7 @@ GVL_IO.wE3508_PV		:= wE3508_PV;
 // bOutputManAuto := GVL_IO.aOutputCmd[1].11; //Temp Controller Mode Command
 // nOutputManAutoBytes.0 	:= GVL_IO.aOutputCmd[1].11; //Command
 
-IF GVL_DEVICE_NET_E3508.aInputManAutoBytes[1].7 THEN // Read form E3508 Mode, 0:Man 1:Auto
+IF GVL_DEVICE_NET_E3508.aInputManAutoBytes[1].0 THEN // Read form E3508 Mode, 0:Man 1:Auto
 	wOutputPowerSVBytes 	:= WORD_TO_USINT_Bit(wControlValue*10); //multiple to 10, Power Reate Set Value
 	GVL_DEVICE_NET_E3508.aOutputPowerBytes[1] 	:= wOutputPowerSVBytes.Lower;
 	GVL_DEVICE_NET_E3508.aOutputPowerBytes[2] 	:= wOutputPowerSVBytes.Upper;

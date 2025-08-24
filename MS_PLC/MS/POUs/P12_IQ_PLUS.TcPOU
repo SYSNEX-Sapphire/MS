@@ -30,21 +30,10 @@ VAR
 	bPumpOn				: BOOL;
 	bPumpReset			: BOOL;	//Input from IQ-PLUS Throttle Valve
 	
-//	nInputStatus AT %I* : USINT; //Input Status Bytes
-//	aInputPressurePV_CDG1 AT %I* : ARRAY[1..2]OF USINT; //CDG1 Pressure
-//	aInputPressurePV_CDG2 AT %I* : ARRAY[1..2]OF USINT; //CDG2 Pressure
-//	aInputPressureSP AT %I* : ARRAY[1..2]OF USINT; //Set Point Pressure
-//	aInputValvePosionPV AT %I* : ARRAY[1..2]OF USINT; //Current Valve Position
-	
 	wTypedControlValue 	: WORD;
 	wOutputSVBytes : outWord; //Word to Byte variable
 	nSetType 			: USINT; //1:Pressure Conrol, 2:Position Control
 	
-	//Output to IQ-PLUS Throttle Valve
-//	nOutputMode AT %Q* : USINT;
-//	aOutputSVBytes AT %Q* : ARRAY[1..2]OF USINT; //Set Pressure
-//	nOutputSetType AT %Q* : USINT; //1:Pressure Control, 2:Valve Position Control
-
 	wByteCDG1_PV 			: WORD; //CDG1 Current Pressure, Not Used
 	wByteCDG2_PV 			: WORD; //CDG2 Current Pressure
 	wByteValvePosition_PV : WORD; //Current Valve Position (0~100%)
@@ -81,6 +70,7 @@ _DigitalOutput();]]></ST>
 
 GVL_IO.nIQPLUS_SetType 	:= GVL_DEVICE_NET_IQ_PLUS.nOutputSetType;
 GVL_IO.nIQPLUS_Mode 	:= GVL_DEVICE_NET_IQ_PLUS.nOutputMode;
+GVL_DEVICE_NET_IQ_PLUS.nOutputMode := GVL_COMMAND_FROM_UI.CMD_THROTTLE_OUTPUT_MODE;
 
 GVL_IO.aMonitoring_PV[E_Morning_Index.E_Morning_TV_Position] := wByteValvePosition_PV/SetPointFactor;
 
@@ -97,11 +87,11 @@ GVL_IO.wIqPlus_CDG1_PV 	:= REAL_TO_WORD(wByteCDG1_PV/PressureFactor);
 GVL_IO.wIqPlus_CDG2_PV 	:= REAL_TO_WORD(wByteCDG2_PV/PressureFactor);
 
 //To IQ Plus
+//nSetType //1:Pressure Conrol, 2:Position Control
 
-
-IF GVL_DEVICE_NET_IQ_PLUS.nOutputMode = 0 AND nSetType = 1 THEN
+IF GVL_DEVICE_NET_IQ_PLUS.nOutputMode = 0 AND nSetType = 1 THEN(*Pressure Mode*)
 	wTypedControlValue := REAL_TO_WORD(wControlValue * SetPointFactor * 0.1); //Pressure Control
-ELSIF GVL_DEVICE_NET_IQ_PLUS.nOutputMode = 0 AND nSetType = 2 THEN
+ELSIF GVL_DEVICE_NET_IQ_PLUS.nOutputMode = 0 AND nSetType = 2 THEN (*Position Mode*)
 	wTypedControlValue := REAL_TO_WORD(wControlValue * SetPointFactor); // Position Control
 END_IF
 
@@ -178,11 +168,15 @@ GVL_IO_REACTOR_CABINET.DO_05_VacuumPumpReset := bPumpReset;]]></ST>
     <LineIds Name="P12_IQ_PLUS._CalData">
       <LineId Id="57" Count="8" />
       <LineId Id="96" Count="0" />
+      <LineId Id="99" Count="0" />
       <LineId Id="66" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="2" Count="0" />
       <LineId Id="26" Count="0" />
-      <LineId Id="5" Count="20" />
+      <LineId Id="5" Count="10" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="18" Count="7" />
       <LineId Id="1" Count="0" />
       <LineId Id="69" Count="26" />
       <LineId Id="67" Count="0" />

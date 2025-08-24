@@ -19,9 +19,9 @@ VAR
 END_VAR
 
 VAR CONSTANT
-	KL4404MaxValueP		: REAL := 13106; //0~4V, 0~2500RPM, BLHM230K-GFS
-	//Motor Max Rotation RPM 2,500rpm, Gear Ratio 15, Belt Ratio 1.5
-	ConversionFactor 	: REAL :=117.9585; //KL4404MaxValueP*15*1.5/2500
+	KL4404MaxValueP		: REAL := 16383; //0~5V, 0~3000
+	//Motor Max Rotation RPM 3000rpm, Gear Ratio 20, Belt Ratio 4.5
+	ConversionFactor 	: REAL :=491.49;// 491.49 ; //13106 * 20 * 4.5 / 3000
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -29,7 +29,7 @@ END_VAR
 
 _DigitalInput();
 
-nConvertedRotation_PV := REAL_TO_INT(wRotaion_PV/(5*ConversionFactor));
+nConvertedRotation_PV := REAL_TO_INT(wRotaion_PV/(10*ConversionFactor));
 
 // Interface with other PRGs
 GVL_IO.nRotation_Converted_PV := nConvertedRotation_PV;
@@ -38,9 +38,9 @@ rControlValue := GVL_IO.rRotation_ControlValue;
 //Write to Motor Driver
 rConvertedCV := rControlValue * ConversionFactor; // Convert from RPM to control value
 
-IF (GVL_IO.aController[29].input.targetValue > 0) OR (wRotaion_PV > 0) THEN // Motor Driver RUN
+IF (GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.targetValue > 0) OR (rConvertedCV > 0) THEN // Motor Driver RUN
 	bBrake_Run := TRUE;
-ELSIF (GVL_IO.aController[29].input.targetValue = 0) AND (wRotaion_PV = 0) THEN
+ELSIF (GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.targetValue = 0) AND (rConvertedCV = 0) THEN
 	bBrake_Run := FALSE;
 END_IF
 
