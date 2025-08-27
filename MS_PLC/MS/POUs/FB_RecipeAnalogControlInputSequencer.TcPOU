@@ -6,14 +6,14 @@ VAR_INPUT
 	rampTime: UINT;
 END_VAR
 VAR_IN_OUT
-	rRecipe: ARRAY[1..30] OF REAL;
+	rRecipe: ARRAY[1..(GVL_CONSTANT.NumAnalogController)] OF REAL;
 END_VAR
 VAR
-	i: UINT;
+	i: INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FOR i:= 1 TO 26 DO
+      <ST><![CDATA[FOR i:= 1 TO E_aAnalogInputIO_Index.E_PV_EPC_04 DO
 	GVL_IO.aController[i].input.restart := TRUE;
 	GVL_IO.aController[i].input.rampTime := rampTime; 
 	GVL_IO.aController[i].input.targetValue := rRecipe[i] / GVL_IO.aMaxValueController[i] * GVL_CONSTANT.EL3064MaxValueH;;

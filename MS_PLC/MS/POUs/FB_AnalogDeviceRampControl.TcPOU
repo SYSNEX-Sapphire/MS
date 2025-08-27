@@ -7,7 +7,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FOR i:=1 TO E_aAnalogInputIO_Index.E_PV_susceptorRotation DO
+      <ST><![CDATA[FOR i:=1 TO E_aAnalogInputIO_Index.E_PV_EPC_04 DO
 	IF GVL_IO.aMaxValueController[i] <> 0 THEN
 		GVL_IO.aAnalogOutputIO[i] := LREAL_TO_INT(GVL_IO.aController[i].rControlValue); //Write to Device
 		GVL_IO.aController_PV[i] := (GVL_IO.aAnalogInputIO[i] / GVL_CONSTANT.EL3064MaxValueH) * GVL_IO.aMaxValueController[i];
@@ -16,7 +16,7 @@ END_VAR
 	END_IF
 END_FOR
 
-IF ( GVL_IO.aController_CV[27] > 10 ) THEN
+IF ( GVL_IO.aController_CV[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp] > 10 ) THEN
 	GVL_IO.aDigitalOutputIO[2].0 := TRUE;
 ELSE
 	GVL_IO.aDigitalOutputIO[2].0 := FALSE;

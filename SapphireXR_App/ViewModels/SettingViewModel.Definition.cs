@@ -220,12 +220,9 @@ namespace SapphireXR_App.ViewModels
         
         public static readonly Dictionary<string, string> AnalogDeviceIDShortNameMap = new Dictionary<string, string>
         {
-            { "MFC01", "M01" }, { "MFC02", "M02" }, { "MFC03", "M03"  }, { "MFC04", "M04"  }, { "MFC05", "M05" },
-            { "MFC06", "M06" }, { "MFC07", "M07" }, { "MFC08", "M08" }, { "MFC09", "M09" }, { "MFC10", "M10" },
-            { "MFC11", "M11" }, { "MFC12", "M12" }, { "MFC13", "M13" }, {  "MFC14", "M14" }, { "MFC15", "M15" },
-            { "MFC16", "M16" }, { "MFC17", "M17" }, { "MFC18", "M18" }, { "MFC19", "M19"  },
-            { "EPC01", "E01" },  { "EPC02", "E02" }, { "EPC03", "E03" }, { "EPC04", "E04" }, { "EPC05", "E05" },
-            { "EPC06", "E06" }, { "EPC07", "E07" }, { "Temperature", "R01"  }, { "Pressure", "R02"  }, { "Rotation", "R03"  }
+            { "MFC01", "M01" }, { "MFC02", "M02" }, { "MFC03", "M03"  }, { "MFC04", "M04"  }, { "MFC05", "M05" }, { "MFC06", "M06" }, { "MFC07", "M07" }, { "MFC08", "M08" }, 
+            { "MFC09", "M09" }, { "MFC10", "M10" }, { "MFC11", "M11" }, { "MFC12", "M12" },  { "EPC01", "E01" },  { "EPC02", "E02" }, { "EPC03", "E03" }, { "EPC04", "E04" }, 
+            { "Temperature", "R01"  }, { "Pressure", "R02"  }, { "Rotation", "R03"  }
         };
         private static readonly Dictionary<string, PLCService.InterlockEnableSetting> InterlockSettingNameToPLCInterlockEnableSettingEnum = new ()
         {

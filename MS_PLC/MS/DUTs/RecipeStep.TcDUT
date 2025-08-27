@@ -5,7 +5,8 @@
 STRUCT
 	sRecipe : STRING(81);
 	iRecipe : ARRAY[1..5] OF INT; //Reactor Condition
-	rRecipe : ARRAY[1..30] OF REAL; //MFC, EPC Data
+	rRecipe : ARRAY[1..GVL_CONSTANT.NumAnalogController] OF REAL; //MFC, EPC Data
+	cTemp 	: REAL := 0; 	
 	dRecipe : DWORD; //Valve Data
 END_STRUCT
 END_TYPE

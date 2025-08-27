@@ -95,59 +95,19 @@ namespace SapphireXR_App.ViewModels
                     break;
 
                 case 15:
-                    key = "M13";
-                    break;
-
-                case 16:
-                    key = "M14";
-                    break;
-
-                case 17:
-                    key = "M15";
-                    break;
-
-                case 18:
-                    key = "M16";
-                    break;
-
-                case 19:
-                    key = "M17";
-                    break;
-
-                case 20:
-                    key = "M18";
-                    break;
-
-                case 21:
-                    key = "M19";
-                    break;
-
-                case 22:
                     key = "E01";
                     break;
 
-                case 23:
+                case 16:
                     key = "E02";
                     break;
 
-                case 24:
+                case 17:
                     key = "E03";
                     break;
 
-                case 25:
+                case 18:
                     key = "E04";
-                    break;
-
-                case 26:
-                    key = "E05";
-                    break;
-
-                case 27:
-                    key = "E06";
-                    break;
-
-                case 28:
-                    key = "E07";
                     break;
 
                 default:
@@ -283,7 +243,7 @@ namespace SapphireXR_App.ViewModels
             }
 
             int analogDeviceAlarms = plcServiceReadAnalogState();
-            for(uint analogDevice = 0; analogDevice < PLCService.NumAnalogDevice; ++analogDevice)
+            for(uint analogDevice = 0; analogDevice < PLCService.NumControllers; ++analogDevice)
             {
                 string? notificationName = GetAnalogDeviceNotificationName(analogDevice);
                 if (notificationName != null)

@@ -157,12 +157,8 @@ namespace SapphireXR_App.Models
 
         public static readonly Dictionary<string, int> dIndexController = new Dictionary<string, int>
         {
-            { "MFC01", 0 }, { "MFC02", 1 }, { "MFC03", 2 }, { "MFC04", 3 }, { "MFC05", 4 },
-            { "MFC06", 5 }, { "MFC07", 6 }, { "MFC08", 7 }, { "MFC09", 8 }, { "MFC10", 9 },
-            { "MFC11", 10 }, { "MFC12", 11 }, { "MFC13", 12 }, { "MFC14", 13 }, { "MFC15", 14 },
-            { "MFC16", 15 }, { "MFC17", 16 }, { "MFC18", 17 }, { "MFC19", 18 },
-            { "EPC01", 19 },  { "EPC02", 20 }, { "EPC03", 21 }, { "EPC04", 22 }, { "EPC05", 23 },
-            { "EPC06", 24 }, { "EPC07", 25 }, {"Temperature", 26}, {"Pressure", 27}, {"Rotation", 28}
+            { "MFC01", 0 }, { "MFC02", 1 }, { "MFC03", 2 }, { "MFC04", 3 }, { "MFC05", 4 }, { "MFC06", 5 }, { "MFC07", 6 }, { "MFC08", 7 }, { "MFC09", 8 }, { "MFC10", 9 },
+            { "MFC11", 10 }, { "MFC12", 11 }, { "EPC01", 12 },  { "EPC02", 13 }, { "EPC03", 14 }, { "EPC04", 15 }, {"Temperature", 16}, {"Pressure", 17}, {"Rotation", 18}
         };
         public static readonly int NumControllers = dIndexController.Count;
 
@@ -175,8 +171,7 @@ namespace SapphireXR_App.Models
         private static readonly Dictionary<string, int> dAnalogDeviceAlarmWarningBit = new Dictionary<string, int>
         {
             { "R01", 0 }, { "R02", 1 }, { "R03", 2 },  { "M01", 3 }, { "M02", 4 }, { "M03", 5 },  { "M04", 6 }, { "M05", 7 }, { "M06", 8 }, { "M07", 9 }, { "M08", 10 }, { "M09", 11 },  
-            { "M10", 12 }, { "M11", 13 }, { "M12", 14 },  { "M13", 15 }, { "M14", 16 }, { "M15",17 }, { "M16", 18 }, { "M17", 19 }, { "M18", 20 },  { "M19", 21 }, { "E01", 22 }, { "E02", 23 }, 
-            { "E03", 24 }, { "E04", 25 }, { "E05", 26 }, { "E06", 27 }, { "E07", 28 }
+            { "M10", 12 }, { "M11", 13 }, { "M12", 14 },  { "E01", 15 }, { "E02", 16 }, { "E03", 17 }, { "E04", 18 }
         };
 
         private static readonly Dictionary<string, int> dDigitalDeviceAlarmWarningBit = new Dictionary<string, int>
@@ -190,7 +185,7 @@ namespace SapphireXR_App.Models
         private const uint NumInterlockSet = 16;
         private const uint NumInterlock = 5;
         public const uint NumDigitalDevice = 14;
-        public const uint NumAnalogDevice = 29;
+        public const uint NumAnalogDevice = 19;
 
         // Variable handles to be connected plc variables
         private static BitArray? baReadValveStatePLC = null;

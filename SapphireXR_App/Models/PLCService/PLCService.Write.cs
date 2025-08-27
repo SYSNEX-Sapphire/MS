@@ -44,7 +44,7 @@ namespace SapphireXR_App.Models
                     throw new Exception("AnalogDeviceIO is null in WriteDeviceMaxValue");
                 }
 
-                float[] maxValue = new float[29];
+                float[] maxValue = new float[analogDeviceIOs.Count];
                 int index = 0;
                 foreach (AnalogDeviceIO entry in analogDeviceIOs)
                 {
@@ -54,7 +54,7 @@ namespace SapphireXR_App.Models
                     }
                     if (index < 3)
                     {
-                        maxValue[index + 26] = entry.MaxValue;
+                        maxValue[index + 16] = entry.MaxValue;
                     }
                     else
                     {

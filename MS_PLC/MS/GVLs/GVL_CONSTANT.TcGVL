@@ -8,7 +8,7 @@ VAR_GLOBAL CONSTANT
 	EL4004MaxValueH	: REAL := 16383; //0~5V Half Output
 	EL4004MaxValue 	: REAL := 32767; //4~20mA
 	
-	NumAnalogController :UINT:=29;
+	NumAnalogController :UINT:=19;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

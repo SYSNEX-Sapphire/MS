@@ -136,7 +136,6 @@ namespace SapphireXR_App.Models
 
         private static void ReadValveStateFromPLC()
         {
-            int valveState = (int)Ads.ReadAny(hReadValveStatePLC, typeof(int));
             baReadValveStatePLC = new BitArray([(int)Ads.ReadAny(hReadValveStatePLC, typeof(int))]);
         }
 

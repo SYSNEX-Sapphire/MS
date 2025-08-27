@@ -46,27 +46,6 @@ namespace SapphireXR_App.Models
                 case nameof(RecipeLog.PV_M12):
                     return recipeLog.PV_M12;
 
-                case nameof(RecipeLog.PV_M13):
-                    return recipeLog.PV_M13;
-
-                case nameof(RecipeLog.PV_M14):
-                    return recipeLog.PV_M14;
-
-                case nameof(RecipeLog.PV_M15):
-                    return recipeLog.PV_M15;
-
-                case nameof(RecipeLog.PV_M16):
-                    return recipeLog.PV_M16;
-
-                case nameof(RecipeLog.PV_M17):
-                    return recipeLog.PV_M17;
-
-                case nameof(RecipeLog.PV_M18):
-                    return recipeLog.PV_M18;
-
-                case nameof(RecipeLog.PV_M19):
-                    return recipeLog.PV_M19;
-
                 case nameof(RecipeLog.PV_E01):
                     return recipeLog.PV_E01;
 
@@ -78,15 +57,6 @@ namespace SapphireXR_App.Models
 
                 case nameof(RecipeLog.PV_E04):
                     return recipeLog.PV_E04;
-
-                case nameof(RecipeLog.PV_E05):
-                    return recipeLog.PV_E05;
-
-                case nameof(RecipeLog.PV_E06):
-                    return recipeLog.PV_E06;
-
-                case nameof(RecipeLog.PV_E07):
-                    return recipeLog.PV_E07;
 
                 case nameof(RecipeLog.PV_TEMP):
                     return recipeLog.PV_TEMP;
@@ -142,27 +112,6 @@ namespace SapphireXR_App.Models
                 case nameof(RecipeLog.SV_M12):
                     return recipeLog.SV_M12;
 
-                case nameof(RecipeLog.SV_M13):
-                    return recipeLog.SV_M13;
-
-                case nameof(RecipeLog.SV_M14):
-                    return recipeLog.SV_M14;
-
-                case nameof(RecipeLog.SV_M15):
-                    return recipeLog.SV_M15;
-
-                case nameof(RecipeLog.SV_M16):
-                    return recipeLog.SV_M16;
-
-                case nameof(RecipeLog.SV_M17):
-                    return recipeLog.SV_M17;
-
-                case nameof(RecipeLog.SV_M18):
-                    return recipeLog.SV_M18;
-
-                case nameof(RecipeLog.SV_M19):
-                    return recipeLog.SV_M19;
-
                 case nameof(RecipeLog.SV_E01):
                     return recipeLog.SV_E01;
 
@@ -174,16 +123,7 @@ namespace SapphireXR_App.Models
 
                 case nameof(RecipeLog.SV_E04):
                     return recipeLog.SV_E04;
-
-                case nameof(RecipeLog.SV_E05):
-                    return recipeLog.SV_E05;
-
-                case nameof(RecipeLog.SV_E06):
-                    return recipeLog.SV_E06;
-
-                case nameof(RecipeLog.SV_E07):
-                    return recipeLog.SV_E07;
-
+                                
                 case nameof(RecipeLog.SV_TEMP):
                     return recipeLog.SV_TEMP;
 
@@ -236,28 +176,7 @@ namespace SapphireXR_App.Models
 
                 case nameof(RecipeLog.PV_M12):
                     return recipeLog.PV_M12 / SettingViewModel.ReadMaxValue("MFC12") * 100.0f;
-
-                case nameof(RecipeLog.PV_M13):
-                    return recipeLog.PV_M13 / SettingViewModel.ReadMaxValue("MFC13") * 100.0f;
-
-                case nameof(RecipeLog.PV_M14):
-                    return recipeLog.PV_M14 / SettingViewModel.ReadMaxValue("MFC14") * 100.0f;
-
-                case nameof(RecipeLog.PV_M15):
-                    return recipeLog.PV_M15 / SettingViewModel.ReadMaxValue("MFC15") * 100.0f;
-
-                case nameof(RecipeLog.PV_M16):
-                    return recipeLog.PV_M16 / SettingViewModel.ReadMaxValue("MFC16") * 100.0f;
-
-                case nameof(RecipeLog.PV_M17):
-                    return recipeLog.PV_M17 / SettingViewModel.ReadMaxValue("MFC17") * 100.0f;
-
-                case nameof(RecipeLog.PV_M18):
-                    return recipeLog.PV_M18 / SettingViewModel.ReadMaxValue("MFC18") * 100.0f;
-
-                case nameof(RecipeLog.PV_M19):
-                    return recipeLog.PV_M19 / SettingViewModel.ReadMaxValue("MFC19") * 100.0f;
-
+             
                 case nameof(RecipeLog.PV_E01):
                     return recipeLog.PV_E01 / SettingViewModel.ReadMaxValue("EPC01") * 100.0f;
 
@@ -269,15 +188,6 @@ namespace SapphireXR_App.Models
 
                 case nameof(RecipeLog.PV_E04):
                     return recipeLog.PV_E04 / SettingViewModel.ReadMaxValue("EPC04") * 100.0f;
-
-                case nameof(RecipeLog.PV_E05):
-                    return recipeLog.PV_E05 / SettingViewModel.ReadMaxValue("EPC05") * 100.0f;
-
-                case nameof(RecipeLog.PV_E06):
-                    return recipeLog.PV_E06 / SettingViewModel.ReadMaxValue("EPC06") * 100.0f;
-
-                case nameof(RecipeLog.PV_E07):
-                    return recipeLog.PV_E07 / SettingViewModel.ReadMaxValue("EPC07") * 100.0f;
 
                 case nameof(RecipeLog.PV_TEMP):
                     return recipeLog.PV_TEMP / SettingViewModel.ReadMaxValue("Temperature") * 100.0f;
@@ -333,27 +243,6 @@ namespace SapphireXR_App.Models
                 case nameof(RecipeLog.SV_M12):
                     return recipeLog.SV_M12 / SettingViewModel.ReadMaxValue("MFC12") * 100.0f;
 
-                case nameof(RecipeLog.SV_M13):
-                    return recipeLog.SV_M13 / SettingViewModel.ReadMaxValue("MFC13") * 100.0f;
-
-                case nameof(RecipeLog.SV_M14):
-                    return recipeLog.SV_M14 / SettingViewModel.ReadMaxValue("MFC14") * 100.0f;
-
-                case nameof(RecipeLog.SV_M15):
-                    return recipeLog.SV_M15 / SettingViewModel.ReadMaxValue("MFC15") * 100.0f;
-
-                case nameof(RecipeLog.SV_M16):
-                    return recipeLog.SV_M16 / SettingViewModel.ReadMaxValue("MFC16") * 100.0f;
-
-                case nameof(RecipeLog.SV_M17):
-                    return recipeLog.SV_M17 / SettingViewModel.ReadMaxValue("MFC17") * 100.0f;
-
-                case nameof(RecipeLog.SV_M18):
-                    return recipeLog.SV_M18 / SettingViewModel.ReadMaxValue("MFC18") * 100.0f;
-
-                case nameof(RecipeLog.SV_M19):
-                    return recipeLog.SV_M19 / SettingViewModel.ReadMaxValue("MFC19") * 100.0f;
-
                 case nameof(RecipeLog.SV_E01):
                     return recipeLog.SV_E01 / SettingViewModel.ReadMaxValue("EPC01") * 100.0f;
 
@@ -365,15 +254,6 @@ namespace SapphireXR_App.Models
 
                 case nameof(RecipeLog.SV_E04):
                     return recipeLog.SV_E04 / SettingViewModel.ReadMaxValue("EPC04") * 100.0f;
-
-                case nameof(RecipeLog.SV_E05):
-                    return recipeLog.SV_E05 / SettingViewModel.ReadMaxValue("EPC05") * 100.0f;
-
-                case nameof(RecipeLog.SV_E06):
-                    return recipeLog.SV_E06 / SettingViewModel.ReadMaxValue("EPC06") * 100.0f;
-
-                case nameof(RecipeLog.SV_E07):
-                    return recipeLog.SV_E07 / SettingViewModel.ReadMaxValue("EPC07") * 100.0f;
 
                 case nameof(RecipeLog.SV_TEMP):
                     return recipeLog.SV_TEMP / SettingViewModel.ReadMaxValue("Temperature") * 100.0f;
@@ -429,27 +309,6 @@ namespace SapphireXR_App.Models
                 case nameof(RecipeLog.PV_M12):
                     return SettingViewModel.ReadMaxValue("MFC12");
 
-                case nameof(RecipeLog.PV_M13):
-                    return SettingViewModel.ReadMaxValue("MFC13");
-
-                case nameof(RecipeLog.PV_M14):
-                    return SettingViewModel.ReadMaxValue("MFC14");
-
-                case nameof(RecipeLog.PV_M15):
-                    return  SettingViewModel.ReadMaxValue("MFC15");
-
-                case nameof(RecipeLog.PV_M16):
-                    return SettingViewModel.ReadMaxValue("MFC16");
-
-                case nameof(RecipeLog.PV_M17):
-                    return SettingViewModel.ReadMaxValue("MFC17");
-
-                case nameof(RecipeLog.PV_M18):
-                    return SettingViewModel.ReadMaxValue("MFC18");
-
-                case nameof(RecipeLog.PV_M19):
-                    return SettingViewModel.ReadMaxValue("MFC19");
-
                 case nameof(RecipeLog.PV_E01):
                     return SettingViewModel.ReadMaxValue("EPC01");
 
@@ -461,15 +320,6 @@ namespace SapphireXR_App.Models
 
                 case nameof(RecipeLog.PV_E04):
                     return SettingViewModel.ReadMaxValue("EPC04");
-
-                case nameof(RecipeLog.PV_E05):
-                    return SettingViewModel.ReadMaxValue("EPC05");
-
-                case nameof(RecipeLog.PV_E06):
-                    return SettingViewModel.ReadMaxValue("EPC06");
-
-                case nameof(RecipeLog.PV_E07):
-                    return SettingViewModel.ReadMaxValue("EPC07");
 
                 case nameof(RecipeLog.PV_TEMP):
                     return SettingViewModel.ReadMaxValue("Temperature");
@@ -525,27 +375,6 @@ namespace SapphireXR_App.Models
                 case nameof(RecipeLog.SV_M12):
                     return SettingViewModel.ReadMaxValue("MFC12");
 
-                case nameof(RecipeLog.SV_M13):
-                    return SettingViewModel.ReadMaxValue("MFC13");
-
-                case nameof(RecipeLog.SV_M14):
-                    return SettingViewModel.ReadMaxValue("MFC14");
-
-                case nameof(RecipeLog.SV_M15):
-                    return SettingViewModel.ReadMaxValue("MFC15");
-
-                case nameof(RecipeLog.SV_M16):
-                    return SettingViewModel.ReadMaxValue("MFC16");
-
-                case nameof(RecipeLog.SV_M17):
-                    return SettingViewModel.ReadMaxValue("MFC17");
-
-                case nameof(RecipeLog.SV_M18):
-                    return SettingViewModel.ReadMaxValue("MFC18");
-
-                case nameof(RecipeLog.SV_M19):
-                    return SettingViewModel.ReadMaxValue("MFC19");
-
                 case nameof(RecipeLog.SV_E01):
                     return SettingViewModel.ReadMaxValue("EPC01");
 
@@ -557,15 +386,6 @@ namespace SapphireXR_App.Models
 
                 case nameof(RecipeLog.SV_E04):
                     return SettingViewModel.ReadMaxValue("EPC04");
-
-                case nameof(RecipeLog.SV_E05):
-                    return SettingViewModel.ReadMaxValue("EPC05");
-
-                case nameof(RecipeLog.SV_E06):
-                    return SettingViewModel.ReadMaxValue("EPC06");
-
-                case nameof(RecipeLog.SV_E07):
-                    return SettingViewModel.ReadMaxValue("EPC07");
 
                 case nameof(RecipeLog.SV_TEMP):
                     return SettingViewModel.ReadMaxValue("Temperature");

@@ -9,8 +9,6 @@ namespace SapphireXR_App.Models
         [ObservableProperty]
         private string? _name;
         public string? Description { get; set; }
-        [ObservableProperty]
-        private Visibility isVisible = Visibility.Visible;
     }
     public partial class WarningAlarmDevice: Device
     {

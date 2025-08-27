@@ -8,8 +8,8 @@ VAR_GLOBAL
 	aDigitalOutputIO AT %Q* : ARRAY[1..5]OF BYTE; //KL2408 4EA
 	
 	(* Analog Input to INT*)
-	aAnalogInputIO AT %I* 	: ARRAY[1..40]OF INT;
-	aAnalogOutputIO AT %Q* 	: ARRAY[1..GVL_CONSTANT.NumAnalogController ] OF INT;
+	aAnalogInputIO AT %I* 	: ARRAY[1..40] OF INT;
+	aAnalogOutputIO AT %Q* 	: ARRAY[1..40] OF INT;
 	aAnalogInputIO2 AT %I*	: ARRAY[1..2]OF UINT;
 	
 	(*Solenoid Valve*)

@@ -65,20 +65,10 @@
         public float PV_M10 { get; set; }
         public float PV_M11 { get; set; }
         public float PV_M12 { get; set; }
-        public float PV_M13 { get; set; }
-        public float PV_M14 { get; set; }
-        public float PV_M15 { get; set; }
-        public float PV_M16 { get; set; }
-        public float PV_M17 { get; set; }
-        public float PV_M18 { get; set; }
-        public float PV_M19 { get; set; }
         public float PV_E01 { get; set; }
         public float PV_E02 { get; set; }
         public float PV_E03 { get; set; }
         public float PV_E04 { get; set; }
-        public float PV_E05 { get; set; }
-        public float PV_E06 { get; set; }
-        public float PV_E07 { get; set; }
         public float PV_TEMP { get; set; }
         public float PV_PRES { get; set; }
         public float PV_ROT { get; set; }
@@ -97,20 +87,10 @@
         public float SV_M10 { get; set; }
         public float SV_M11 { get; set; }
         public float SV_M12 { get; set; }
-        public float SV_M13 { get; set; }
-        public float SV_M14 { get; set; }
-        public float SV_M15 { get; set; }
-        public float SV_M16 { get; set; }
-        public float SV_M17 { get; set; }
-        public float SV_M18 { get; set; }
-        public float SV_M19 { get; set; }
         public float SV_E01 { get; set; }
         public float SV_E02 { get; set; }
         public float SV_E03 { get; set; }
         public float SV_E04 { get; set; }
-        public float SV_E05 { get; set; }
-        public float SV_E06 { get; set; }
-        public float SV_E07 { get; set; }
         public float SV_TEMP { get; set; }
         public float SV_PRES { get; set; }
         public float SV_ROT { get; set; }

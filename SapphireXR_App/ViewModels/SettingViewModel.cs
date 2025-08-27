@@ -8,8 +8,6 @@ using SapphireXR_App.Models;
 using System.Collections;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 
 namespace SapphireXR_App.ViewModels

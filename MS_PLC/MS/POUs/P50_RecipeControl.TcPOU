@@ -59,14 +59,14 @@ END_VAR
 				END_IF				
 				
 			E_RecipeRun.CheckHoldTemp: //Hold Temp 확인
-				IF RCP.aRecipe[nRcpIndex].rRecipe[30] = 0 THEN
+				IF RCP.aRecipe[nRcpIndex].cTemp = 0 THEN
 					Hold_TON(IN:=TRUE, PT:= RCP.aRecipe[nRcpIndex].iRecipe[3] * T#1S, ET=>RCP.RecipeRunET.ET);
 					RCP.RecipeRunET.Mode := E_RecipeRunETMode.Hold;
 					IF Hold_TON.Q THEN
 						Hold_TON(IN:=FALSE);
 						eRecipeRun := E_RecipeRun.End; // 레시피 첫 Column 실행
 					END_IF
-				ELSIF GVL_IO.aController_PV[27] < RCP.aRecipe[nRcpIndex].rRecipe[30] THEN //서셉터 온도가 Wait 온도보다 낮을 때
+				ELSIF GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp] < RCP.aRecipe[nRcpIndex].cTemp THEN //서셉터 온도가 Wait 온도보다 낮을 때
 					Hold_TON(IN:=FALSE);
 					eRecipeRun := E_RecipeRun.End; // 레시피 첫 Column 실행
 				ELSE // 서셉터 온도가 Wait 온도보다 높을 때

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
   <POU Name="P90_Interlock" Id="{c8b81d81-de46-4c7a-a894-4387b2cd9bf7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P90_Interlock
 VAR
@@ -521,7 +521,7 @@ GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
     </Implementation>
     <Action Name="_Alarm_AnalogDevice" Id="{dd06f845-f2fa-43a4-a46e-0ce4f972699c}">
       <Implementation>
-        <ST><![CDATA[FOR i := 1 TO 26 DO
+        <ST><![CDATA[FOR i := 1 TO E_aAnalogInputIO_Index.E_PV_EPC_04 DO
 		wDeviceAlarmEnable := SHR(GVL_IO.aInterlockEnable[2], (i+2)); //오늘쪽 쉬프트 연산
 		wDeviceWarningEnable := SHR(GVL_IO.aInterlockEnable[3], (i+2));
 		
@@ -585,13 +585,13 @@ GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
 			3: //Susceptor Over Temperature
 				bAlarmEnable := GVL_IO.aInterlockEnable[4].6;
 				bWarningEnable := GVL_IO.aInterlockEnable[5].6;
-				fDeviceCurrentValue := GVL_IO.aController_PV[27];
+				fDeviceCurrentValue := GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp];
 				fDeviceAlarmTreshold := GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_SUSCEPTOR_OVER_TEMP];
 				fDeviceWarningTreshold := (GVL_IO.aInterlockSet_jh[E_AlarmSetValue.E_AS_SUSCEPTOR_OVER_TEMP] - 20.0); //20도 아래에서 Warning 발생				
 			4: //Reactor Over Pressure Alarm
 				bAlarmEnable := GVL_IO.aInterlockEnable[4].7;
 				bWarningEnable := GVL_IO.aInterlockEnable[5].7;
-				fDeviceCurrentValue := GVL_IO.aController_PV[28];
+				fDeviceCurrentValue := GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure];
 				fDeviceAlarmTreshold := GVL_IO.aInterlockSet[12];
 				fDeviceWarningTreshold := (GVL_IO.aInterlockSet[12] - 50.0); //50Torr 아래에서 Warning 발생							
 		END_CASE
@@ -634,7 +634,7 @@ GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
     <Action Name="_Alarm_Temp_Pressure" Id="{cc17bcd7-4e7d-4962-872b-3c21039ffd67}">
       <Implementation>
         <ST><![CDATA[	//Controller Deviation Monitoring - Temp, Pressure, Rotation
-	FOR i := 27 TO 29 DO
+	FOR i := E_aAnalogInputIO_Index.E_PV_Susceptor_Temp TO E_aAnalogInputIO_Index.E_PV_susceptorRotation DO
 		wDeviceAlarmEnable := SHR(GVL_IO.aInterlockEnable[2], (i-27)); //오늘쪽 쉬프트 연산, -27은 어레이 변수 옵셋값
 		wDeviceWarningEnable := SHR(GVL_IO.aInterlockEnable[3], (i-27));
 		
@@ -847,12 +847,12 @@ bMainPowerMonitor := GVL_IO.aDigitalInputIO[7].5; /// ??????? 이게 뭐지 ?]]>
         <ST><![CDATA[bDorOnEnable :=	NOT(AlarmTrig) AND GVL_IO.isCoverClosed AND	GVL_IO.bDorState AND GVL_IO.isPumpRunning;
 
 // DOR Off Conditions
-IF  GVL_IO.aController_PV[27] < GVL_IO.aInterlockSet[13] THEN
+IF  GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp] < GVL_IO.aInterlockSet[13] THEN
 	bOpenEnableTemp := TRUE;
 ELSE
 	bOpenEnableTemp := FALSE;
 END_IF
-IF  GVL_IO.aController_PV[28] < GVL_IO.aInterlockSet[14] THEN
+IF  GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure] < GVL_IO.aInterlockSet[14] THEN
 	bOpenEnablePress := TRUE;
 ELSE
 	bOpenEnablePress := FALSE;
