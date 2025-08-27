@@ -92,7 +92,7 @@ namespace SapphireXR_App.ViewModels.FlowController
 
         void IObserver<float>.OnNext(float value)
         {
-            string controlValueStr = ((int)value).ToString();
+            string controlValueStr = value.ToString();
             if (controlValueStr != ControlValue)
             {
                 ControlValue = controlValueStr;

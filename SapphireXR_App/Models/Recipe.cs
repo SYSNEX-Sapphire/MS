@@ -1,18 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CsvHelper.Configuration.Attributes;
+using SapphireXR_App.ViewModels;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
+using SapphireXR_App.Common;
 
 namespace SapphireXR_App.Models
 {
     public partial class Recipe : ObservableObject
     {
-        public Recipe() { }
+        public Recipe() 
+        {
+            initialize();
+        }
 
         public Recipe(Recipe rhs)
         {
+            initialize();
+
             No = rhs.No;
             Name = rhs.Name;
             cTemp = rhs.cTemp;
@@ -61,6 +68,104 @@ namespace SapphireXR_App.Models
             V20 = rhs.V20;
         }
 
+        private void initialize()
+        {
+            PropertyChanged += (sender, args) =>
+            {
+                var constraintValue = (string fullName, float curValue) =>
+                {
+                    int? maxValue = SettingViewModel.ReadMaxValue(fullName) ?? 0;
+                    if (maxValue < curValue)
+                    {
+                        maxValueExceedPublihser.Publish(fullName);
+                        return (float)maxValue;
+                    }
+                    else
+                    {
+                        return curValue;
+                    }
+                };
+                switch(args.PropertyName)
+                {
+                    case nameof(M01):
+                        M01 = constraintValue("MFC01", M01);
+                        break;
+
+                    case nameof(M02):
+                        M02 = constraintValue("MFC02", M02);
+                        break;
+
+                    case nameof(M03):
+                        M03 = constraintValue("MFC03", M03);
+                        break;
+
+                    case nameof(M04):
+                        M04 = constraintValue("MFC04", M04);
+                        break;
+
+                    case nameof(M05):
+                        M05 = constraintValue("MFC05", M05);
+                        break;
+
+                    case nameof(M06):
+                        M06 = constraintValue("MFC06", M06);
+                        break;
+
+                    case nameof(M07):
+                        M07 = constraintValue("MFC07", M07);
+                        break;
+
+                    case nameof(M08):
+                        M08 = constraintValue("MFC08", M08);
+                        break;
+
+                    case nameof(M09):
+                        M09 = constraintValue("MFC09", M09);
+                        break;
+
+                    case nameof(M10):
+                        M10 = constraintValue("MFC10", M10);
+                        break;
+
+                    case nameof(M11):
+                        M11 = constraintValue("MFC11", M11);
+                        break;
+
+                    case nameof(M12):
+                        M12 = constraintValue("MFC12", M12);
+                        break;
+
+                    case nameof(E01):
+                        E01 = constraintValue("EPC01", E01);
+                        break;
+
+                    case nameof(E02):
+                        E02 = constraintValue("EPC02", E02);
+                        break;
+
+                    case nameof(E03):
+                        E03 = constraintValue("EPC03", E03);
+                        break;
+
+                    case nameof(E04):
+                        E04 = constraintValue("EPC04", E04);
+                        break;
+
+                    case nameof(STemp):
+                        STemp = constraintValue("Temperature", STemp);
+                        break;
+
+                    case nameof(RPress):
+                        RPress = constraintValue("Pressure", RPress);
+                        break;
+
+                    case nameof(SRotation):
+                        SRotation = constraintValue("Rotation", SRotation);
+                        break;
+                }
+            };
+        }
+
         public string Name { get; set; } = "";
         // RecipeInt Array
         [ObservableProperty]
@@ -70,12 +175,12 @@ namespace SapphireXR_App.Models
         [ObservableProperty]
         public short _hTime;
         [ObservableProperty]
-        public short _sTemp;
+        public float _sTemp;
         [ObservableProperty]
-        public short _rPress;
+        public float _rPress;
         [ObservableProperty]
-        public short _sRotation;
-        public short cTemp { get; set; }
+        public float _sRotation;
+        public float cTemp { get; set; }
         public short LoopRepeat { get; set; }
         public short LoopEndStep { get; set; }
         //RecipeFloat Array
@@ -193,6 +298,9 @@ namespace SapphireXR_App.Models
             set;
             get;
         } = 0;
+
+        [Ignore]
+        private static readonly ObservableManager<string>.Publisher maxValueExceedPublihser = ObservableManager<string>.Get("Recipe.MaxValueExceed");
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
@@ -204,12 +312,8 @@ namespace SapphireXR_App.Models
             aRecipeShort[0] = rhs.No;
             aRecipeShort[1] = rhs.RTime;
             aRecipeShort[2] = rhs.HTime;
-            aRecipeShort[3] = rhs.STemp;
-            aRecipeShort[4] = rhs.RPress;
-            aRecipeShort[5] = rhs.SRotation;
-            aRecipeShort[6] = rhs.cTemp;
-            aRecipeShort[7] = rhs.JumpStride;
-            aRecipeShort[8] = rhs.LoopCount;
+            aRecipeShort[3] = rhs.JumpStride;
+            aRecipeShort[4] = rhs.LoopCount;
             //Float Type Array
             aRecipeFloat[0] = rhs.M01;
             aRecipeFloat[1] = rhs.M02;
@@ -227,8 +331,13 @@ namespace SapphireXR_App.Models
             aRecipeFloat[20] = rhs.E02;
             aRecipeFloat[21] = rhs.E03;
             aRecipeFloat[22] = rhs.E04;
+            aRecipeFloat[26] = rhs.STemp;
+            aRecipeFloat[27] = rhs.RPress;
+            aRecipeFloat[28] = rhs.SRotation;
+            aRecipeFloat[29] = rhs.cTemp;
+
             //BitArray from Valve Data
-            BitArray aRecipeBit = new BitArray(32);
+            BitArray aRecipeBit = new(32);
             aRecipeBit[0] = rhs.V01;
             aRecipeBit[1] = rhs.V02;
             aRecipeBit[2] = rhs.V03;
@@ -249,24 +358,22 @@ namespace SapphireXR_App.Models
             aRecipeBit[17] = rhs.V18;
             aRecipeBit[18] = rhs.V19;
             aRecipeBit[19] = rhs.V20;
-
-            sName = rhs.Name;
-
-            if (aRecipeBit.Length > 32)
-                throw new ArgumentException("Argument length shall be at most 32 bits.");
+            
             int[] aValve = new int[1];
             aRecipeBit.CopyTo(aValve, 0);
             iValve = aValve[0];
+
+            sName = rhs.Name;
         }
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 81)]
         public string sName = "";
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
-        public short[] aRecipeShort = new short[9];
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
+        public short[] aRecipeShort = new short[5];
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 26)]
-        public float[] aRecipeFloat = new float[26];
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 30)]
+        public float[] aRecipeFloat = new float[30];
 
         public int iValve;
     }

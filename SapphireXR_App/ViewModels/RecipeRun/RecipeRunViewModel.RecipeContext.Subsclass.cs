@@ -32,13 +32,13 @@ namespace SapphireXR_App.ViewModels
                 {
                     if (prevValue == null || prevValue != value)
                     {
-                        recipeContext.CurrentWaitTemp = (int)value;
+                        recipeContext.CurrentWaitTemp = value;
                         prevValue = recipeContext.CurrentWaitTemp;
                     }
                 }
 
                 private RecipeContext recipeContext;
-                private int? prevValue;
+                private float? prevValue;
             }
 
             private class RecipeTimeSubscriber : IObserver<int>

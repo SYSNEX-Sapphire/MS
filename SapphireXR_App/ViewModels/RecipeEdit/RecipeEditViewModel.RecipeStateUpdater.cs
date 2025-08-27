@@ -529,15 +529,15 @@ namespace SapphireXR_App.ViewModels
                         break;
 
                     case "Temperature":
-                        currentSelected.STemp = (short)value;
+                        currentSelected.STemp = value;
                         break;
 
                     case "Pressure":
-                        currentSelected.RPress = (short)value;
+                        currentSelected.RPress = value;
                         break;
 
                     case "Rotation":
-                        currentSelected.SRotation = (short)value;
+                        currentSelected.SRotation = value;
                         break;
 
                     default:

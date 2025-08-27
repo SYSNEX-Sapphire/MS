@@ -14,20 +14,36 @@ namespace SapphireXR_App.Views
             flowControllerDataGridTextColumnTextBoxValidaterOnlyNumber = new FlowControllerDataGridTextColumnTextBoxValidaterOnlyNumber(viewModel, nameof(viewModel.CurrentRecipe));
         }
 
-        private void TextBox_TextChangedMaxNumber(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChangedIntegerMaxNumber(object sender, TextChangedEventArgs e)
         {
-            Util.CostraintTextBoxColumnMaxNumber(sender, flowControllerDataGridTextColumnTextBoxValidaterMaxValue, e);
+            Util.CostraintTextBoxColumnMaxNumber(sender, flowControllerDataGridTextColumnTextBoxValidaterMaxValue, e, FlowControllerTextBoxValidater.NumberType.Integer);
         }
 
-        private void TextBox_TextChangedOnlyNumber(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChangedIntegerOnlyNumber(object sender, TextChangedEventArgs e)
         {
             
-             Util.CostraintTextBoxColumnOnlyNumber(sender, flowControllerDataGridTextColumnTextBoxValidaterOnlyNumber);
+             Util.CostraintTextBoxColumnOnlyNumber(sender, flowControllerDataGridTextColumnTextBoxValidaterOnlyNumber, FlowControllerTextBoxValidater.NumberType.Integer);
         }
-      
+
+        private void TextBox_TextChangedFloatingPointMaxNumber(object sender, TextChangedEventArgs e)
+        {
+            Util.CostraintTextBoxColumnMaxNumber(sender, flowControllerDataGridTextColumnTextBoxValidaterMaxValue, e, FlowControllerTextBoxValidater.NumberType.Float);
+        }
+
+        private void TextBox_TextChangedFloatingPointOnlyNumber(object sender, TextChangedEventArgs e)
+        {
+
+            Util.CostraintTextBoxColumnOnlyNumber(sender, flowControllerDataGridTextColumnTextBoxValidaterOnlyNumber, FlowControllerTextBoxValidater.NumberType.Float);
+        }
+
         private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             Util.ConstraintEmptyToZeroOnDataGridCellCommitForRecipeRunEdit(sender, e);
+        }
+
+        private void TextBox_LostFocusTrimLastDot(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Util.TrimLastDotOnLostFocus(sender, e);
         }
 
         FlowControllerDataGridTextColumnTextBoxValidaterMaxValue flowControllerDataGridTextColumnTextBoxValidaterMaxValue;

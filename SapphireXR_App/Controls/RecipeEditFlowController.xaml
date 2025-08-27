@@ -37,7 +37,7 @@
         <Border Grid.Row="1" BorderBrush="LightGray"  BorderThickness="1,0,1,1"  Background="{Binding BorderBackground}" 
         CornerRadius="0,0,3,3" x:Name="controllerBorder">
             <StackPanel Orientation="Horizontal">
-                <view:NumberBoxWithMax x:Name="flowCurrent" local:SelectAllFocusBehavior.Enable="True" BorderThickness="0" Height="28" Width="68" FontSize="20" Background="{Binding BorderBackground}"
+                <view:FloatingPointBoxWithMax x:Name="flowCurrent" local:SelectAllFocusBehavior.Enable="True" BorderThickness="0" Height="28" Width="68" FontSize="20" Background="{Binding BorderBackground}"
                         HorizontalContentAlignment="Right" VerticalAlignment="Center" Padding="0" Text="{Binding ControlValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MaxValue="{Binding MaxValue}"/>
             </StackPanel>
         </Border>

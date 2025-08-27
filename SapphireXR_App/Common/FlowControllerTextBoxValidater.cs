@@ -1,21 +1,31 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using SapphireXR_App.Models;
 using SapphireXR_App.ViewModels;
 using System.ComponentModel;
 using System.Windows.Controls;
 
 namespace SapphireXR_App.Common
 {
-    internal abstract class FlowControllerTextBoxValidater
+    public abstract class FlowControllerTextBoxValidater
     {
+        public enum NumberType { Integer = 0, Float = 1 };
+
+        public FlowControllerTextBoxValidater(NumberType numType)
+        {
+            isTextNumeric = (numType == NumberType.Integer ? Util.IsTextNumeric : Util.IsTextFloatintgPoint);
+        }
+
         protected string prevText = "";
-      
+        protected Func<string, bool> isTextNumeric;
     }
     internal class FlowControllerTextBoxValidaterOnlyNumber: FlowControllerTextBoxValidater
     {
+        public FlowControllerTextBoxValidaterOnlyNumber(NumberType numType): base(numType)
+        {
+        }
+
         public string valdiate(TextBox textBox)
         {
-            if (textBox.Text == "" || Util.IsTextNumeric(textBox.Text) == true)
+            if (textBox.Text == "" || isTextNumeric(textBox.Text) == true)
             {
                 prevText = textBox.Text;
             }
@@ -23,26 +33,55 @@ namespace SapphireXR_App.Common
             return prevText;
         }
     }
+
     internal class FlowControllerTextBoxValidaterMaxValue: FlowControllerTextBoxValidater
     {
         public enum Result { Valid = 0, NotNumber = 1, ExceedMax, Undefined };
 
+        public FlowControllerTextBoxValidaterMaxValue(NumberType numTypeVal): base(numTypeVal)
+        {
+            numType = numTypeVal;
+        }
+
         public (string, Result) valdiate(TextBox textBox, uint maxValue)
         {
-            if(textBox.Text == "")
+            try
             {
-                prevText = textBox.Text;
-                return (prevText, Result.Valid);
-            }
+                if (textBox.Text == "")
+                {
+                    prevText = textBox.Text;
+                    return (prevText, Result.Valid);
+                }
 
-            if(Util.IsTextNumeric(textBox.Text) == false)
+                if (isTextNumeric(textBox.Text) == false)
+                {
+                    return (prevText, Result.NotNumber);
+                }
+
+                switch (numType)
+                {
+                    case NumberType.Integer:
+                        if (maxValue < uint.Parse(textBox.Text))
+                        {
+                            return (prevText, Result.ExceedMax);
+                        }
+                        break;
+                    case NumberType.Float:
+                        string currentValue = textBox.Text;
+                        if (currentValue.EndsWith('.') == true)
+                        {
+                            currentValue = currentValue[..^1];
+                        }
+                        if (maxValue < float.Parse(currentValue))
+                        {
+                            return (prevText, Result.ExceedMax);
+                        }
+                        break;
+                }
+            }
+            catch (Exception)
             {
                 return (prevText, Result.NotNumber);
-            }
-
-            if(maxValue < uint.Parse(textBox.Text))
-            {
-                return (prevText, Result.ExceedMax);
             }
 
             prevText = textBox.Text;
@@ -62,6 +101,8 @@ namespace SapphireXR_App.Common
                     "the value of \"flowControllerID\", the second argument of the validate method \"" + flowControllerID + "\" is not valid");
             }
         }
+
+        private NumberType numType;
     }
     
     internal abstract class FlowControllerDataGridTextColumnTextBoxValidater
@@ -77,14 +118,14 @@ namespace SapphireXR_App.Common
             };
         }
 
-        protected abstract FlowControllerTextBoxValidater CreateValidater();
+        protected abstract FlowControllerTextBoxValidater CreateValidater(FlowControllerTextBoxValidater.NumberType numberType);
 
-        protected FlowControllerTextBoxValidater get(TextBox textBox)
+        protected FlowControllerTextBoxValidater get(TextBox textBox, FlowControllerTextBoxValidater.NumberType numberType)
         {
             FlowControllerTextBoxValidater? validater = null;
             if (prevTexts.TryGetValue(textBox, out validater) == false)
             {
-                validater = CreateValidater();
+                validater = CreateValidater(numberType);
                 prevTexts.Add(textBox, validater);
             }
             return validater;
@@ -96,36 +137,36 @@ namespace SapphireXR_App.Common
     {
         internal FlowControllerDataGridTextColumnTextBoxValidaterOnlyNumber(ObservableObject viewModel, string recipesPropertyName) : base(viewModel, recipesPropertyName) { }
 
-        protected override FlowControllerTextBoxValidater CreateValidater()
+        protected override FlowControllerTextBoxValidater CreateValidater(FlowControllerTextBoxValidater.NumberType numberType)
         {
-            return new FlowControllerTextBoxValidaterOnlyNumber();
+            return new FlowControllerTextBoxValidaterOnlyNumber(numberType);
         }
 
-        public string validate(TextBox textBox)
+        public string validate(TextBox textBox, FlowControllerTextBoxValidater.NumberType numberType)
         {
-            return ((FlowControllerTextBoxValidaterOnlyNumber)get(textBox)).valdiate(textBox);
+            return ((FlowControllerTextBoxValidaterOnlyNumber)get(textBox, numberType)).valdiate(textBox);
         }
     }
     internal class FlowControllerDataGridTextColumnTextBoxValidaterMaxValue: FlowControllerDataGridTextColumnTextBoxValidater
     {
         internal FlowControllerDataGridTextColumnTextBoxValidaterMaxValue(ObservableObject viewModel, string recipesPropertyName): base(viewModel, recipesPropertyName) { }
 
-        protected override FlowControllerTextBoxValidater CreateValidater()
+        protected override FlowControllerTextBoxValidater CreateValidater(FlowControllerTextBoxValidater.NumberType numberType)
         {
-            return new FlowControllerTextBoxValidaterMaxValue();
+            return new FlowControllerTextBoxValidaterMaxValue(numberType);
         }
 
-        public (string, FlowControllerTextBoxValidaterMaxValue.Result) validate(TextBox textBox, string flowControllerID)
+        public (string, FlowControllerTextBoxValidaterMaxValue.Result) validate(TextBox textBox, string flowControllerID, FlowControllerTextBoxValidater.NumberType numberType)
         {
-            return ((FlowControllerTextBoxValidaterMaxValue)get(textBox)).valdiate(textBox, flowControllerID);
+            return ((FlowControllerTextBoxValidaterMaxValue)get(textBox, numberType)).valdiate(textBox, flowControllerID);
         }
 
-        public (string, FlowControllerTextBoxValidaterMaxValue.Result) validate(TextBox textBox, uint maxValue)
+        public (string, FlowControllerTextBoxValidaterMaxValue.Result) validate(TextBox textBox, uint maxValue, FlowControllerTextBoxValidater.NumberType numberType)
         {
-            return ((FlowControllerTextBoxValidaterMaxValue)get(textBox)).valdiate(textBox, maxValue);
+            return ((FlowControllerTextBoxValidaterMaxValue)get(textBox, numberType)).valdiate(textBox, maxValue);
         }
 
-        public (string?, FlowControllerTextBoxValidaterMaxValue.Result) validate(TextBox textBox, TextChangedEventArgs e)
+        public (string?, FlowControllerTextBoxValidaterMaxValue.Result) validate(TextBox textBox, TextChangedEventArgs e, FlowControllerTextBoxValidater.NumberType numberType)
         {
             DataGridCell? dataGridCell = textBox.Parent as DataGridCell;
             if (dataGridCell != null)
@@ -134,9 +175,9 @@ namespace SapphireXR_App.Common
                 if (flowControlField != null)
                 {
                     string? flowControllerID = null;
-                    if (Util.RecipeFlowControlFieldToControllerID.TryGetValue(flowControlField, out flowControllerID) == true)
+                    if (Util.RecipeColumnHeaderToControllerID.TryGetValue(flowControlField, out flowControllerID) == true)
                     {
-                        return validate(textBox, flowControllerID);
+                        return validate(textBox, flowControllerID, numberType);
                     }
                 }
             }

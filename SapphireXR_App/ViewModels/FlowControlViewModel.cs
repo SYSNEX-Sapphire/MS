@@ -86,7 +86,7 @@ namespace SapphireXR_App.ViewModels
             PopupExResult = PopupExResult.Confirm;
             if (Confirmed!(PopupExResult.Confirm, new ControlValues
             {
-                targetValue = (string.IsNullOrEmpty(TargetValue) ? null : int.Parse(TargetValue)),
+                targetValue = (string.IsNullOrEmpty(TargetValue) ? null : float.Parse(TargetValue)),
                 rampTime = (string.IsNullOrEmpty(RampTime) ? null : short.Parse(RampTime))
             }) == true)
             {
@@ -135,21 +135,21 @@ namespace SapphireXR_App.ViewModels
             CurrentValue = string.Empty;
             ControlValue = string.Empty;
             int? redMaxValue = SettingViewModel.ReadMaxValue(fcID);
-            if (redMaxValue != null)
+            if (redMaxValue != null && redMaxValue != 0)
             {
-                MaxValue = (int)redMaxValue;
+                MaxValue = redMaxValue.Value;
             }
             else
             {
                 throw new Exception("Faiure happend in reading max value for flow control view window. Logic error in FlowControlViewModel constructor: "
-                       + "the value of \"fcID\", the third argument of the constructor \"" + fcID + "\" is not valid flow controller ID");
+                       + "the value of \"fcID\", the third argument of the constructor \"" + fcID + "\" is not valid flow controller ID:" + redMaxValue == null ? "Null" : redMaxValue.ToString());
             }
             FontColor = OnNormal;
             PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
             {
                 if(e.PropertyName == "CurrentValue" || e.PropertyName == "ControlValue")
                 {
-                    if (CurrentValue != string.Empty && ControlValue != string.Empty && 0 != MaxValue)
+                    if (CurrentValue != string.Empty && ControlValue != string.Empty)
                     {
                         Deviation = Util.FloatingPointStrWithMaxDigit((((float)(Math.Abs(float.Parse(CurrentValue) - float.Parse(ControlValue))) / ((float)MaxValue)) * 100.0f), AppSetting.FloatingPointMaxNumberDigit);
                     }
@@ -163,7 +163,7 @@ namespace SapphireXR_App.ViewModels
 
         public struct ControlValues
         {
-            public int? targetValue;
+            public float? targetValue;
             public short? rampTime;
         }
 

@@ -61,7 +61,7 @@ namespace SapphireXR_App.Views
                 ManualBatchViewModel.AnalogIOUserState? dataContext = textBox.DataContext as ManualBatchViewModel.AnalogIOUserState;
                 if (dataContext != null)
                 {
-                    Util.CostraintTextBoxColumnMaxNumber(textBox, flowControllerDataGridTextColumnTextBoxValidaterMaxValue, (uint)dataContext.MaxValue);
+                    Util.CostraintTextBoxColumnMaxNumber(textBox, flowControllerDataGridTextColumnTextBoxValidaterMaxValue, (uint)dataContext.MaxValue, FlowControllerTextBoxValidater.NumberType.Float);
                 }
             }
         }

@@ -321,7 +321,7 @@ namespace SapphireXR_App.Models
             }
         }
 
-        public static void WriteFlowControllerTargetValue(string controllerID, int targetValue, short rampTime)
+        public static void WriteFlowControllerTargetValue(string controllerID, float targetValue, short rampTime)
         {
             int controllerIDIndex = dIndexController[controllerID];
             float? targetValueMappingFactor = aTargetValueMappingFactor[controllerIDIndex];

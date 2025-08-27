@@ -20,9 +20,9 @@ VAR_GLOBAL
 	aController 			: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF FB_ControlRampGenerator; //MFC, EPC 0 ~ 5V
 	aController_PV 			: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF REAL; //Present Value from Device
 	aController_CV 			: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF REAL; //Current Value from RampingController
-	temperatureTV : INT := -1;
-	pressureTV : INT := -1;
-	rotationTV : INT := -1;
+	temperatureTV : REAL := -1;
+	pressureTV : REAL := -1;
+	rotationTV : REAL := -1;
 	
 	(* Present Value Meter Display*)
 	aMonitoring_PV 			: ARRAY[1..17] OF REAL; //Gauge Monitoring Value to UI

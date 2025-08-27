@@ -138,8 +138,8 @@
                             <Thickness Right="{StaticResource p_2}" Bottom="{StaticResource p_2}" />
                         </TextBox.Margin>
                     </TextBox>
-                    <local:NumberBox Grid.Row="3" x:Name="rampingTime" Grid.Column="1" Width="176" Height="26" Text="{Binding CurrentBatch.RampingTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource rampingTimeValueConverter}}" IsEnabled="{Binding RampingTimeEnabled}" LostFocus="NumberBox_LostFocus">
-                        <local:NumberBox.Style>
+                    <local:IntegerBox Grid.Row="3" x:Name="rampingTime" Grid.Column="1" Width="176" Height="26" Text="{Binding CurrentBatch.RampingTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource rampingTimeValueConverter}}" IsEnabled="{Binding RampingTimeEnabled}" LostFocus="NumberBox_LostFocus">
+                        <local:IntegerBox.Style>
                             <Style TargetType="local:NumberBox" BasedOn="{StaticResource DefaultTextBox}">
                                 <Setter Property="Template">
                                     <Setter.Value>
@@ -175,11 +175,11 @@
                                     </Setter.Value>
                                 </Setter>
                             </Style>
-                        </local:NumberBox.Style>
+                        </local:IntegerBox.Style>
                         <TextBox.Margin>
                             <Thickness Bottom="{StaticResource p_2}" />
                         </TextBox.Margin>
-                    </local:NumberBox>
+                    </local:IntegerBox>
                 </Grid>
                 <DataGrid x:Name="dgUserSettingA" Height="360" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding CurrentBatch.AnalogIOUserStates}" CellEditEnding="dgUserSettingA_CellEditEnding" Style="{StaticResource ManualBatchViewDataGrid}">
                     <DataGrid.Margin>

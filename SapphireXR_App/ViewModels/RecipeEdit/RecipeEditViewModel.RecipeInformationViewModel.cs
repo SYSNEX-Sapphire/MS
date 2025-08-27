@@ -108,7 +108,7 @@ namespace SapphireXR_App.ViewModels
 
                 try
                 {
-                    int sTempDiff = currentStep.STemp;
+                    float sTempDiff = currentStep.STemp;
                     if (prevStep != null)
                     {
                         sTempDiff = Math.Abs(sTempDiff - prevStep.STemp);
@@ -130,7 +130,7 @@ namespace SapphireXR_App.ViewModels
 
                 try
                 {
-                    int rPressDiff = currentStep.RPress;
+                    float rPressDiff = currentStep.RPress;
                     if (prevStep != null)
                     {
                         rPressDiff = Math.Abs(rPressDiff - prevStep.RPress);
@@ -264,11 +264,11 @@ namespace SapphireXR_App.ViewModels
             [ObservableProperty]
             private int? _totalStepNumber = null;
             [ObservableProperty]
-            private int? _rampingRateTemp = null;
+            private float? _rampingRateTemp = null;
             [ObservableProperty]
-            private int? _rampingRatePress = null;
+            private float? _rampingRatePress = null;
             [ObservableProperty]
-            private int? _totalFlowRate = null;
+            private float? _totalFlowRate = null;
 
             private Recipe? prevStep = null;
             private Recipe? currentStep = null;

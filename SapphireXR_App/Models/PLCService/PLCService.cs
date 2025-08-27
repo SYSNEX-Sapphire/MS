@@ -239,9 +239,9 @@ namespace SapphireXR_App.Models
             dPLCConnectionPublisher = ObservableManager<PLCConnection>.Get("PLCService.Connected");
             dControlModeChangingPublisher = ObservableManager<ControlMode>.Get("ControlModeChanging");
             ObservableManager<bool>.Subscribe("Leak Test Mode", leakTestModeSubscriber = new LeakTestModeSubscriber());
-            temperatureTVPublisher = ObservableManager<short>.Get("TemperatureTV");
-            pressureTVPublisher = ObservableManager<short>.Get("PressureTV");
-            rotationTVPublisher = ObservableManager<short>.Get("RotationTV");
+            temperatureTVPublisher = ObservableManager<float>.Get("TemperatureTV");
+            pressureTVPublisher = ObservableManager<float>.Get("PressureTV");
+            rotationTVPublisher = ObservableManager<float>.Get("RotationTV");
         }
 
         public static void AddPLCStateUpdateTask(Action task)

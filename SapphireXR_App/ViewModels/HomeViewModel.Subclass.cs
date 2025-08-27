@@ -115,25 +115,25 @@ namespace SapphireXR_App.ViewModels
             private HomeViewModel homeViewModel;
         }
 
-        private class ReactorTargetValueSubscriber : IObserver<short>
+        private class ReactorTargetValueSubscriber : IObserver<float>
         {
             internal ReactorTargetValueSubscriber(Action<string> onNewValueAct)
             {
                 onNewValue = onNewValueAct;
             }
-            void IObserver<short>.OnCompleted()
+            void IObserver<float>.OnCompleted()
             {
                 throw new NotImplementedException();
             }
-            void IObserver<short>.OnError(Exception error)
+            void IObserver<float>.OnError(Exception error)
             {
                 throw new NotImplementedException();
             }
-            void IObserver<short>.OnNext(short value)
+            void IObserver<float>.OnNext(float value)
             {
                 if (prevTemperatureTV != value)
                 {
-                    onNewValue(0 <= value ? value.ToString() : "");
+                    onNewValue(0 <= value ? Util.FloatingPointStrWithMaxDigit(value, 3) : "");
                     prevTemperatureTV = value;
                 }
             }

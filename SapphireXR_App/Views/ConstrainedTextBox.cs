@@ -3,12 +3,16 @@ using System.Windows.Controls;
 using System.Windows;
 
 namespace SapphireXR_App.Views
-{    public class NumberBox : TextBox
+{   public class NumberBox : TextBox
     {
-        public NumberBox() : base()
+        public NumberBox(FlowControllerTextBoxValidater.NumberType numberType) : base()
         {
             TextChanged += OnlyAllowNumber;
-            flowControllerTextBoxValidaterOnlyNumber = new FlowControllerTextBoxValidaterOnlyNumber();
+            flowControllerTextBoxValidaterOnlyNumber = new FlowControllerTextBoxValidaterOnlyNumber(numberType);
+            if (numberType == FlowControllerTextBoxValidater.NumberType.Float)
+            {
+                LostFocus += Util.TrimLastDotOnLostFocus;
+            }
         }
 
         protected void OnlyAllowNumber(object sender, TextChangedEventArgs e)
@@ -30,12 +34,28 @@ namespace SapphireXR_App.Views
         private FlowControllerTextBoxValidaterOnlyNumber flowControllerTextBoxValidaterOnlyNumber;
     }
 
+    public class IntegerBox: NumberBox
+    {
+        public IntegerBox(): base(FlowControllerTextBoxValidater.NumberType.Integer)
+        { }
+    }
+
+    public class FloatingPointBox : NumberBox
+    {
+        public FloatingPointBox() : base(FlowControllerTextBoxValidater.NumberType.Float)
+        { }
+    }
+
     public class NumberBoxWithMax : TextBox
     {
-        public NumberBoxWithMax() : base()
+        public NumberBoxWithMax(FlowControllerTextBoxValidater.NumberType numberType) : base()
         {
-            flowControllerTextBoxValidater = new FlowControllerTextBoxValidaterMaxValue();
+            flowControllerTextBoxValidater = new FlowControllerTextBoxValidaterMaxValue(numberType);
             TextChanged += onlyAllowNumberWithMax;
+            if(numberType == FlowControllerTextBoxValidater.NumberType.Float)
+            {
+                LostFocus += Util.TrimLastDotOnLostFocus;
+            }
         }
 
         protected void onlyAllowNumberWithMax(object sender, TextChangedEventArgs e)
@@ -64,5 +84,17 @@ namespace SapphireXR_App.Views
 
         private static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(int), typeof(NumberBoxWithMax), new PropertyMetadata(int.MinValue));
         private FlowControllerTextBoxValidaterMaxValue flowControllerTextBoxValidater;
+    }
+
+    public class IntegerBoxWithMax : NumberBoxWithMax
+    {
+        public IntegerBoxWithMax() : base(FlowControllerTextBoxValidater.NumberType.Integer)
+        { }
+    }
+
+    public class FloatingPointBoxWithMax : NumberBoxWithMax
+    {
+        public FloatingPointBoxWithMax() : base(FlowControllerTextBoxValidater.NumberType.Float)
+        { }
     }
 }

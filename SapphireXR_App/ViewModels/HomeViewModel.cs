@@ -95,9 +95,9 @@ namespace SapphireXR_App.ViewModels
             ObservableManager<BitArray>.Subscribe("DigitalOutput3", digitalOutput3Subscriber = new DigitalOutput3Subscriber(this));
             ObservableManager<short>.Subscribe("ThrottleValveStatus", throttleValveStatusSubscriber = new ThrottleValveStatusSubscriber(this));
             ObservableManager<bool>.Subscribe("RecipeRunViewModel.RecipeEnded", recipeEndedSubscriber = new RecipeEndedSubscriber(this));
-            ObservableManager<short>.Subscribe("TemperatureTV", temperatureTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetTemp = newValue));
-            ObservableManager<short>.Subscribe("PressureTV", pressureTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetPress = newValue));
-            ObservableManager<short>.Subscribe("RotationTV", rotationTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetRotation = newValue));
+            ObservableManager<float>.Subscribe("TemperatureTV", temperatureTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetTemp = newValue));
+            ObservableManager<float>.Subscribe("PressureTV", pressureTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetPress = newValue));
+            ObservableManager<float>.Subscribe("RotationTV", rotationTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetRotation = newValue));
 
             ThrottleValveControlModes = ["Control", "Open", "Close", "Hold", "Reset"];
 

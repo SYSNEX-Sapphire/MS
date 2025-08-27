@@ -469,9 +469,9 @@ namespace SapphireXR_App.ViewModels
             [ObservableProperty]
             private int? _pauseTime = null;
             [ObservableProperty]
-            private int? _currentWaitTemp = null;
+            private float? _currentWaitTemp = null;
             [ObservableProperty]
-            private int? _totalWaitTemp = null;
+            private float? _totalWaitTemp = null;
 
             public Recipe? currentRecipe = null;
             public int currentRecipeIndex = -1;

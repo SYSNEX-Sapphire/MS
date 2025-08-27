@@ -44,42 +44,18 @@ namespace SapphireXR_App.Common
 
         public static bool IsTextNumeric(string str)
         {
-            return reg.IsMatch(str);
+            return regUint.IsMatch(str);
 
         }
-        static readonly System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex("^\\d+$");
 
-        static public bool CheckValid(string curStr, string newStr, int caretPosition, int maxValue)
+        public static bool IsTextFloatintgPoint(string str)
         {
-            if (IsTextNumeric(newStr) == true)
-            {
-                
-                string nextValueStr = curStr.Substring(0, caretPosition) + newStr + curStr.Substring(caretPosition);
-                int nextValue = int.Parse(nextValueStr);
-                if (nextValue <= maxValue)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false; ;
-            }
+            return regUFloat.IsMatch(str) || regUFloatADotPostFix.IsMatch(str);
         }
 
-        public static void OnlyAllowNumber(RoutedEventArgs e, string textInput)
-        {
-            e.Handled = !IsTextNumeric(textInput);
-        }
-
-        public static void OnlyAllowConstrainedNumber(RoutedEventArgs e, string curStr,  string newStr, int caretPosition, int maxValue)
-        {
-            e.Handled = !CheckValid(curStr, newStr, caretPosition, maxValue);
-        }
+        static readonly System.Text.RegularExpressions.Regex regUint = new System.Text.RegularExpressions.Regex("^\\d+$");
+        static readonly System.Text.RegularExpressions.Regex regUFloat = new System.Text.RegularExpressions.Regex("^\\d*\\.?\\d*$");
+        static readonly System.Text.RegularExpressions.Regex regUFloatADotPostFix = new System.Text.RegularExpressions.Regex("^\\d*\\.$");
 
         public static string GetResourceAbsoluteFilePath(string subPath)
         {
@@ -100,12 +76,13 @@ namespace SapphireXR_App.Common
             }
         }
 
-        public static void CostraintTextBoxColumnOnlyNumber(object sender, FlowControllerDataGridTextColumnTextBoxValidaterOnlyNumber flowControllerDataGridTextColumnTextBoxValidaterOnlyNumber)
+        public static void CostraintTextBoxColumnOnlyNumber(object sender, FlowControllerDataGridTextColumnTextBoxValidaterOnlyNumber flowControllerDataGridTextColumnTextBoxValidaterOnlyNumber,
+            FlowControllerTextBoxValidater.NumberType numberType)
         {
             TextBox? textBox = sender as TextBox;
             if (textBox != null)
             {
-                string validatedStr = flowControllerDataGridTextColumnTextBoxValidaterOnlyNumber.validate(textBox);
+                string validatedStr = flowControllerDataGridTextColumnTextBoxValidaterOnlyNumber.validate(textBox, numberType);
                 if (validatedStr != textBox.Text)
                 {
                     int textCaret = Math.Max(textBox.CaretIndex - 1, 0);
@@ -115,12 +92,13 @@ namespace SapphireXR_App.Common
             }
         }
 
-        public static void CostraintTextBoxColumnMaxNumber(object sender, FlowControllerDataGridTextColumnTextBoxValidaterMaxValue flowControllerDataGridTextColumnTextBoxValidaterMaxValue, uint maxValue)
+        public static void CostraintTextBoxColumnMaxNumber(object sender, FlowControllerDataGridTextColumnTextBoxValidaterMaxValue flowControllerDataGridTextColumnTextBoxValidaterMaxValue, 
+            uint maxValue, FlowControllerTextBoxValidater.NumberType numberType)
         {
             TextBox? textBox = sender as TextBox;
             if (textBox != null)
             {
-                (string valiatedStr, FlowControllerTextBoxValidaterMaxValue.Result result) = flowControllerDataGridTextColumnTextBoxValidaterMaxValue.validate(textBox, maxValue);
+                (string valiatedStr, FlowControllerTextBoxValidaterMaxValue.Result result) = flowControllerDataGridTextColumnTextBoxValidaterMaxValue.validate(textBox, maxValue, numberType);
                 if (FlowControllerTextBoxValidaterMaxValue.Result.NotNumber <= result && result <= FlowControllerTextBoxValidaterMaxValue.Result.ExceedMax)
                 {
                     int textCaret = Math.Max(textBox.CaretIndex - 1, 0);
@@ -130,12 +108,13 @@ namespace SapphireXR_App.Common
             }
         }
 
-        public static void CostraintTextBoxColumnMaxNumber(object sender, FlowControllerDataGridTextColumnTextBoxValidaterMaxValue flowControllerDataGridTextColumnTextBoxValidaterMaxValue, TextChangedEventArgs e)
+        public static void CostraintTextBoxColumnMaxNumber(object sender, FlowControllerDataGridTextColumnTextBoxValidaterMaxValue flowControllerDataGridTextColumnTextBoxValidaterMaxValue, TextChangedEventArgs e,
+            FlowControllerTextBoxValidater.NumberType numberType)
         {
             TextBox? textBox = sender as TextBox;
             if (textBox != null)
             {
-                (string? validatedStr, FlowControllerTextBoxValidaterMaxValue.Result result) = flowControllerDataGridTextColumnTextBoxValidaterMaxValue.validate(textBox, e);
+                (string? validatedStr, FlowControllerTextBoxValidaterMaxValue.Result result) = flowControllerDataGridTextColumnTextBoxValidaterMaxValue.validate(textBox, e, numberType);
                 if (FlowControllerTextBoxValidaterMaxValue.Result.NotNumber <= result && result <= FlowControllerTextBoxValidaterMaxValue.Result.ExceedMax)
                 {
                     int caretIndex = Math.Max(textBox.CaretIndex - 1, 0);
@@ -275,6 +254,29 @@ namespace SapphireXR_App.Common
             }
         }
 
+        public static void TrimLastDotOnLostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox? textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                textBox.Text = textBox.Text.TrimEnd('.');
+            }
+        }
+
+        public static void ShowFlowControllersMaxValueExceededIfExist(HashSet<string>? fcMaxValueExceeded)
+        {
+            if(fcMaxValueExceeded != null && 0 < fcMaxValueExceeded.Count)
+            {
+                string message = "Recipe를 읽어오는 중 최대값을 초과한 Flow Controller 값들이 발견되었습니다. 이 값들은 최대값으로 강제됩니다:\r\n";
+                foreach (string flowController in fcMaxValueExceeded)
+                {
+                    message += flowController + " = " + SettingViewModel.ReadMaxValue(flowController) + "\r\n";
+                }
+                
+                MessageBox.Show(message);
+            }
+        }
+
         public static void ConstraintEmptyToZeroOnDataGridCellCommitForRecipeRunEdit(object sender, DataGridCellEditEndingEventArgs e)
         {
             ConstraintEmptyToZeroOnDataGridCellCommit(sender, e, ["Ramp", "Hold", "M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "E01", "E02", "E03", "E04",
@@ -288,7 +290,17 @@ namespace SapphireXR_App.Common
             { "M11", "MFC11" }, { "M12", "MFC12" }, { "M13", "MFC13" }, { "M14", "MFC14" }, { "M15",  "MFC15" },
             { "M16", "MFC16" }, { "M17", "MFC17" }, { "M18", "MFC18" }, {"M19", "MFC19"  },
             { "E01", "EPC01" },  { "E02", "EPC02" }, { "E03", "EPC03" }, { "E04", "EPC04" }, { "E05", "EPC05" },
-            { "E06", "EPC06" }, { "E07", "EPC07" }, { "STemp", "Temperature" }, { "RPress", "Pressure" }, { "SRotation", "Rotation" }
+            { "E06", "EPC06" }, { "E07", "EPC07" }, { "STemp", "Temperature" }, { "RPress", "Pressure" }, { "SRotation", "Rotation" },
+        };
+
+        public static readonly Dictionary<string, string> RecipeColumnHeaderToControllerID = new Dictionary<string, string>
+        {
+            { "M01", "MFC01" }, { "M02", "MFC02" }, { "M03", "MFC03" }, { "M04", "MFC04" }, { "M05", "MFC05" },
+            { "M06", "MFC06" }, { "M07", "MFC07" }, { "M08", "MFC08" }, { "M09", "MFC09" }, { "M10", "MFC10" },
+            { "M11", "MFC11" }, { "M12", "MFC12" }, { "M13", "MFC13" }, { "M14", "MFC14" }, { "M15",  "MFC15" },
+            { "M16", "MFC16" }, { "M17", "MFC17" }, { "M18", "MFC18" }, {"M19", "MFC19"  },
+            { "E01", "EPC01" },  { "E02", "EPC02" }, { "E03", "EPC03" }, { "E04", "EPC04" }, { "E05", "EPC05" },
+            { "E06", "EPC06" }, { "E07", "EPC07" }, { "Susceptor Temp.", "Temperature" }, { "Reactor Press.", "Pressure" }, { "Sus. Rotation", "Rotation" },
         };
     }
 }

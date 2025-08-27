@@ -226,9 +226,9 @@ namespace SapphireXR_App.Models
         private static ObservableManager<BitArray>.Publisher? dLogicalInterlockStateIssuer;
         private static ObservableManager<PLCConnection>.Publisher? dPLCConnectionPublisher;
         private static ObservableManager<ControlMode>.Publisher? dControlModeChangingPublisher;
-        private static ObservableManager<short>.Publisher? temperatureTVPublisher;
-        private static ObservableManager<short>.Publisher? pressureTVPublisher; 
-        private static ObservableManager<short>.Publisher? rotationTVPublisher;
+        private static ObservableManager<float>.Publisher? temperatureTVPublisher;
+        private static ObservableManager<float>.Publisher? pressureTVPublisher; 
+        private static ObservableManager<float>.Publisher? rotationTVPublisher;
 
         private static LeakTestModeSubscriber? leakTestModeSubscriber = null;
 
