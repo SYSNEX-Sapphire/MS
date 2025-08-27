@@ -27,7 +27,7 @@ namespace SapphireXR_App.ViewModels
         public partial class AnalogIOUserState: IOUserState
         {
             [ObservableProperty]
-            private int _value;
+            private float _value;
 
             [ObservableProperty]
             private int _maxValue;
@@ -240,11 +240,11 @@ namespace SapphireXR_App.ViewModels
             foreach(string flowController in PLCService.RecipeFlowControllers)
             {
                 string fullName = Util.RecipeFlowControlFieldToControllerID[flowController];
-                newBatch.AnalogIOUserStates.Add(new AnalogIOUserState() { ID = flowController, MaxValue = (int)SettingViewModel.ReadMaxValue(fullName)!, FullIDName = fullName });
+                newBatch.AnalogIOUserStates.Add(new AnalogIOUserState() { ID = flowController, MaxValue = (int)SettingViewModel.ReadMaxValue(fullName)!, FullIDName = fullName, Name = SettingViewModel.ReadFlowControllerDeviceName(fullName)! });
             }
             foreach(string valve in PLCService.RecipeValves)
             {
-                newBatch.DigitalIOUserStates.Add(new DigitalIOUserState() { ID = valve });
+                newBatch.DigitalIOUserStates.Add(new DigitalIOUserState() { ID = valve, Name = SettingViewModel.ReadValveDeviceName(valve)! });
             }
          
             Batches.Add(newBatch);

@@ -80,6 +80,11 @@ namespace SapphireXR_App.Views
             }
         }
 
+        private void TextBox_LostFocusTrimLastDot(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Util.TrimLastDotOnLostFocus(sender, e);
+        }
+
         private void OnClose(object sender, RoutedEventArgs e)
         {
             CancelEventArgs cancelEventArgs = new CancelEventArgs();

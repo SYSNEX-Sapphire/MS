@@ -313,9 +313,9 @@ namespace SapphireXR_App.Models
             WriteFirstInterlockSetting(true, 1);
         }
 
-        public static void WriteFlowControllerTargetValue((string, int)[] aControllerIdTargetValues, short rampTime)
+        public static void WriteFlowControllerTargetValue((string, float)[] aControllerIdTargetValues, short rampTime)
         {
-            foreach((string id, int targetValue) in aControllerIdTargetValues)
+            foreach((string id, float targetValue) in aControllerIdTargetValues)
             {
                 WriteFlowControllerTargetValue(Util.RecipeFlowControlFieldToControllerID[id], targetValue, rampTime);
             }
