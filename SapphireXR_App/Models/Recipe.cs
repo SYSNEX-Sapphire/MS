@@ -327,14 +327,15 @@ namespace SapphireXR_App.Models
             aRecipeFloat[9] = rhs.M10;
             aRecipeFloat[10] = rhs.M11;
             aRecipeFloat[11] = rhs.M12;
-            aRecipeFloat[19] = rhs.E01;
-            aRecipeFloat[20] = rhs.E02;
-            aRecipeFloat[21] = rhs.E03;
-            aRecipeFloat[22] = rhs.E04;
-            aRecipeFloat[26] = rhs.STemp;
-            aRecipeFloat[27] = rhs.RPress;
-            aRecipeFloat[28] = rhs.SRotation;
-            aRecipeFloat[29] = rhs.cTemp;
+            aRecipeFloat[12] = rhs.E01;
+            aRecipeFloat[13] = rhs.E02;
+            aRecipeFloat[14] = rhs.E03;
+            aRecipeFloat[15] = rhs.E04;
+            aRecipeFloat[16] = rhs.STemp;
+            aRecipeFloat[17] = rhs.RPress;
+            aRecipeFloat[18] = rhs.SRotation;
+            
+            cTemp = rhs.cTemp;
 
             //BitArray from Valve Data
             BitArray aRecipeBit = new(32);
@@ -372,9 +373,10 @@ namespace SapphireXR_App.Models
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
         public short[] aRecipeShort = new short[5];
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 30)]
-        public float[] aRecipeFloat = new float[30];
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 19)]
+        public float[] aRecipeFloat = new float[19];
 
+        public float cTemp;
         public int iValve;
     }
 }
