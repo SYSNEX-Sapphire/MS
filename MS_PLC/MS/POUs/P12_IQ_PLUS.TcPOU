@@ -38,6 +38,8 @@ VAR
 	wByteCDG2_PV 			: WORD; //CDG2 Current Pressure
 	wByteValvePosition_PV : WORD; //Current Valve Position (0~100%)
 	nInputStatusOld : USINT := 9; //Value Change Monitoring, First Temp value
+	wByteValvePosition_PV_Monitoring: WORD;
+	CDG1_RealValue: REAL;
 END_VAR
 
 VAR CONSTANT
@@ -80,9 +82,16 @@ GVL_IO.aMonitoring_PV[E_Morning_Index.E_Morning_TV_Position] := wByteValvePositi
 wByteCDG1_PV 		:= USINT_TO_WORD_jh(GVL_DEVICE_NET_IQ_PLUS.aInputPressurePV_CDG1);
 wByteCDG2_PV 		:= USINT_TO_WORD_jh(GVL_DEVICE_NET_IQ_PLUS.aInputPressurePV_CDG2);
 wByteValvePosition_PV:= USINT_TO_WORD_jh(GVL_DEVICE_NET_IQ_PLUS.aInputValvePosionPV);
+wByteValvePosition_PV_Monitoring:=REAL_TO_WORD(wByteValvePosition_PV/SetPointFactor);
+GVL_IO.aMonitoring_PV[11] := wByteValvePosition_PV_Monitoring;
+
+
 wControlValue		:= GVL_IO.wIqPlus_CV;
 
 //From IQ Plus
+CDG1_RealValue :=wByteCDG1_PV/PressureFactor; 
+
+
 GVL_IO.wIqPlus_CDG1_PV 	:= REAL_TO_WORD(wByteCDG1_PV/PressureFactor);
 GVL_IO.wIqPlus_CDG2_PV 	:= REAL_TO_WORD(wByteCDG2_PV/PressureFactor);
 
@@ -173,7 +182,16 @@ GVL_IO_REACTOR_CABINET.DO_05_VacuumPumpReset := bPumpReset;]]></ST>
       <LineId Id="27" Count="0" />
       <LineId Id="2" Count="0" />
       <LineId Id="26" Count="0" />
-      <LineId Id="5" Count="10" />
+      <LineId Id="5" Count="3" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="9" Count="2" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="12" Count="3" />
       <LineId Id="98" Count="0" />
       <LineId Id="97" Count="0" />
       <LineId Id="18" Count="7" />

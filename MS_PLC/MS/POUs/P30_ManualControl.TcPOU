@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
-  <POU Name="P30_ManualControl" Id="{87edd900-96de-41d7-b820-4b4e090513ec}" SpecialFunc="None">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="P30_ManualControl" Id="{1bb09c77-6d3f-460c-8adf-a95106aac779}" SpecialFunc="None">
     <Declaration><![CDATA[Program P30_ManualControl
 VAR
 	analogDeviceRampControl : FB_AnalogDeviceRampControl;

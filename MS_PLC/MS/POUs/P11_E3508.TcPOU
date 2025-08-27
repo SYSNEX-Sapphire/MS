@@ -53,7 +53,7 @@ bHeaterOn := GVL_COMMAND_FROM_UI.CMD_HEATER_MAIN_MC_ON;
 
 //jhkang 에전에는 인덕션 콘트롤러가 있었고 현재는 ssr다이렉트여서 io가 없어짐
 //bHeaterReset := GVL_IO.aOutputCmd[1].5;
-GVL_DEVICE_NET_E3508.nOutputManAutoBytes[1].0 := GVL_COMMAND_FROM_UI.CMD_E3508_MAN_AUTO; //Temp Controller Mode Command
+GVL_DEVICE_NET_E3508.nOutputManAutoBytes[1].0 := GVL_COMMAND_FROM_UI.CMD_E3508_MAN_AUTO; //Temp Controller Mode Command(*True:manual   False:auto*)
 
 (* Read from Power Distribution Pannel *)
 bInductionHeaterCB		:= GVL_IO_GAS_CABINET.DI_02_GraphiteHeaterELCB;
@@ -72,15 +72,15 @@ wE3508_P 				:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputProportional[1], GV
 wE3508_I 				:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputIntegral[1], GVL_DEVICE_NET_E3508.aInputIntegral[2]);
 wE3508_D 				:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputDerivative[1], GVL_DEVICE_NET_E3508.aInputDerivative[2]);
 
+//Temp Controller Alarm
+GVL_IO.aInputState[4].11 := GVL_DEVICE_NET_E3508.aInputAlarmStatus[1] > 0;
+GVL_IO.aInputState[4].12 := GVL_DEVICE_NET_E3508.aInputManAutoBytes[1] = 0; //(*True:manual   False:auto*)
+
 //bAlarmState_E3508 		:= nInputAlarmBytes.7;
 
 GVL_IO.aMonitoring_PV[10] := WORD_TO_REAL(wE3508_PowerRate)*0.1; //divided to 10 PowerRate
 
 (* Read from Induction Heater Value *)
-//에전에는 인덕션 콘트롤러가 있었지만 현재는 없어짐
-//isHeaterReady 			:= GVL_IO.aDigitalInputIO[2].2;
-//isHeaterRun		 		:= GVL_IO.aDigitalInputIO[2].3;
-//isHeaterFault 			:= GVL_IO.aDigitalInputIO[2].4;
 
 // Interface with other PRGs
 wControlValue			:= GVL_IO.wE3508_CV;
@@ -105,6 +105,10 @@ END_IF
 GVL_IO_GAS_CABINET.DO_07_GraphiteHeaterMC := bHeaterOn;
 //GVL_IO.aDigitalOutputIO[2].1 := bHeaterReset;
 GVL_IO.nE3508_nInputManAutoBytes := GVL_DEVICE_NET_E3508.aInputManAutoBytes[1]; //State
+
+
+GVL_DEVICE_NET_E3508.aOutputThreshold[1]:=232;
+GVL_DEVICE_NET_E3508.aOutputThreshold[2]:=3;
 ]]></ST>
     </Implementation>
     <LineIds Name="P11_E3508">
@@ -128,14 +132,15 @@ GVL_IO.nE3508_nInputManAutoBytes := GVL_DEVICE_NET_E3508.aInputManAutoBytes[1]; 
       <LineId Id="614" Count="0" />
       <LineId Id="282" Count="0" />
       <LineId Id="620" Count="0" />
-      <LineId Id="283" Count="4" />
+      <LineId Id="283" Count="3" />
+      <LineId Id="662" Count="0" />
+      <LineId Id="664" Count="1" />
+      <LineId Id="663" Count="0" />
+      <LineId Id="287" Count="0" />
       <LineId Id="531" Count="0" />
       <LineId Id="293" Count="0" />
       <LineId Id="548" Count="0" />
       <LineId Id="294" Count="0" />
-      <LineId Id="621" Count="0" />
-      <LineId Id="296" Count="0" />
-      <LineId Id="309" Count="1" />
       <LineId Id="558" Count="2" />
       <LineId Id="562" Count="0" />
       <LineId Id="254" Count="0" />
@@ -156,7 +161,10 @@ GVL_IO.nE3508_nInputManAutoBytes := GVL_DEVICE_NET_E3508.aInputManAutoBytes[1]; 
       <LineId Id="292" Count="0" />
       <LineId Id="382" Count="0" />
       <LineId Id="570" Count="0" />
+      <LineId Id="666" Count="1" />
       <LineId Id="556" Count="0" />
+      <LineId Id="669" Count="0" />
+      <LineId Id="668" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

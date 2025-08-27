@@ -16,7 +16,7 @@ GVL_IO.aInputState[1].7 := FALSE; //Induction Heater
 GVL_IO.aInputState[1].8 := FALSE; //Induction Heater
 
 //jhkang_  GVL_IO.aInputState[1].9	 , GVL_IO.aInputState[1].10 문의 필요
-GVL_IO.aInputState[1].9	:=GVL_IO_REACTOR_CABINET.DO_05_SusceptorRotationFWD; //Susceptor Rotation Motor
+GVL_IO.aInputState[1].9	:=GVL_IO_REACTOR_CABINET.DO_05_SusceptorRotationSTOP; //Susceptor Rotation Motor
 GVL_IO.aInputState[1].10:=GVL_IO_REACTOR_CABINET.DO_05_SusceptorRotationFWD; //Susceptor Rotation Motor
 GVL_IO.aInputState[1].11:=GVL_IO_REACTOR_CABINET.DI_02_SusceptorRotationMotorFault; //Susceptor Rotation Motor
 GVL_IO.aInputState[1].12 := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpWarning; //Vacuum Pump Warning
@@ -60,22 +60,22 @@ GVL_IO.aInputState[4].1:= GVL_IO_REACTOR_CABINET.DO_04_SignalTowerOrange;
 GVL_IO.aInputState[4].2:= GVL_IO_REACTOR_CABINET.DO_04_SignalTowerGreen;
 GVL_IO.aInputState[4].3:= GVL_IO_REACTOR_CABINET.DO_04_SignalTowerBlue;
 GVL_IO.aInputState[4].4:= GVL_IO_REACTOR_CABINET.DO_04_SignalTowerWhite;
-GVL_IO.aInputState[4].5:= FALSE;
-//jhkang 어떤 아이오인지 모르겠음
-GVL_IO.aInputState[4].6:= FALSE;
-//jhkang 아래 내용 재 확인 필요
-GVL_IO.aInputState[4].7:= GVL_DEVICE_NET_E3508.aInputAlarmStatus[1].7; // P11_E3508.bAlarmState_E3508
-//jhkang 아래 내용 재 확인 필요
-GVL_IO.aInputState[4].8:= GVL_DEVICE_NET_E3508.aInputAlarmStatus[1].7;//P11_E3508.bManAuto_E3508
-GVL_IO.aInputState[5].0:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus = 0;
-GVL_IO.aInputState[5].1:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus = 1;
-GVL_IO.aInputState[5].2:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus = 2;
-GVL_IO.aInputState[5].3:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus = 3;
-GVL_IO.aInputState[5].4:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus = 4;
-GVL_IO.aInputState[5].5:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus = 5;
-GVL_IO.aInputState[5].6:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus = 6;
-GVL_IO.aInputState[5].7:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus = 7; 
-GVL_IO.aInputState[5].0:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus = 8;
+GVL_IO.aInputState[4].5:= GVL_IO_REACTOR_CABINET.DO_04_SignalTowerBuzzer;
+GVL_IO.aInputState[4].6:= GVL_IO_GAS_CABINET.DI_04_GasDetectorH2;
+GVL_IO.aInputState[4].7:= GVL_IO_GAS_CABINET.DI_04_GasDetectorH2S;
+GVL_IO.aInputState[4].8:= GVL_IO_GAS_CABINET.DI_04_GasDetectorH2Se;
+GVL_IO.aInputState[4].9:= GVL_IO_GAS_CABINET.DI_04_FireSensor;
+
+
+GVL_IO.aInputState[5]:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus;
+
+GVL_IO.aInputState[6].4 := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpRunning;
+
+GVL_IO.aInputState[6].5 := GVL_IO_GAS_CABINET.DI_04_ExternalScrubberFault;
+GVL_IO.aInputState[6].6 := GVL_IO_GAS_CABINET.DI_05_ExternalH2GasCabinetFault;
+GVL_IO.aInputState[6].7 := GVL_IO_GAS_CABINET.DI_05_ExternalH2SGasCabinetFault;
+GVL_IO.aInputState[6].8 := GVL_IO_GAS_CABINET.DI_05_ExternalH2SeGasCabinetFault;
+GVL_IO.aInputState[6].9 := GVL_IO_GAS_CABINET.DI_05_ExternalUserInputAlarm;
 
 
 ]]></ST>
@@ -87,14 +87,17 @@ GVL_IO.aInputState[5].0:= GVL_DEVICE_NET_IQ_PLUS.nInputStatus = 8;
       <LineId Id="348" Count="11" />
       <LineId Id="361" Count="0" />
       <LineId Id="360" Count="0" />
-      <LineId Id="362" Count="4" />
-      <LineId Id="368" Count="0" />
-      <LineId Id="367" Count="0" />
-      <LineId Id="371" Count="0" />
+      <LineId Id="362" Count="5" />
       <LineId Id="370" Count="0" />
-      <LineId Id="373" Count="0" />
       <LineId Id="372" Count="0" />
-      <LineId Id="375" Count="8" />
+      <LineId Id="385" Count="1" />
+      <LineId Id="388" Count="0" />
+      <LineId Id="375" Count="0" />
+      <LineId Id="398" Count="0" />
+      <LineId Id="389" Count="0" />
+      <LineId Id="393" Count="0" />
+      <LineId Id="392" Count="0" />
+      <LineId Id="394" Count="3" />
       <LineId Id="374" Count="0" />
       <LineId Id="369" Count="0" />
       <LineId Id="82" Count="0" />

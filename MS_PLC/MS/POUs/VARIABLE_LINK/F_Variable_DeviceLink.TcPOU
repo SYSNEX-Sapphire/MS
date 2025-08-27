@@ -58,74 +58,6 @@ GVL_IO.aDigitalInputIO[6].5:=GVL_IO_GAS_CABINET.DI_06_Spare_02 ;
 GVL_IO.aDigitalInputIO[6].6:=GVL_IO_GAS_CABINET.DI_06_Spare_03 ;
 GVL_IO.aDigitalInputIO[6].7:=GVL_IO_GAS_CABINET.DI_06_Spare_04 ;
 
-GVL_IO.aDigitalOutputIO[1].0:=GVL_IO_GAS_CABINET.DO_07_SystemPowerOffLock ;
-GVL_IO.aDigitalOutputIO[1].1:=GVL_IO_GAS_CABINET.DO_07_ControlCabinetLamp ;
-GVL_IO.aDigitalOutputIO[1].2:=GVL_IO_GAS_CABINET.DO_07_GasCabinetLamp ;
-GVL_IO.aDigitalOutputIO[1].3:=GVL_IO_GAS_CABINET.DO_07_GraphiteHeaterMC ;
-GVL_IO.aDigitalOutputIO[1].4:=GVL_IO_GAS_CABINET.DO_07_ThermalBathsMC ;
-GVL_IO.aDigitalOutputIO[1].5:=GVL_IO_GAS_CABINET.DO_07_VacuumPumpMC ;
-GVL_IO.aDigitalOutputIO[1].6:=GVL_IO_GAS_CABINET.DO_07_LineHeatersMC ;
-GVL_IO.aDigitalOutputIO[1].7:=GVL_IO_GAS_CABINET.DO_07_ResetButtonLamp ;
-
-GVL_IO.aDigitalOutputIO[2].0:=GVL_IO_GAS_CABINET.DO_08_Spare_01 ;
-GVL_IO.aDigitalOutputIO[2].1:=GVL_IO_GAS_CABINET.DO_08_Spare_02 ;
-GVL_IO.aDigitalOutputIO[2].2:=GVL_IO_GAS_CABINET.DO_08_Spare_03 ;
-GVL_IO.aDigitalOutputIO[2].3:=GVL_IO_GAS_CABINET.DO_08_Spare_04 ;
-GVL_IO.aDigitalOutputIO[2].4:=GVL_IO_GAS_CABINET.DO_08_Spare_05 ;
-GVL_IO.aDigitalOutputIO[2].5:=GVL_IO_GAS_CABINET.DO_08_Spare_06 ;
-GVL_IO.aDigitalOutputIO[2].6:=GVL_IO_GAS_CABINET.DO_08_Spare_07 ;
-GVL_IO.aDigitalOutputIO[2].7:=GVL_IO_GAS_CABINET.DO_08_Spare_08 ;
-
-GVL_IO.aAnalogInputIO[1]:=GVL_IO_GAS_CABINET.AI_09_M01_ChalcogenRunPV ;
-GVL_IO.aAnalogInputIO[2]:=GVL_IO_GAS_CABINET.AI_09_M02_MORunPV ;
-GVL_IO.aAnalogInputIO[3]:=GVL_IO_GAS_CABINET.AI_09_M03_H2SeSupplyPV ;
-GVL_IO.aAnalogInputIO[4]:=GVL_IO_GAS_CABINET.AI_09_M04_H2SSupplyPV ;
-
-GVL_IO_GAS_CABINET.AO_10_M01_ChalcogenRunSV :=GVL_IO.aAnalogOutputIO[1];
-GVL_IO_GAS_CABINET.AO_10_M02_MORunSV :=GVL_IO.aAnalogOutputIO[2];
-GVL_IO_GAS_CABINET.AO_10_M03_H2SeSupplySV  := GVL_IO.aAnalogOutputIO[3];
-GVL_IO_GAS_CABINET.AO_10_M04_H2SSupplySV :=GVL_IO.aAnalogOutputIO[4];
-
-GVL_IO.aAnalogInputIO[5]:=GVL_IO_GAS_CABINET.AI_11_M05_Source_1TMInSupplyPV ;
-GVL_IO.aAnalogInputIO[6]:=GVL_IO_GAS_CABINET.AI_11_M06_Source_2TMGaSupplyPV ;
-GVL_IO.aAnalogInputIO[7]:=GVL_IO_GAS_CABINET.AI_11_M07_Source_3DMSeSupplyPV ;
-GVL_IO.aAnalogInputIO[8]:=GVL_IO_GAS_CABINET.AI_11_M08_Source_4ChalcoSupplyPV ;
-
-GVL_IO_GAS_CABINET.AO_12_M05_Source_1TMInSupplySV :=GVL_IO.aAnalogOutputIO[5];
-GVL_IO_GAS_CABINET.AO_12_M06_Source_2TMGaSupplySV :=GVL_IO.aAnalogOutputIO[6];
-GVL_IO_GAS_CABINET.AO_12_M07_Source_3DMSeSupplySV :=GVL_IO.aAnalogOutputIO[7];
-GVL_IO_GAS_CABINET.AO_12_M08_Source_4ChalcoSupplySV :=GVL_IO.aAnalogOutputIO[8];
-
-GVL_IO.aAnalogInputIO[9]:=GVL_IO_GAS_CABINET.AI_13_M09_LinerPurgePV ;
-GVL_IO.aAnalogInputIO[10]:=GVL_IO_GAS_CABINET.AI_13_M10_HeaterPurgePV ;
-GVL_IO.aAnalogInputIO[11]:=GVL_IO_GAS_CABINET.AI_13_M11_ChalcogenVentPV ;
-GVL_IO.aAnalogInputIO[12]:=GVL_IO_GAS_CABINET.AI_13_M12_MOVentPV ;
-
-GVL_IO_GAS_CABINET.AO_14_M09_LinerPurgeSV :=GVL_IO.aAnalogOutputIO[9];
-GVL_IO_GAS_CABINET.AO_14_M10_HeaterPurgeSV :=GVL_IO.aAnalogOutputIO[10];
-GVL_IO_GAS_CABINET.AO_14_M11_ChalcogenVentSV :=GVL_IO.aAnalogOutputIO[11];
-GVL_IO_GAS_CABINET.AO_14_M12_MOVentSV :=GVL_IO.aAnalogOutputIO[12];
-
-GVL_IO.aAnalogInputIO[13]:=GVL_IO_GAS_CABINET.AI_15_E01Source_1TMInPressurePV ;
-GVL_IO.aAnalogInputIO[14]:=GVL_IO_GAS_CABINET.AI_15_E02Source_2TMGaPressurePV ;
-GVL_IO.aAnalogInputIO[15]:=GVL_IO_GAS_CABINET.AI_15_E03Source_3DMSePressurePV ;
-GVL_IO.aAnalogInputIO[16]:=GVL_IO_GAS_CABINET.AI_15_E04Source_4ChalcoPressurePV ;
-
-GVL_IO_GAS_CABINET.AO_16_E01Source_1TMInPressureSV :=GVL_IO.aAnalogOutputIO[13];
-GVL_IO_GAS_CABINET.AO_16_E02Source_2TMGaPressureSV :=GVL_IO.aAnalogOutputIO[14];
-GVL_IO_GAS_CABINET.AO_16_E03Source_3DMSePressureSV :=GVL_IO.aAnalogOutputIO[15];
-GVL_IO_GAS_CABINET.AO_16_E04Source_4ChalcoPressureSV :=GVL_IO.aAnalogOutputIO[16];
-
-GVL_IO.aAnalogInputIO2[1]:=GVL_IO_GAS_CABINET.DI_17_DP1ChalcogenDP ;
-GVL_IO.aAnalogInputIO2[2]:=GVL_IO_GAS_CABINET.DI_17_DP2MODP ;
-
-GVL_IO.aAnalogInputIO[17]:=GVL_IO_GAS_CABINET.DI_18_S01N2SupplyPressPV ;
-GVL_IO.aAnalogInputIO[18]:=GVL_IO_GAS_CABINET.DI_18_S02H2SupplyPressPV ;
-GVL_IO.aAnalogInputIO[19]:=GVL_IO_GAS_CABINET.DI_18_S03H2SSupplyPressPV ;
-GVL_IO.aAnalogInputIO[20]:=GVL_IO_GAS_CABINET.DI_18_S04H2SeSupplyPressPV ;
-
-
-(*Reactor Cabinet*)
 GVL_IO.aDigitalInputIO[7].0:=GVL_IO_REACTOR_CABINET.DI_01_MaintenanceModeKey ;
 GVL_IO.aDigitalInputIO[7].1:=GVL_IO_REACTOR_CABINET.DI_01_ReactorCabinetLampButton ;
 GVL_IO.aDigitalInputIO[7].2:=GVL_IO_REACTOR_CABINET.DI_01_DORVACButton ;
@@ -152,6 +84,25 @@ GVL_IO.aDigitalInputIO[9].4:=GVL_IO_REACTOR_CABINET.DI_03_Spare_01 ;
 GVL_IO.aDigitalInputIO[9].5:=GVL_IO_REACTOR_CABINET.DI_03_Spare_02 ;
 GVL_IO.aDigitalInputIO[9].6:=GVL_IO_REACTOR_CABINET.DI_03_Spare_03 ;
 GVL_IO.aDigitalInputIO[9].7:=GVL_IO_REACTOR_CABINET.DI_03_Spare_04 ;
+
+
+GVL_IO.aDigitalOutputIO[1].0:=GVL_IO_GAS_CABINET.DO_07_SystemPowerOffLock ;
+GVL_IO.aDigitalOutputIO[1].1:=GVL_IO_GAS_CABINET.DO_07_ControlCabinetLamp ;
+GVL_IO.aDigitalOutputIO[1].2:=GVL_IO_GAS_CABINET.DO_07_GasCabinetLamp ;
+GVL_IO.aDigitalOutputIO[1].3:=GVL_IO_GAS_CABINET.DO_07_GraphiteHeaterMC ;
+GVL_IO.aDigitalOutputIO[1].4:=GVL_IO_GAS_CABINET.DO_07_ThermalBathsMC ;
+GVL_IO.aDigitalOutputIO[1].5:=GVL_IO_GAS_CABINET.DO_07_VacuumPumpMC ;
+GVL_IO.aDigitalOutputIO[1].6:=GVL_IO_GAS_CABINET.DO_07_LineHeatersMC ;
+GVL_IO.aDigitalOutputIO[1].7:=GVL_IO_GAS_CABINET.DO_07_ResetButtonLamp ;
+
+GVL_IO.aDigitalOutputIO[2].0:=GVL_IO_GAS_CABINET.DO_08_Spare_01 ;
+GVL_IO.aDigitalOutputIO[2].1:=GVL_IO_GAS_CABINET.DO_08_Spare_02 ;
+GVL_IO.aDigitalOutputIO[2].2:=GVL_IO_GAS_CABINET.DO_08_Spare_03 ;
+GVL_IO.aDigitalOutputIO[2].3:=GVL_IO_GAS_CABINET.DO_08_Spare_04 ;
+GVL_IO.aDigitalOutputIO[2].4:=GVL_IO_GAS_CABINET.DO_08_Spare_05 ;
+GVL_IO.aDigitalOutputIO[2].5:=GVL_IO_GAS_CABINET.DO_08_Spare_06 ;
+GVL_IO.aDigitalOutputIO[2].6:=GVL_IO_GAS_CABINET.DO_08_Spare_07 ;
+GVL_IO.aDigitalOutputIO[2].7:=GVL_IO_GAS_CABINET.DO_08_Spare_08 ;
 
 GVL_IO.aDigitalOutputIO[3].0:=GVL_IO_REACTOR_CABINET.DO_04_SignalTowerRed ;
 GVL_IO.aDigitalOutputIO[3].1:=GVL_IO_REACTOR_CABINET.DO_04_SignalTowerOrange ;
@@ -180,7 +131,28 @@ GVL_IO.aDigitalOutputIO[5].5:=GVL_IO_REACTOR_CABINET.DO_06_ReactorCabinetLamp ;
 GVL_IO.aDigitalOutputIO[5].6:=GVL_IO_REACTOR_CABINET.DO_06_Spare07 ;
 GVL_IO.aDigitalOutputIO[5].7:=GVL_IO_REACTOR_CABINET.DO_06_Spare08 ;
 
-GVL_IO.aAnalogInputIO[21]:=GVL_IO_REACTOR_CABINET.AI_07_P02_ReactorPressure10TorrPV ;
+
+GVL_IO.aAnalogInputIO[1]:=GVL_IO_GAS_CABINET.AI_09_M01_ChalcogenRunPV ;
+GVL_IO.aAnalogInputIO[2]:=GVL_IO_GAS_CABINET.AI_09_M02_MORunPV ;
+GVL_IO.aAnalogInputIO[3]:=GVL_IO_GAS_CABINET.AI_09_M03_H2SeSupplyPV ;
+GVL_IO.aAnalogInputIO[4]:=GVL_IO_GAS_CABINET.AI_09_M04_H2SSupplyPV ;
+GVL_IO.aAnalogInputIO[5]:=GVL_IO_GAS_CABINET.AI_11_M05_Source_1TMInSupplyPV ;
+GVL_IO.aAnalogInputIO[6]:=GVL_IO_GAS_CABINET.AI_11_M06_Source_2TMGaSupplyPV ;
+GVL_IO.aAnalogInputIO[7]:=GVL_IO_GAS_CABINET.AI_11_M07_Source_3DMSeSupplyPV ;
+GVL_IO.aAnalogInputIO[8]:=GVL_IO_GAS_CABINET.AI_11_M08_Source_4ChalcoSupplyPV ;
+GVL_IO.aAnalogInputIO[9]:=GVL_IO_GAS_CABINET.AI_13_M09_LinerPurgePV ;
+GVL_IO.aAnalogInputIO[10]:=GVL_IO_GAS_CABINET.AI_13_M10_HeaterPurgePV ;
+GVL_IO.aAnalogInputIO[11]:=GVL_IO_GAS_CABINET.AI_13_M11_ChalcogenVentPV ;
+GVL_IO.aAnalogInputIO[12]:=GVL_IO_GAS_CABINET.AI_13_M12_MOVentPV ;
+GVL_IO.aAnalogInputIO[13]:=GVL_IO_GAS_CABINET.AI_15_E01Source_1TMInPressurePV ;
+GVL_IO.aAnalogInputIO[14]:=GVL_IO_GAS_CABINET.AI_15_E02Source_2TMGaPressurePV ;
+GVL_IO.aAnalogInputIO[15]:=GVL_IO_GAS_CABINET.AI_15_E03Source_3DMSePressurePV ;
+GVL_IO.aAnalogInputIO[16]:=GVL_IO_GAS_CABINET.AI_15_E04Source_4ChalcoPressurePV ;
+GVL_IO.aAnalogInputIO[17]:=GVL_IO_GAS_CABINET.DI_18_S01N2SupplyPressPV ;
+GVL_IO.aAnalogInputIO[18]:=GVL_IO_GAS_CABINET.DI_18_S02H2SupplyPressPV ;
+GVL_IO.aAnalogInputIO[19]:=GVL_IO_GAS_CABINET.DI_18_S03H2SSupplyPressPV ;
+GVL_IO.aAnalogInputIO[20]:=GVL_IO_GAS_CABINET.DI_18_S04H2SeSupplyPressPV ;
+GVL_IO.aAnalogInputIO[21]:=GVL_IO_REACTOR_CABINET.AI_07_P02_ReactorPressure10TorrPV;
 GVL_IO.aAnalogInputIO[22]:=GVL_IO_REACTOR_CABINET.AI_07_P03_ExhaustPressurePV ;
 GVL_IO.aAnalogInputIO[23]:=GVL_IO_REACTOR_CABINET.AI_07_S05_DORPressurePV ;
 GVL_IO.aAnalogInputIO[24]:=GVL_IO_REACTOR_CABINET.AI_07_Spare_04 ;
@@ -190,19 +162,41 @@ GVL_IO.aAnalogInputIO[26]:=GVL_IO_REACTOR_CABINET.AI_08_Spare_02 ;
 GVL_IO.aAnalogInputIO[27]:=GVL_IO_REACTOR_CABINET.AI_08_Spare_03 ;
 GVL_IO.aAnalogInputIO[28]:=GVL_IO_REACTOR_CABINET.AI_08_Spare_04 ;
 
-GVL_IO.aAnalogOutputIO[17]:=GVL_IO_REACTOR_CABINET.AO_09_P03_ExhaustPressureAM215Input ;
-GVL_IO.aAnalogOutputIO[18]:=GVL_IO_REACTOR_CABINET.AO_09_R01_SusceptorRotationSV ;
-GVL_IO.aAnalogOutputIO[19]:=GVL_IO_REACTOR_CABINET.AO_09_Spare_03 ;
-GVL_IO.aAnalogOutputIO[20]:=GVL_IO_REACTOR_CABINET.AO_09_Spare_04 ;
-
 GVL_IO.aAnalogInputIO[29]:=GVL_IO_REACTOR_CABINET.AI_10_R04S_HCoolingWaterPV ;
 GVL_IO.aAnalogInputIO[30]:=GVL_IO_REACTOR_CABINET.AI_10_Spare_02 ;
 GVL_IO.aAnalogInputIO[31]:=GVL_IO_REACTOR_CABINET.AI_10_Spare_03 ;
 GVL_IO.aAnalogInputIO[32]:=GVL_IO_REACTOR_CABINET.AI_10_Spare_04 ;
+
+GVL_IO.aAnalogInputIO2[1]:=GVL_IO_GAS_CABINET.DI_17_DP1ChalcogenDP ;
+GVL_IO.aAnalogInputIO2[2]:=GVL_IO_GAS_CABINET.DI_17_DP2MODP ;
+
+GVL_IO_GAS_CABINET.AO_10_M01_ChalcogenRunSV :=GVL_IO.aAnalogOutputIO[1];
+GVL_IO_GAS_CABINET.AO_10_M02_MORunSV :=GVL_IO.aAnalogOutputIO[2];
+GVL_IO_GAS_CABINET.AO_10_M03_H2SeSupplySV  := GVL_IO.aAnalogOutputIO[3];
+GVL_IO_GAS_CABINET.AO_10_M04_H2SSupplySV :=GVL_IO.aAnalogOutputIO[4];
+
+GVL_IO_GAS_CABINET.AO_12_M05_Source_1TMInSupplySV :=GVL_IO.aAnalogOutputIO[5];
+GVL_IO_GAS_CABINET.AO_12_M06_Source_2TMGaSupplySV :=GVL_IO.aAnalogOutputIO[6];
+GVL_IO_GAS_CABINET.AO_12_M07_Source_3DMSeSupplySV :=GVL_IO.aAnalogOutputIO[7];
+GVL_IO_GAS_CABINET.AO_12_M08_Source_4ChalcoSupplySV :=GVL_IO.aAnalogOutputIO[8];
+GVL_IO_GAS_CABINET.AO_14_M09_LinerPurgeSV :=GVL_IO.aAnalogOutputIO[9];
+GVL_IO_GAS_CABINET.AO_14_M10_HeaterPurgeSV :=GVL_IO.aAnalogOutputIO[10];
+GVL_IO_GAS_CABINET.AO_14_M11_ChalcogenVentSV :=GVL_IO.aAnalogOutputIO[11];
+GVL_IO_GAS_CABINET.AO_14_M12_MOVentSV :=GVL_IO.aAnalogOutputIO[12];
+GVL_IO_GAS_CABINET.AO_16_E01Source_1TMInPressureSV :=GVL_IO.aAnalogOutputIO[13];
+GVL_IO_GAS_CABINET.AO_16_E02Source_2TMGaPressureSV :=GVL_IO.aAnalogOutputIO[14];
+GVL_IO_GAS_CABINET.AO_16_E03Source_3DMSePressureSV :=GVL_IO.aAnalogOutputIO[15];
+GVL_IO_GAS_CABINET.AO_16_E04Source_4ChalcoPressureSV :=GVL_IO.aAnalogOutputIO[16];
+
+GVL_IO_REACTOR_CABINET.AO_09_P03_ExhaustPressureAM215Input:=GVL_IO.aAnalogOutputIO[17];
+GVL_IO_REACTOR_CABINET.AO_09_R01_SusceptorRotationSV:=GVL_IO.aAnalogOutputIO[18];
+GVL_IO_REACTOR_CABINET.AO_09_Spare_03:=GVL_IO.aAnalogOutputIO[19];
+GVL_IO_REACTOR_CABINET.AO_09_Spare_04 :=GVL_IO.aAnalogOutputIO[20];
 ]]></ST>
     </Implementation>
     <LineIds Name="F_Variable_DeviceLink">
-      <LineId Id="520" Count="194" />
+      <LineId Id="716" Count="165" />
+      <LineId Id="883" Count="21" />
       <LineId Id="479" Count="0" />
     </LineIds>
   </POU>
