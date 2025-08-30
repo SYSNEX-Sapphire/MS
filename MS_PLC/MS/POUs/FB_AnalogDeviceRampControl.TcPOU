@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
   <POU Name="FB_AnalogDeviceRampControl" Id="{901ef948-d319-4e50-9c34-c06b07342954}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_AnalogDeviceRampControl
 VAR
@@ -24,21 +24,18 @@ END_IF
 
 //jhkang aController 의 Input은 언제 들어감?
 //Temp Controller
-GVL_IO.temperatureTV := GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp].input.targetValue;
 GVL_IO.wE3508_CV := LREAL_TO_WORD(GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp].rControlValue); //Write to Temperature Controller
 GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp] := WORD_TO_REAL(GVL_IO.wE3508_PV);
 GVL_IO.aController_CV[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp] := WORD_TO_REAL(GVL_IO.wE3508_CV);
 GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp]();
 
-//Temp Pressure Controller
-GVL_IO.pressureTV := GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure].input.targetValue;				
+//Temp Pressure Controller				
 GVL_IO.wIqPlus_CV := LREAL_TO_WORD(GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure].rControlValue); //Write to Pressure Controller
 GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure] := WORD_TO_REAL(GVL_IO.wIqPlus_CDG2_PV);
 GVL_IO.aController_CV[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure] := WORD_TO_REAL(GVL_IO.wIqPlus_CV);
 GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure]();
 
-//Rotation Controller
-GVL_IO.rotationTV := GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.targetValue;			
+//Rotation Controller		
 GVL_IO.rRotation_ControlValue := LREAL_TO_REAL(GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].rControlValue); //Write to Rotation Controller (rpm)
 GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_susceptorRotation] := GVL_IO.nRotation_Converted_PV;
 GVL_IO.aController_CV[E_aAnalogInputIO_Index.E_PV_susceptorRotation] := GVL_IO.rRotation_ControlValue;
@@ -49,16 +46,13 @@ GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation]();	]]></ST>
       <LineId Id="39" Count="7" />
       <LineId Id="97" Count="0" />
       <LineId Id="96" Count="0" />
-      <LineId Id="87" Count="8" />
+      <LineId Id="87" Count="5" />
+      <LineId Id="94" Count="1" />
       <LineId Id="82" Count="0" />
-      <LineId Id="47" Count="8" />
+      <LineId Id="47" Count="2" />
+      <LineId Id="51" Count="4" />
       <LineId Id="74" Count="0" />
-      <LineId Id="56" Count="5" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="62" Count="5" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="68" Count="2" />
-      <LineId Id="33" Count="0" />
+      <LineId Id="57" Count="3" />
     </LineIds>
   </POU>
 </TcPlcObject>
