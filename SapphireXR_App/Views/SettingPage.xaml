@@ -450,58 +450,6 @@
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
-                                                <Label Grid.Column="0">CW Temp S/H Alarm (℃)</Label>
-                                                <Line Grid.Column="1" Style="{StaticResource seperatorLine}" ></Line>
-                                                <TextBox x:Name="DORTemperatureSet" Grid.Column="2" Text="{Binding Path=dInterLockA[CWTempSHAlarm].Treshold, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource sectionTextBox}"/>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.Margin>
-                                                    <Thickness Bottom="{StaticResource p_2}" />
-                                                </Grid.Margin>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <Label Grid.Column="0">CW Temp S/H Warning (℃)</Label>
-                                                <Line Grid.Column="1" Style="{StaticResource seperatorLine}" ></Line>
-                                                <TextBox Grid.Column="2" Text="{Binding Path=dInterLockA[CWTempSHWarning].Treshold, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource sectionTextBox}"/>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.Margin>
-                                                    <Thickness Bottom="{StaticResource p_2}" />
-                                                </Grid.Margin>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <Label Grid.Column="0">CW Temp Coil Alarm (℃)</Label>
-                                                <Line Grid.Column="1" Style="{StaticResource seperatorLine}" ></Line>
-                                                <TextBox x:Name="coilCoolingWaterTempValue" Grid.Column="2" Text="{Binding Path=dInterLockA[CWTempCoilAlarm].Treshold, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource sectionTextBox}"/>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.Margin>
-                                                    <Thickness Bottom="{StaticResource p_2}" />
-                                                </Grid.Margin>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <Label Grid.Column="0">CW Temp Coil Warning (℃)</Label>
-                                                <Line Grid.Column="1" Style="{StaticResource seperatorLine}" ></Line>
-                                                <TextBox Grid.Column="2" Text="{Binding Path=dInterLockA[CWTempCoilWarning].Treshold, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource sectionTextBox}"/>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.Margin>
-                                                    <Thickness Bottom="{StaticResource p_2}" />
-                                                </Grid.Margin>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
                                                 <Label Grid.Column="0">Reactor Over Pressure (Torr)</Label>
                                                 <Line Grid.Column="1" Style="{StaticResource seperatorLine}" />
                                                 <TextBox x:Name="reactorPressureValue" Grid.Column="2" Text="{Binding Path=dInterLockA[ReactorOverPressure].Treshold, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource sectionTextBox}" />
@@ -589,11 +537,6 @@
                                                     <Thickness Bottom="{StaticResource p_3}" />
                                                 </Label.Margin>
                                             </Label>
-                                            <CheckBox Grid.Row="9" Content="Induction Power Supply" IsChecked="{Binding Path=dInterLockD[InductionPowerSupply].IsEnable, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  Style="{StaticResource DefaultCheckBox}">
-                                                <CheckBox.Margin>
-                                                    <Thickness Bottom="{StaticResource p_2}" />
-                                                </CheckBox.Margin>
-                                            </CheckBox>
                                             <CheckBox Content=" Susceptor Rotation Motor" IsChecked="{Binding Path=dInterLockD[SusceptorRotationMotor].IsEnable, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource DefaultCheckBox}">
                                                 <CheckBox.Margin>
                                                     <Thickness Bottom="{StaticResource p_2}" />
@@ -638,7 +581,7 @@
                                                     <ColumnDefinition />
                                                     <ColumnDefinition />
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Induction Heater" HorizontalAlignment="Center" Style="{StaticResource infoTextBlockLeft}" />
+                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Graphite Heater" HorizontalAlignment="Center" Style="{StaticResource infoTextBlockLeft}" />
                                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Power" HorizontalAlignment="Center" Style="{StaticResource infoTextBlockLeft}" />
                                                 <ToggleButton Grid.Row="2" Grid.Column="0" IsChecked="{Binding InductionHeaterPowerOnOff, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Center" Style="{StaticResource toggleButonTopMargin}" PreviewMouseLeftButtonDown="ConfirmBeforeToggle" IsEnabled="{Binding Source={x:Static model:PLCConnectionState.Instance}, Path=Online, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />  
                                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="Thermal Bath" HorizontalAlignment="Center" Style="{StaticResource infoTextBlockLeft}" />

@@ -352,17 +352,6 @@
                             <Rectangle Grid.Column="2" Fill="{Binding ReactorOpenStateColor}" Width="10" Height="10" RadiusX="99" RadiusY="97" Margin="0"/>
                         </Grid>
 
-                        <!-- Heater can be Turn On -->
-                        <Grid VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Heater can be Turn On" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12" Margin="20,0,0,0"/>
-                            <Line Grid.Column="1" X1="0" Y1="0" X2="1" Y2="0" Stretch="Fill" Stroke="{DynamicResource Gray_300}" StrokeThickness="1" VerticalAlignment="Center" Opacity="0.995" Margin="8,0"/>
-                            <Rectangle Grid.Column="2" Fill="{Binding HeaterTurnOnStateColor}" Width="10" Height="10" RadiusX="99" RadiusY="98" Margin="0"/>
-                        </Grid>
                         <Grid VerticalAlignment="Center" Margin="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -415,17 +404,7 @@
                             <Rectangle Grid.Column="2" Fill="{Binding MaintenanceKeyLampColor}" Width="10" Height="10" RadiusX="99" RadiusY="99" Margin="0"/>
                         </Grid>
 
-                        <Grid VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Induction Heater" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12" Margin="20,0,0,0"/>
-                            <Line Grid.Column="1" X1="0" Y1="0" X2="1" Y2="0" Stretch="Fill" Stroke="{DynamicResource Gray_300}" StrokeThickness="1" VerticalAlignment="Center" Opacity="0.995" Margin="8,0"/>
-                            <Rectangle Grid.Column="2" Fill="{Binding InductionHeaterLampColor}" Width="10" Height="10" RadiusX="99" RadiusY="99" Margin="0"/>
-                        </Grid>
-
+                       
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -476,7 +455,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Door - Reactor Cabinet" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12" Margin="20,0,0,0"/>
+                            <TextBlock Grid.Column="0" Text="Door Sensor - Reactor" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12" Margin="20,0,0,0"/>
                             <Line Grid.Column="1" X1="0" Y1="0" X2="1" Y2="0" Stretch="Fill" Stroke="{DynamicResource Gray_300}" StrokeThickness="1" VerticalAlignment="Center" Opacity="0.995" Margin="8,0"/>
                             <Rectangle Grid.Column="2" Fill="{Binding DoorReactorCabinetLampColor}" Width="10" Height="10" RadiusX="99" RadiusY="99" Margin="0"/>
                         </Grid>
@@ -487,7 +466,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Door - Gas Delivery Cabinet" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12" Margin="20,0,0,0"/>
+                            <TextBlock Grid.Column="0" Text="Door Seonsor - Gas Delivery" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12" Margin="20,0,0,0"/>
                             <Line Grid.Column="1" X1="0" Y1="0" X2="1" Y2="0" Stretch="Fill" Stroke="{DynamicResource Gray_300}" StrokeThickness="1" VerticalAlignment="Center" Opacity="0.995" Margin="8,0"/>
                             <Rectangle Grid.Column="2" Fill="{Binding DoorGasDeliveryCabinetLampColor}" Width="10" Height="10" RadiusX="99" RadiusY="99" Margin="0"/>
                         </Grid>
@@ -498,7 +477,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Door - Power Distribute Cabinet" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12" Margin="20,0,0,0"/>
+                            <TextBlock Grid.Column="0" Text="Door Sensor - Electric Control" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12" Margin="20,0,0,0"/>
                             <Line Grid.Column="1" X1="0" Y1="0" X2="1" Y2="0" Stretch="Fill" Stroke="{DynamicResource Gray_300}" StrokeThickness="1" VerticalAlignment="Center" Opacity="0.995" Margin="8,0"/>
                             <Rectangle Grid.Column="2" Fill="{Binding DoorPowerDistributeCabinetLampColor}" Width="10" Height="10" RadiusX="99" RadiusY="99" Margin="0"/>
                         </Grid>
@@ -643,12 +622,7 @@
                             </Style>
                         </Grid.Resources>
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="8"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+                           
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="8"/>
                                 <RowDefinition Height="Auto"/>
@@ -656,9 +630,7 @@
                                 <RowDefinition Height="20"/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Column="1" Grid.Row="1" Text="Shower Head" />
-                            <TextBlock Grid.Column="3" Grid.Row="1" Text="Induction Coil" />
                             <TextBox  x:Name="tbShowerHeadTemp"  Grid.Column="1" Grid.Row="3" Text="{Binding ShowerHeadTemp}" />
-                            <TextBox  x:Name="tbInductionCoilTemp"  Grid.Column="3" Grid.Row="3" Text="{Binding InductionCoilTemp}"  />
                         </Grid>
                     </Grid>
                 </StackPanel>

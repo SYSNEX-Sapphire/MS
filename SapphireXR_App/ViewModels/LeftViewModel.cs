@@ -252,7 +252,6 @@ namespace SapphireXR_App.ViewModels
         public LeftViewModel()
         {
             ObservableManager<float>.Subscribe("MonitoringPresentValue.ShowerHeadTemp.CurrentValue", showerHeaderTempSubscriber = new CoolingWaterValueSubscriber("ShowerHeadTemp", this));
-            ObservableManager<float>.Subscribe("MonitoringPresentValue.InductionCoilTemp.CurrentValue", inductionCoilTempSubscriber = new CoolingWaterValueSubscriber("InductionCoilTemp", this));
             ObservableManager<BitArray>.Subscribe("HardWiringInterlockState", hardWiringInterlockStateSubscriber = new HardWiringInterlockStateSubscriber(this));
             ObservableManager<int>.Subscribe("MainView.SelectedTabIndex", mainViewTabIndexChagedSubscriber = new MainViewTabIndexChagedSubscriber(this));
             ObservableManager<BitArray>.Subscribe("DeviceIOList", signalTowerStateSubscriber = new SignalTowerStateSubscriber(this));
@@ -405,13 +404,9 @@ namespace SapphireXR_App.ViewModels
 
         [ObservableProperty]
         private string _showerHeadTemp = "";
-        [ObservableProperty]
-        private string _inductionCoilTemp = "";
 
         [ObservableProperty]
         private Brush _maintenanceKeyLampColor = OnLampColor;
-        [ObservableProperty]
-        private Brush _inductionHeaterLampColor = ReadyLampColor;
         [ObservableProperty]
         private Brush _cleanDryAirLampColor = OnLampColor;
         [ObservableProperty]
@@ -446,8 +441,6 @@ namespace SapphireXR_App.ViewModels
         private Brush _recipeStartStateColor = Brushes.Transparent;
         [ObservableProperty]
         private Brush _reactorOpenStateColor = Brushes.Transparent;
-        [ObservableProperty]
-        private Brush _heaterTurnOnStateColor = Brushes.Transparent;
         [ObservableProperty]
         private Brush _pumpTurnOnStateColor = Brushes.Transparent;
 
@@ -484,7 +477,6 @@ namespace SapphireXR_App.ViewModels
         private string signalTowerImage = SignalTowerDefaultPath;
 
         private readonly CoolingWaterValueSubscriber showerHeaderTempSubscriber;
-        private readonly CoolingWaterValueSubscriber inductionCoilTempSubscriber;
         private readonly HardWiringInterlockStateSubscriber hardWiringInterlockStateSubscriber;
         private readonly MainViewTabIndexChagedSubscriber mainViewTabIndexChagedSubscriber;
         private readonly SignalTowerStateSubscriber signalTowerStateSubscriber;

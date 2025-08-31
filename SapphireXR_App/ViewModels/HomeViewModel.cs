@@ -115,7 +115,6 @@ namespace SapphireXR_App.ViewModels
                     }
                     OnThrottleValveModeChangedCommand.NotifyCanExecuteChanged();
                     TogglePressureControlModeCommand.NotifyCanExecuteChanged();
-                    InductionHeaterResetCommand.NotifyCanExecuteChanged();
                     ToggleHeaterControlModeCommand.NotifyCanExecuteChanged();
                     VacuumPumpResetCommand.NotifyCanExecuteChanged();
                     manualBatchViewModel.LoadToPLCCommand.NotifyCanExecuteChanged();
@@ -134,8 +133,8 @@ namespace SapphireXR_App.ViewModels
                         toggleVacuumPump(IsVaccumPumpOn);
                         break;
 
-                    case nameof(IsInductionHeaterOn):
-                        toggleInductionHeater(IsInductionHeaterOn);
+                    case nameof(MotorResetEnable):
+                        MotorResetCommand.NotifyCanExecuteChanged();
                         break;
                 }
             };
@@ -155,9 +154,8 @@ namespace SapphireXR_App.ViewModels
                     prevThrottleValveControlMode = CurrentThrottleValveControlMode;
                 }
                 BitArray outputCmd1 = PLCService.ReadOutputCmd1();
-                IsInductionHeaterOn = outputCmd1[(int)PLCService.OutputCmd1Index.InductionHeaterControl];
                 IsVaccumPumpOn = outputCmd1[(int)PLCService.OutputCmd1Index.VaccumPumpControl];
-                InputManualAuto = PLCService.ReadInputManAuto(7) == false ? "Auto" : "Manual";
+                InputManualAuto = PLCService.ReadInputManAuto(10) == false ? "Auto" : "Manual";
             }
             catch (Exception ex)
             {
@@ -206,6 +204,32 @@ namespace SapphireXR_App.ViewModels
             }
         }
 
+        private bool canMotorResetExecute()
+        {
+            return PLCConnectionState.Instance.Online == true && MotorResetEnable == true;
+        }
+
+        [RelayCommand(CanExecute = "canMotorResetExecute")]
+        private void MotorReset()
+        {
+            try
+            {
+                if (ValveOperationEx.Show("Motor Reset", "Reset 하시겠습니까?") == Enums.DialogResult.Ok)
+                {
+                    PLCService.WriteOutputCmd1(PLCService.OutputCmd1Index.RotationReset, true);
+                    MotorResetEnable = false;
+                }
+            }
+            catch (Exception exception)
+            {
+                if (showMsgOnMotorResetEx == true)
+                {
+                    showMsgOnMotorResetEx = MessageBox.Show("PLC로 Vaccum Reset 값을 쓰는데 실패했습니다. 이 메시지를 다시 표시하지 않으려면 Yes를 클릭하세요. 원인은 다음과 같습니다: "
+                            + exception.Message, "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes ? false : true;
+                }
+            }
+        }
+
         private bool canToggleHeaterControlModeExecute()
         {
             return PLCConnectionState.Instance.Online == true;
@@ -220,7 +244,7 @@ namespace SapphireXR_App.ViewModels
                 if (OutputCmd1ToggleConfirmService.Toggle(PLCService.OutputCmd1Index.TempControllerManAuto, "Induction Power Supply Manual/Auto", nextState + " 상태로 바꾸시겠습니까?", InputManualAuto,
                     "Manual", "Auto") == true)
                 {
-                    SynchronizeExpected(InputManualAuto == "Auto" ? 1 : 0, () => (PLCService.ReadInputManAuto(7) == true ? 1 : 0), (int manualAuto) => InputManualAuto = (manualAuto == 0 ? "Auto" : "Manual"),
+                    SynchronizeExpected(InputManualAuto == "Auto" ? 1 : 0, () => (PLCService.ReadInputManAuto(10) == true ? 1 : 0), (int manualAuto) => InputManualAuto = (manualAuto == 0 ? "Auto" : "Manual"),
                         null, 3000, "장비의 Input Heater Control Mode가 " + nextState + "로 설정되지 않았습니다. 프로그램과 장비 간에 Heater Control Mode 상태 동기화가 되지 않았습니다.");
                 }
             }
@@ -229,51 +253,6 @@ namespace SapphireXR_App.ViewModels
                 if (showMsgOnToggleHeaterControlModeEx == true)
                 {
                     showMsgOnToggleHeaterControlModeEx = MessageBox.Show("PLC로 Heater Control Mode 값을 쓰는데 실패했습니다. 이 메시지를 다시 표시하지 않으려면 Yes를 클릭하세요. 원인은 다음과 같습니다: "
-                                + exception.Message, "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes ? false : true;
-                }
-            }
-        }
-
-        [RelayCommand]
-        private void toggleInductionHeater(bool on)
-        {
-            try
-            {
-                PLCService.WriteOutputCmd1(PLCService.OutputCmd1Index.InductionHeaterControl, on);
-            }
-            catch (Exception exception)
-            {
-                if (showMsgOnInductionHeaterToggleEx == true)
-                {
-                    showMsgOnInductionHeaterToggleEx = MessageBox.Show("PLC로 Heater Toggle 값을 쓰는데 실패했습니다. 이 메시지를 다시 표시하지 않으려면 Yes를 클릭하세요. 원인은 다음과 같습니다: "
-                                + exception.Message, "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes ? false : true;
-                }
-            }
-        }
-
-        private bool canInductionHeaterResetExecute()
-        {
-            return PLCService.Connected == PLCConnection.Connected;
-        }
-
-        [RelayCommand(CanExecute = "canInductionHeaterResetExecute")]
-        private void InductionHeaterReset()
-        {
-            try
-            {
-                if (ValveOperationEx.Show("Vaccum Pump Reset", "Reset 하시겠습니까?") == Enums.DialogResult.Ok)
-                {
-                    PLCService.WriteOutputCmd1(PLCService.OutputCmd1Index.InductionHeaterReset, true);
-                    //int timeout = 10000;
-                    //SynchronizeExpected(0, () => PLCService.ReadDigitalOutputIO2(1) == true ? 1 : 0, null, null, timeout, "Induction Heater Reset 명령이 실패하였거나 본 프로그램의 timout 대기 시간 " +
-                    //    timeout + "(MS)을 초과하셨습니다");
-                }
-            }
-            catch(Exception exception)
-            {
-                if(showMsgOnInductionHeaterResetEx == true)
-                {
-                    showMsgOnInductionHeaterResetEx = MessageBox.Show("PLC로 Heater Reset 값을 쓰는데 실패했습니다. 이 메시지를 다시 표시하지 않으려면 Yes를 클릭하세요. 원인은 다음과 같습니다: "
                                 + exception.Message, "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes ? false : true;
                 }
             }
@@ -473,8 +452,9 @@ namespace SapphireXR_App.ViewModels
 
         [ObservableProperty]
         private bool _isVaccumPumpOn;
+
         [ObservableProperty]
-        private bool _isInductionHeaterOn;
+        private bool motorResetEnable = false;
 
         private string? prevThrottleValveControlMode = null;
 
@@ -500,9 +480,8 @@ namespace SapphireXR_App.ViewModels
 
         private bool showMsgOnVacuumPumpToggleEx = true;
         private bool showMsgOnVacuumPumpResetEx = true;
+        private bool showMsgOnMotorResetEx = true;
         private bool showMsgOnToggleHeaterControlModeEx = true;
-        private bool showMsgOnInductionHeaterToggleEx = true;
-        private bool showMsgOnInductionHeaterResetEx = true;
         private bool showMsgOnTogglePressureControlModeEx = true;
         private bool showMsgOnThrottleValveModeChangedCommandEx = true;
         private bool showMsgOnLoadBatchOnRecipeEnd = true;

@@ -149,7 +149,7 @@ namespace SapphireXR_App.Models
             hReadValveStatePLC = Ads.CreateVariableHandle("GVL_IO.aOutputSolValve");
             hMonitoring_PV = Ads.CreateVariableHandle("GVL_IO.aMonitoring_PV");
             hInputState = Ads.CreateVariableHandle("GVL_IO.aInputState");
-            hInputState4 = Ads.CreateVariableHandle("GVL_IO.aInputState[4]");
+            hInputState5 = Ads.CreateVariableHandle("GVL_IO.aInputState[5]");
             hDigitalOutput = Ads.CreateVariableHandle("GVL_IO.aDigitalOutputIO");
             hDigitalOutput2 = Ads.CreateVariableHandle("GVL_IO.aDigitalOutputIO[2]");
             hOutputCmd = Ads.CreateVariableHandle("GVL_IO.aOutputCmd");
@@ -171,22 +171,18 @@ namespace SapphireXR_App.Models
             hRcpTotalStep = Ads.CreateVariableHandle("RCP.iRcpTotalStep");
             hCmd_RcpOperation = Ads.CreateVariableHandle("RCP.cmd_RcpOperation");
             hRcpStepN = Ads.CreateVariableHandle("RCP.iRcpStepN");
-            hTemperaturePV = Ads.CreateVariableHandle("GVL_IO.aLineHeater_rTemperaturePV");
             hControlModeCmd = Ads.CreateVariableHandle("MAIN.controlModeCmd");
             hControlMode = Ads.CreateVariableHandle("MAIN.controlMode");
             hUserState = Ads.CreateVariableHandle("RCP.userState");
             hRecipeControlPauseTime = Ads.CreateVariableHandle("RCP.Pause_ET");
             hRecipeRunET = Ads.CreateVariableHandle("RCP.RecipeRunET");
-            hE3508InputManAuto = Ads.CreateVariableHandle("GVL_IO.nE3508_nInputManAutoBytes");
             hOutputSetType = Ads.CreateVariableHandle("GVL_IO.nIQPLUS_SetType");
             hOutputMode = Ads.CreateVariableHandle("GVL_IO.nIQPLUS_Mode");
+            hTemperaturePV = Ads.CreateVariableHandle("GVL_IO.aLineHeater_rTemperaturePV");
             for (uint analogDevice = 0; analogDevice < NumControllers; ++analogDevice)
             {
                 hAControllerInput[analogDevice] = Ads.CreateVariableHandle("GVL_IO.aController[" + (analogDevice + 1)+ "].input");
             }
-            hTemperatureTV = Ads.CreateVariableHandle("GVL_IO.temperatureTV");
-            hPressureTV = Ads.CreateVariableHandle("GVL_IO.pressureTV");
-            hRotationTV = Ads.CreateVariableHandle("GVL_IO.rotationTV");
         }
 
         private static void IntializePubSub()
@@ -231,7 +227,6 @@ namespace SapphireXR_App.Models
             dDigitalOutput2 = ObservableManager<BitArray>.Get("DigitalOutput2");
             dDigitalOutput3 = ObservableManager<BitArray>.Get("DigitalOutput3");
             dOutputCmd1 = ObservableManager<BitArray>.Get("OutputCmd1");
-            dInputManAuto = ObservableManager<BitArray>.Get("InputManAuto");
             dThrottleValveControlMode = ObservableManager<short>.Get("ThrottleValveControlMode");
             dPressureControlModeIssuer = ObservableManager<ushort>.Get("PressureControlMode");
             dThrottleValveStatusIssuer = ObservableManager<short>.Get("ThrottleValveStatus");

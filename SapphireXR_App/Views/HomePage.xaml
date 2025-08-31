@@ -716,7 +716,7 @@
                                             <Thickness Left="{StaticResource p_5}" />
                                         </Border.BorderThickness>
                                         <Border.Margin>
-                                            <Thickness Top="{StaticResource p_1}" Bottom="{StaticResource p_1}" />
+                                            <Thickness Top="{StaticResource p_1}" />
                                         </Border.Margin>
                                         <StackPanel Orientation="Vertical">
                                             <Label Content="Heater Control Mode" FontFamily="Segoe UI" Foreground="{StaticResource Gray_900}" FontSize="12" >
@@ -734,33 +734,6 @@
                                         <Border.Margin>
                                             <Thickness Top="{StaticResource p_1}" Bottom="14" />
                                         </Border.Margin>
-                                        <StackPanel Orientation="Vertical">
-                                            <Label Content="Induction Power Supply" FontFamily="Segoe UI" Foreground="{StaticResource Gray_900}" FontSize="12">
-                                                <Label.Padding>
-                                                    <Thickness Top="0" Left="0" Right="0" Bottom="{StaticResource p_1}" />
-                                                </Label.Padding>
-                                            </Label>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="48"/>
-                                                    <ColumnDefinition Width="8"/>
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <ToggleButton Style="{StaticResource ToggleSwitch}" PreviewMouseLeftButtonDown="ConfirmBeforeToggle" Grid.Column="0" x:Name="btHeaterOn" 
-                                                              IsChecked="{Binding IsInductionHeaterOn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="{Binding Online, Source={x:Static model:PLCConnectionState.Instance}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
-                                                              VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                    <ToggleButton.LayoutTransform>
-                                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
-                                                    </ToggleButton.LayoutTransform>
-                                                </ToggleButton>
-                                                <Button Grid.Column="2" x:Name="btHeaterReset" Command="{Binding InductionHeaterResetCommand}" Height="28" Style="{StaticResource DefaultButton}">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Image Source="/Resources/icons/icon_line_reset.png" Width="12" Height="12"/>
-                                                        <Label FontFamily="Segoe UI" FontSize="12" Content="Reset" Foreground="{StaticResource Gray_900}" />
-                                                    </StackPanel>
-                                                </Button>
-                                            </Grid>
-                                        </StackPanel>
                                     </Border>
                                 </StackPanel>
                             </StackPanel>
@@ -986,7 +959,27 @@
                                             <TextBox x:Name="btMotorReset" Text="{Binding RotationReset, Mode=OneWay}" Style="{StaticResource DefaultTextBox}" Height="26" IsReadOnly="True"/>
                                         </StackPanel>
                                     </Border>
-                                  
+                                    <Border>
+                                        <Border.BorderThickness>
+                                            <Thickness Left="{StaticResource p_5}" />
+                                        </Border.BorderThickness>
+                                        <Border.Margin>
+                                            <Thickness Top="{StaticResource p_1}"  />
+                                        </Border.Margin>
+                                        <StackPanel Orientation="Vertical">
+                                            <Label Content="Motor Reset" FontFamily="Segoe UI" Foreground="{StaticResource Gray_900}" FontSize="12">
+                                                <Label.Padding>
+                                                    <Thickness Top="0" Left="0" Right="0" Bottom="{StaticResource p_1}" />
+                                                </Label.Padding>
+                                            </Label>
+                                            <Button x:Name="btRotorReset" Command="{Binding MotorResetCommand}" Height="28" Style="{StaticResource DefaultButton}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="/Resources/icons/icon_line_reset.png" Width="12" Height="12"/>
+                                                    <Label FontFamily="Segoe UI" FontSize="12" Content="Reset" Foreground="{StaticResource Gray_900}" />
+                                                </StackPanel>
+                                            </Button>
+                                        </StackPanel>
+                                    </Border>
                                 </StackPanel>
                             </StackPanel>
                         </Border>                      

@@ -235,11 +235,7 @@ namespace SapphireXR_App.ViewModels
         {
             { "ProcessGasPressureAlarm", PLCService.InterlockValueSetting.ProcessGasPressureAlarm },
             { "ProcessGasPressureWarning", PLCService.InterlockValueSetting.ProcessGasPressureWarning },
-            { "CWTempSHAlarm", PLCService.InterlockValueSetting.CWTempSHAlarm },
-            { "CWTempSHWarning", PLCService.InterlockValueSetting.CWTempSHWarning },
-            { "CWTempCoilAlarm", PLCService.InterlockValueSetting.CWTempCoilAlarm },
-            { "CWTempCoilWarning", PLCService.InterlockValueSetting.CWTempCoilWarning },
-             { "SusceptorOverTemperature", PLCService.InterlockValueSetting.SusceptorOverTemperature },
+            { "SusceptorOverTemperature", PLCService.InterlockValueSetting.SusceptorOverTemperature },
             { "ReactorOverPressure", PLCService.InterlockValueSetting.ReactorOverPressure },
             { "CanOpenSusceptorTemperature", PLCService.InterlockValueSetting.CanOpenSusceptorTemperature },
             { "CanOpenReactorPressure", PLCService.InterlockValueSetting.CanOpenReactorPressure },

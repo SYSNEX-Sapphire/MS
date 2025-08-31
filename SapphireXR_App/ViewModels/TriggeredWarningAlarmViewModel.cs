@@ -182,10 +182,6 @@ namespace SapphireXR_App.ViewModels
                     key = "A13";
                     break;
 
-                case 13:
-                    key = "A14";
-                    break;
-
                 default:
                     return null;
             }

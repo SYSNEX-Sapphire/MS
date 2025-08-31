@@ -62,7 +62,6 @@ namespace SapphireXR_App.Models
                         dValveStateIssuers?[valveID].Publish(baReadValveStatePLC[index]);
                     }
                 }
-                dLineHeaterTemperatureIssuers?.Publish(Ads.ReadAny<float[]>(hTemperaturePV, [(int)LineHeaterTemperature]));
 
                 byte[] digitalOutput = Ads.ReadAny<byte[]>(hDigitalOutput, [4]);
                 dDigitalOutput2?.Publish(new BitArray(new byte[1] { digitalOutput[1] }));
@@ -70,9 +69,8 @@ namespace SapphireXR_App.Models
                 short[] outputCmd = Ads.ReadAny<short[]>(hOutputCmd, [3]);
                 dOutputCmd1?.Publish(bOutputCmd1 = new BitArray(BitConverter.IsLittleEndian == true ? BitConverter.GetBytes(outputCmd[0]) : BitConverter.GetBytes(outputCmd[0]).Reverse().ToArray()));
                 dThrottleValveControlMode?.Publish(outputCmd[1]);
-                ushort inputManAuto = Ads.ReadAny<ushort>(hE3508InputManAuto);
-                dInputManAuto?.Publish(new BitArray(BitConverter.IsLittleEndian == true ? BitConverter.GetBytes(inputManAuto) : BitConverter.GetBytes(inputManAuto).Reverse().ToArray()));
                 dPressureControlModeIssuer?.Publish(Ads.ReadAny<ushort>(hOutputSetType));
+                dLineHeaterTemperatureIssuers?.Publish(Ads.ReadAny<float[]>(hTemperaturePV, [(int)LineHeaterTemperature]));
 
                 int iterlock1 = Ads.ReadAny<int>(hInterlock[0]);
                 dLogicalInterlockStateIssuer?.Publish(new BitArray(BitConverter.IsLittleEndian == true ? BitConverter.GetBytes(iterlock1) : BitConverter.GetBytes(iterlock1).Reverse().ToArray()));
@@ -187,18 +185,12 @@ namespace SapphireXR_App.Models
 
         public static bool ReadInputManAuto(int index)
         {
-            return ReadBit(Ads.ReadAny<ushort>(hE3508InputManAuto), index);
+            return ReadBit(Ads.ReadAny<ushort>(hInputState5), index);
         }
 
         public static bool ReadDigitalOutputIO2(int bitIndex)
         {
             return new BitArray(new byte[1] { Ads.ReadAny<byte>(hDigitalOutput2) })[bitIndex];
-        }
-
-        public static bool ReadInputState4(int bitIndex)
-        {
-            short inputState4 = Ads.ReadAny<short>(hInputState4);
-            return new BitArray(BitConverter.IsLittleEndian == true ? BitConverter.GetBytes(inputState4) : BitConverter.GetBytes(inputState4).Reverse().ToArray())[bitIndex];
         }
 
         public static bool ReadBit(int bitField, int bit)

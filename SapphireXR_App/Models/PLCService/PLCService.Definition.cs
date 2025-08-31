@@ -89,24 +89,26 @@ namespace SapphireXR_App.Models
 
         internal enum HardWiringInterlockStateIndex
         {
-            MaintenanceKey = 0, DoorReactorCabinet = 1, DoorGasDeliveryCabinet = 2, DoorPowerDistributeCabinet = 3, CleanDryAir = 4, CoolingWater = 5,
-            InductionHeaterReady = 6, InductionHeaterRun = 7, InductionHeaterFault = 8, SusceptorMotorStop = 9, SusceptorMotorRun = 10, SusceptorMotorFault = 11,
-            VacuumPumpWarning = 12, VacuumPumpRun = 13, VacuumPumpFault = 14
+            MaintenanceKey = 0, CleanDryAir = 3, CoolingWater = 4, SusceptorMotorRun = 5, SusceptorMotorStop = 6, SusceptorMotorFault = 7, VacuumPumpFault = 8, 
+            VacuumPumpWarning = 9, VacuumPumpAlarm = 10, VacuumPumpRunning = 11, DoorSensorReactor = 13, DoorSensorGasDelivery = 14, DoorSensorElectricControl = 15
         };
 
         const int NumShortBits = sizeof(short) * 8;
         internal enum IOListIndex
         {
-            PowerResetSwitch = 2, Cover_UpperLimit = 3, Cover_LowerLimit = 4, SMPS_24V480 = 5, SMPS_24V72 = 6, SMPS_15VPlus = 7, SMPS_15VMinus = 8, CB_GraphiteHeater = 9,
-            CB_ThermalBath = 10, CB_VaccumPump = 11, CB_LineHeater = 12, CB_RotationMotor = 13, CB_CoverLiftMotor = 14, CB_ThrottleValve = 15, CB_Lamp = NumShortBits * 1,
-            CB_SM515CP = NumShortBits * 1 + 1, LineHeader1 = NumShortBits * 1 + 2, LineHeader2 = NumShortBits * 1 + 3, LineHeader3 = NumShortBits * 1 + 4, LineHeader4 = NumShortBits * 1 + 5,
-            LineHeader5 = NumShortBits * 1 + 6, LineHeader6 = NumShortBits * 1 + 7, LineHeader7 = NumShortBits * 1 + 8, LineHeader8 = NumShortBits * 1 + 9, ThernamBath1 = NumShortBits * 1 + 10, 
-            ThernamBath2 = NumShortBits * 1 + 11, ThernamBath3 = NumShortBits * 1 + 12, ThernamBath4 = NumShortBits * 1 + 13, GasDetectorCP = NumShortBits * 1 + 14,
-            SingalTower_RED = NumShortBits * 2, SingalTower_YELLOW = NumShortBits * 2 + 1, SingalTower_GREEN = NumShortBits * 2 + 2, SingalTower_BLUE = NumShortBits * 2 + 3,
-            SingalTower_WHITE = NumShortBits * 2 + 4, SingalTower_BUZZER = NumShortBits * 2 + 5, GasDetectorH2 = NumShortBits * 2 + 6, GasDetectorH2S = NumShortBits * 2 + 7,
-            GasDetectorH2Se = NumShortBits * 2 + 8, FireSensor = NumShortBits * 2 + 9, DOR_Vaccum_State = NumShortBits * 2 + 10, Temp_Controller_Alarm = NumShortBits * 2 + 11,
-            ExternalScrubberFault = NumShortBits * 4 + 5, ExternalH2GasCabinetFault = NumShortBits * 4 + 6, 
-            ExternalH2SGasCabinetFault = NumShortBits * 4 + 7, ExternalH2SeGasCabinetFault = NumShortBits * 4 + 8, ExternalUserInputAlarm = NumShortBits * 4 + 9
+            PowerResetSwitch = 0, Cover_UpperLimit = 1, Cover_LowerLimit = 2, CylinderAutoSwicthClosed = 3, CylinderAutoSwicthOpen = 4, SMPS_24V480 = 5, SMPS_24V72 = 6, 
+            SMPS_15VPlus = 7, SMPS_15VMinus = 8, CB_GraphiteHeater = 9, CB_ThermalBath = 10, CB_VaccumPump = 11, CB_LineHeater = 12, CB_RotationMotor = 13, CB_CoverLiftMotor = 14, 
+            CB_ThrottleValve = 15, CB_Lamp = NumShortBits * 1 + 1, CB_GasDetector = NumShortBits * 1, CB_CabitnetLamp = NumShortBits * 1 + 1, CB_MFCPower = NumShortBits * 1 + 2, 
+            LineHeader1 = NumShortBits * 1 + 3, LineHeader2 = NumShortBits * 1 + 4, LineHeader3 = NumShortBits * 1 + 5, LineHeader4 = NumShortBits * 1 + 6,
+            LineHeader5 = NumShortBits * 1 + 7, LineHeader6 = NumShortBits * 1 + 8, LineHeader7 = NumShortBits * 1 + 9, LineHeader8 = NumShortBits * 1 + 10, 
+            GasDetectorH2 = NumShortBits * 1 + 11, GasDetectorH2S = NumShortBits * 1 + 12, GasDetectorH2Se = NumShortBits * 1 + 13, FireSensor = NumShortBits * 1 + 14,
+            ExternalScrubberFault = NumShortBits * 1 + 15, ExternalH2GasCabinetFault = NumShortBits * 2, ExternalH2SGasCabinetFault = NumShortBits * 2 + 1,
+            ExternalH2SeGasCabinetFault = NumShortBits * 2 + 2, ExternalUserInputAlarm = NumShortBits * 2 + 3, ThermalBath1_Deviaiton = NumShortBits * 2 + 4,
+            ThermalBath1_CutOff = NumShortBits * 2 + 5, ThermalBath2_Deviaiton = NumShortBits * 2 + 6, ThermalBath2_CutOff = NumShortBits * 2 + 7, ThermalBath3_Deviaiton = NumShortBits * 2 + 8,
+            ThermalBath3_CutOff = NumShortBits * 2 + 9, ThermalBath4_Deviaiton = NumShortBits * 2 + 10, ThermalBath4_CutOff = NumShortBits * 2 + 11,
+            SingalTower_RED = NumShortBits * 3, SingalTower_YELLOW = NumShortBits * 3 + 1, SingalTower_GREEN = NumShortBits * 3 + 2, SingalTower_BLUE = NumShortBits * 3 + 3,
+            SingalTower_WHITE = NumShortBits * 3 + 4, SingalTower_BUZZER = NumShortBits * 3 + 5, ClampLock = NumShortBits * 3 + 6, ClampRelease = NumShortBits * 3 + 7, 
+            DOR_Vaccum_State = NumShortBits * 3 + 8, Temp_Controller_Alarm = NumShortBits * 3 + 9            
         };
 
 
@@ -122,7 +124,8 @@ namespace SapphireXR_App.Models
 
         public enum OutputCmd1Index
         {
-            InductionHeaterPower = 0, ThermalBathPower, VaccumPumpPower, LineHeaterPower, InductionHeaterControl, InductionHeaterReset, VaccumPumpControl, VaccumPumpReset, TempControllerManAuto = 11, PressureControlMode = 12
+            GraphiteHeaterPower = 0, ThermalBathPower, VaccumPumpPower, LineHeaterPower, VaccumPumpControl = 6, VaccumPumpReset, RotationControl = 8,  RotationReset = 10, 
+            TempControllerManAuto = 12, PressureControlMode = 13
         }
 
         public enum OutputSetType : ushort
@@ -137,8 +140,8 @@ namespace SapphireXR_App.Models
 
         public enum InterlockValueSetting
         {
-            ProcessGasPressureAlarm = 5, ProcessGasPressureWarning, CWTempSHAlarm, CWTempSHWarning, CWTempCoilAlarm, CWTempCoilWarning, SusceptorOverTemperature, ReactorOverPressure,
-            CanOpenSusceptorTemperature, CanOpenReactorPressure, PressureLimit, RetryCount
+            ProcessGasPressureAlarm = 5, ProcessGasPressureWarning, SusceptorOverTemperature, ReactorOverPressure, CanOpenSusceptorTemperature, CanOpenReactorPressure, 
+            PressureLimit, RetryCount, DORFault
         };
 
         public enum TriggerType { Alarm = 0, Warning };
@@ -164,8 +167,8 @@ namespace SapphireXR_App.Models
 
         public static readonly Dictionary<string, int> dMonitoringMeterIndex = new Dictionary<string, int>
         {
-            { "UltimatePressure", 0 },  { "ExtPressure", 1},  { "DorPressure", 2}, { "Gas1", 3}, { "Gas2", 4}, { "Gas3", 5}, { "Gas4", 6}, { "ShowerHeadTemp", 7}, { "InductionCoilTemp", 8},
-            { "HeaterPowerRate", 9 }, { "ValvePosition", 10 }, { "Source1", 11}, { "Source2", 12},  { "Source3", 13},  { "Source4", 14},  { "Source5", 15},  { "Source6", 16}
+            { "UltimatePressure", 0 },  { "ExtPressure", 1},  { "DorPressure", 2}, { "Gas1", 3}, { "Gas2", 4}, { "Gas3", 5}, { "Gas4", 6}, { "ShowerHeadTemp", 7},
+            { "HeaterPowerRate", 10 }, { "ValvePosition", 11 }, { "Source1", 12}, { "Source2", 13},  { "Source3", 14},  { "Source4", 15}
         };
 
         private static readonly Dictionary<string, int> dAnalogDeviceAlarmWarningBit = new Dictionary<string, int>
@@ -177,14 +180,14 @@ namespace SapphireXR_App.Models
         private static readonly Dictionary<string, int> dDigitalDeviceAlarmWarningBit = new Dictionary<string, int>
         {
             { "A01", 0 }, { "A02", 1 }, { "A03", 2 },  { "A04", 3 }, { "A05", 4 }, { "A06", 5 },  { "A07", 6 }, { "A08", 7 }, { "A09", 8 }, { "A10", 9 }, { "A11", 10 }, { "A12", 11 },
-            { "A13", 12 }, { "A14", 13 }, { "A15", 14 }, { "A16", 15  }
+            { "A13", 12 }
         };
 
         public const uint LineHeaterTemperature = 8;
         private const uint NumAlarmWarningArraySize = 6;
         private const uint NumInterlockSet = 16;
         private const uint NumInterlock = 5;
-        public const uint NumDigitalDevice = 14;
+        public const uint NumDigitalDevice = 12;
         public const uint NumAnalogDevice = 19;
 
         // Variable handles to be connected plc variables
@@ -208,13 +211,11 @@ namespace SapphireXR_App.Models
         private static Dictionary<string, ObservableManager<bool>.Publisher>? dValveStateIssuers;
         private static ObservableManager<bool>.Publisher? dRecipeEndedPublisher;
         private static ObservableManager<short>.Publisher? dCurrentActiveRecipeIssue;
-        private static ObservableManager<float[]>.Publisher? dLineHeaterTemperatureIssuers;
         private static ObservableManager<int>.Publisher? dRecipeControlPauseTimeIssuer;
         private static ObservableManager<(int, RecipeRunETMode)>.Publisher? dRecipeRunElapsedTimeIssuer;
         private static ObservableManager<BitArray>.Publisher? dDigitalOutput2;
         private static ObservableManager<BitArray>.Publisher? dDigitalOutput3;
         private static ObservableManager<BitArray>.Publisher? dOutputCmd1;
-        private static ObservableManager<BitArray>.Publisher? dInputManAuto;
         private static ObservableManager<short>.Publisher? dThrottleValveControlMode;
         private static ObservableManager<ushort>.Publisher? dPressureControlModeIssuer;
         private static ObservableManager<short>.Publisher? dThrottleValveStatusIssuer;
@@ -224,6 +225,7 @@ namespace SapphireXR_App.Models
         private static ObservableManager<float>.Publisher? temperatureTVPublisher;
         private static ObservableManager<float>.Publisher? pressureTVPublisher; 
         private static ObservableManager<float>.Publisher? rotationTVPublisher;
+        private static ObservableManager<float[]>.Publisher? dLineHeaterTemperatureIssuers;
 
         private static LeakTestModeSubscriber? leakTestModeSubscriber = null;
 
@@ -267,8 +269,7 @@ namespace SapphireXR_App.Models
         private static uint hRcpStepN;
         private static uint hMonitoring_PV;
         private static uint hInputState;
-        private static uint hInputState4;
-        private static uint hTemperaturePV;
+        private static uint hInputState5;
         private static uint hControlModeCmd;
         private static uint hControlMode;
         private static uint hUserState;
@@ -276,15 +277,12 @@ namespace SapphireXR_App.Models
         private static uint hDigitalOutput;
         private static uint hDigitalOutput2;
         private static uint hOutputCmd;
-        private static uint hE3508InputManAuto;
         private static uint hOutputCmd1;
         private static uint hOutputCmd2;
         private static uint hOutputSetType;
         private static uint hOutputMode;
         private static uint hRecipeRunET;
-        private static uint hTemperatureTV;
-        private static uint hPressureTV;
-        private static uint hRotationTV;
+        private static uint hTemperaturePV;
         private static uint[] hInterlockEnable = new uint[NumAlarmWarningArraySize];
         private static uint[] hInterlockset = new uint[NumInterlockSet];
         private static uint[] hInterlock = new uint[NumInterlock];

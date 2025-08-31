@@ -35,10 +35,6 @@ namespace SapphireXR_App.ViewModels
                     case "ShowerHeadTemp":
                         leftViewModel.ShowerHeadTemp = ((int)value).ToString();
                         break;
-
-                    case "InductionCoilTemp":
-                        leftViewModel.InductionCoilTemp = ((int)value).ToString();
-                        break;
                 }
             }
 
@@ -70,12 +66,12 @@ namespace SapphireXR_App.ViewModels
                 {
                     if (value[startIndex] == true)
                     {
-                        return ReadyLampColor;
+                        return RunLampColor;
                     }
 
                     if (value[startIndex + 1] == true)
                     {
-                        return RunLampColor;
+                        return ReadyLampColor;
                     }
 
                     if (value[startIndex + 2] == true)
@@ -85,17 +81,35 @@ namespace SapphireXR_App.ViewModels
 
                     return null;
                 };
+                var convertFourStateColor = (BitArray value, int startIndex) =>
+                {
+                    if (value[startIndex] == true || value[startIndex + 2] == true)
+                    {
+                        return FaultLampColor ;
+                    }
+
+                    if (value[startIndex + 1] == true)
+                    {
+                        return ReadyLampColor;
+                    }
+
+                    if (value[startIndex + 3] == true)
+                    {
+                        return RunLampColor;
+                    }
+
+                    return null;
+                };
 
                 leftViewModel.MaintenanceKeyLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.MaintenanceKey]);
-                leftViewModel.DoorReactorCabinetLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.DoorReactorCabinet]);
-                leftViewModel.DoorGasDeliveryCabinetLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.DoorGasDeliveryCabinet]);
-                leftViewModel.DoorPowerDistributeCabinetLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.DoorPowerDistributeCabinet]);
+                leftViewModel.DoorReactorCabinetLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.DoorSensorReactor]);
+                leftViewModel.DoorGasDeliveryCabinetLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.DoorSensorGasDelivery]);
+                leftViewModel.DoorPowerDistributeCabinetLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.DoorSensorElectricControl]);
                 leftViewModel.CleanDryAirLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.CleanDryAir]);
                 leftViewModel.CoolingWaterLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.CoolingWater]);
-
-                leftViewModel.InductionHeaterLampColor = convertThreeStateColor(value, (int)PLCService.HardWiringInterlockStateIndex.InductionHeaterReady) ?? leftViewModel.InductionHeaterLampColor;
-                leftViewModel.SusceptorMotorLampColor = convertThreeStateColor(value, (int)PLCService.HardWiringInterlockStateIndex.SusceptorMotorStop) ?? leftViewModel.SusceptorMotorLampColor;
-                leftViewModel.VacuumPumpLampColor = convertThreeStateColor(value, (int)PLCService.HardWiringInterlockStateIndex.VacuumPumpWarning) ?? leftViewModel.VacuumPumpLampColor;
+  
+                leftViewModel.SusceptorMotorLampColor = convertThreeStateColor(value, (int)PLCService.HardWiringInterlockStateIndex.SusceptorMotorRun) ?? leftViewModel.SusceptorMotorLampColor;
+                leftViewModel.VacuumPumpLampColor = convertFourStateColor(value, (int)PLCService.HardWiringInterlockStateIndex.VacuumPumpFault) ?? leftViewModel.VacuumPumpLampColor;
             }
 
             LeftViewModel leftViewModel;
@@ -315,8 +329,7 @@ namespace SapphireXR_App.ViewModels
                 SetIfChanged(getGasState(value, 9, 8), ref prevGasPressureSiH4State, (byte state) => leftViewModel.GasPressureGas4StateColor = getGasStateColor(state));
                 Util.SetIfChanged(value[10], ref prevRecipeStartState, (bool state) => leftViewModel.RecipeStartStateColor = getDeviceColor(state));
                 Util.SetIfChanged(value[11], ref prevReactorOpenState, (bool state) => leftViewModel.ReactorOpenStateColor = getDeviceColor(state));
-                Util.SetIfChanged(value[12], ref prevHeaterTurnOnState, (bool state) => leftViewModel.HeaterTurnOnStateColor = getDeviceColor(state));
-                Util.SetIfChanged(value[13], ref prevPumpTurnOnState, (bool state) => leftViewModel.PumpTurnOnStateColor = getDeviceColor(state));
+                Util.SetIfChanged(value[12], ref prevPumpTurnOnState, (bool state) => leftViewModel.PumpTurnOnStateColor = getDeviceColor(state));
             }
 
             byte? prevGasPressureH2State = null;
@@ -325,7 +338,6 @@ namespace SapphireXR_App.ViewModels
             byte? prevGasPressureNH3State = null;
             bool? prevRecipeStartState = null;
             bool? prevReactorOpenState = null;
-            bool? prevHeaterTurnOnState = null;
             bool? prevPumpTurnOnState = null;
 
             LeftViewModel leftViewModel;
