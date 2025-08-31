@@ -334,7 +334,6 @@
                HorizontalContentAlignment="Center"/>
                 <control:MonitoringMeter x:Name="totalFlow_MO" Canvas.Left="740" Canvas.Top="241" Type="TotalFlowMO" />
 
-
                 <!-- Differntial Pressure for Manifold -->
                 <Label Canvas.Left="281" Canvas.Top="302" Foreground="{StaticResource SecondaryFontColor}" Content="D. Pressure Chalco"
                HorizontalContentAlignment="Center"/>

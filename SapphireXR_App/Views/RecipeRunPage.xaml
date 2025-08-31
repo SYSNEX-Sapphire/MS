@@ -253,6 +253,15 @@
                     <control:RecipeRunFlowController x:Name="susceptorTemperature" Canvas.Left="1003" Canvas.Top="72" ControllerID="Temperature" Type="Reactor" />
                     <control:RecipeRunFlowController x:Name="reactorPressure" Canvas.Left="1098" Canvas.Top="72" ControllerID="Pressure" Type="Reactor" />
                     <control:RecipeRunFlowController x:Name="susceptorRotation" Canvas.Left="1193" Canvas.Top="72" ControllerID="Rotation" Type="Reactor" />
+
+                    <!-- Total Flow 계산된 값 -->
+                    <Label Canvas.Left="1100" Canvas.Top="209" Foreground="{StaticResource SecondaryFontColor}" Content="Total Flow / Chalco"
+                        HorizontalContentAlignment="Center"/>
+                    <control:MonitoringMeter x:Name="totalFlow_Chalco" Canvas.Left="1215" Canvas.Top="214" Type="TotalFlowChalco" />
+
+                    <Label Canvas.Left="1100" Canvas.Top="245" Foreground="{StaticResource SecondaryFontColor}" Content="Total Flow / MO"
+                        HorizontalContentAlignment="Center"/>
+                    <control:MonitoringMeter x:Name="totalFlow_MO" Canvas.Left="1215" Canvas.Top="250" Type="TotalFlowMO" />
                     <!--#endregion-->
 
                     <!-- #Region 4. 가스제어용 밸브 -->
