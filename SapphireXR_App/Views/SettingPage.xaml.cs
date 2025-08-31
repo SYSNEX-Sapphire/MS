@@ -1,10 +1,7 @@
 ﻿using SapphireXR_App.Common;
 using SapphireXR_App.ViewModels;
-using System;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Media;
 
 namespace SapphireXR_App.Views
 {

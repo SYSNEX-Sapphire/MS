@@ -144,14 +144,14 @@ namespace SapphireXR_App.Models
         private static readonly Dictionary<string, int> dDigitalDeviceAlarmWarningBit = new Dictionary<string, int>
         {
             { "A01", 0 }, { "A02", 1 }, { "A03", 2 },  { "A04", 3 }, { "A05", 4 }, { "A06", 5 },  { "A07", 6 }, { "A08", 7 }, { "A09", 8 }, { "A10", 9 }, { "A11", 10 }, { "A12", 11 },
-            { "A13", 12 }
+            { "A13", 12 },  { "A14", 13 },  { "A15", 14 },  { "A16", 15 },  { "A17", 16 }
         };
 
         public const uint LineHeaterTemperature = 8;
         private const uint NumAlarmWarningArraySize = 6;
         private const uint NumInterlockSet = 16;
         private const uint NumInterlock = 5;
-        public const uint NumDigitalDevice = 13;
+        public const uint NumDigitalDevice = 17;
         public const uint NumAnalogDevice = 19;
 
         // Variable handles to be connected plc variables

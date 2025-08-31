@@ -542,18 +542,6 @@
                                                     <Thickness Bottom="{StaticResource p_2}" />
                                                 </CheckBox.Margin>
                                             </CheckBox>
-                                            <!--<Border Style="{StaticResource subSubSectionSeperator}" />
-                                            <Label Style="{StaticResource SectionTitle}" Content="Misc."/>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="Log Interval in Recipe Run (Millisecond)" Style="{StaticResource infoTextBlockLeft}"/>
-                                                <Line Grid.Column="1" Style="{StaticResource seperatorLine}" />
-                                                <local:NumberBox Grid.Column="2" Text="{Binding LogIntervalInRecipeRun}" Style="{StaticResource sectionTextBox}"/>
-                                            </Grid>-->
                                         </StackPanel>
                                     </Grid>
                                     <Grid Grid.Row="1">
