@@ -8,6 +8,7 @@ VAR_GLOBAL
 	fbDeviationCheck		:ARRAY[1..29] OF FB_DeviationCheck;
 	fbSensorLimitCheck		:ARRAY[1..7] OF FB_SensorLimitCheck;  // Pressure N2 H2 H2S,H2SE + Reactor / Press / Roration
 	fbFaultCheck			:ARRAY[1..8] OF FB_FaultCheck; // CDA/CoolingWafer/Rotation Fault/Vacuum Pump Fault/Gas Cabinet Open / Reactor Door Open / Dor Fault
+	fbFaultCheck_Utility	:ARRAY[1..4] OF FB_FaultCheck; //SMPS,Circuit Power , Gas Detector , External Alarm
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

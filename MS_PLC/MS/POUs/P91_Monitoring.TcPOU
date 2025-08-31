@@ -28,14 +28,14 @@ IF TimeCycle.Q THEN
 	// Reactor Ultimate Pressure Gauge
 	GVL_IO.aMonitoring_PV[1] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_Ultimate_Pressure] / GVL_CONSTANT.EL3064MaxValue * 10; //Ultimate Pressure 10Torr, 0~10V, Cal. x10
 	GVL_IO.aMonitoring_PV[2] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_Exhaust_Pressure] / GVL_CONSTANT.EL3064MaxValue * 1000; //1,000Torr, 0~10V, Cal. x1000
-	GVL_IO.aMonitoring_PV[3] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_DOR_PRESSURE] / GVL_CONSTANT.EL3064MaxValueH * 100;//DOR //100kPa, 0~5V, Cal. x100
+	GVL_IO.aMonitoring_PV[3] := F_GetDorPressure(GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_DOR_PRESSURE]);
 	GVL_IO.aMonitoring_PV[4] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_GAS_Pressure_N2] / GVL_CONSTANT.EL3064MaxValue * 6.89; //N2 Cal. 6.89 bar  
 	GVL_IO.aMonitoring_PV[5] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_GAS_Pressure_H2] / GVL_CONSTANT.EL3064MaxValue * 6.89; //H2 Cal. 6.89 bar
 	GVL_IO.aMonitoring_PV[6] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_GAS_Pressure_H2S] / GVL_CONSTANT.EL3064MaxValue * 6.89; //NH3 Cal. 6.89 bar
 	GVL_IO.aMonitoring_PV[7] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_GAS_Pressure_H2Se] / GVL_CONSTANT.EL3064MaxValue * 6.89; // Cal. 6.89 bar
 	GVL_IO.aMonitoring_PV[8] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_CoolingWafer_SH] / GVL_CONSTANT.EL3064MaxValue * 0.1; //  // PT100, Shower Head, Cal. 0.1
 	GVL_IO.aMonitoring_PV[9] := GVL_IO.aAnalogInputIO2[1] / GVL_CONSTANT.EL3102MAxValue;
-	GVL_IO.aMonitoring_PV[10] := GVL_IO.aAnalogInputIO2[2] / GVL_CONSTANT.EL3102MAxValue;
+	GVL_IO.aMonitoring_PV[10] := GVL_IO.aAnalogInputIO2[2] / GVL_CONSTANT.EL3102MAxValue; 
 	GVL_IO.aMonitoring_PV[11] := WORD_TO_REAL(P11_E3508.wE3508_PowerRate)*0.1; //divided to 10 PowerRate
 	GVL_IO.aMonitoring_PV[12] := P12_IQ_PLUS.wByteValvePosition_PV_Monitoring;
 	GVL_IO.aMonitoring_PV[13] := P14_ThermalBath.rTemperature_PV[1];
@@ -74,23 +74,7 @@ IF TimeCycle.Q THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="P91_Monitoring">
-      <LineId Id="233" Count="31" />
-      <LineId Id="278" Count="1" />
-      <LineId Id="266" Count="0" />
-      <LineId Id="295" Count="0" />
-      <LineId Id="280" Count="2" />
-      <LineId Id="289" Count="5" />
-      <LineId Id="283" Count="0" />
-      <LineId Id="286" Count="0" />
-      <LineId Id="296" Count="1" />
-      <LineId Id="287" Count="0" />
-      <LineId Id="267" Count="0" />
-      <LineId Id="299" Count="1" />
-      <LineId Id="298" Count="0" />
-      <LineId Id="303" Count="1" />
-      <LineId Id="302" Count="0" />
-      <LineId Id="305" Count="1" />
-      <LineId Id="301" Count="0" />
+      <LineId Id="315" Count="59" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

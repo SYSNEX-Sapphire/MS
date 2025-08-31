@@ -70,7 +70,7 @@ GVL_IO.aInputState[5].9:= GVL_DEVICE_NET_E3508.aInputAlarmStatus[1] > 0 OR GVL_D
 
 //bAlarmState_E3508 		:= nInputAlarmBytes.7;
 
-GVL_IO.aMonitoring_PV[11] := WORD_TO_REAL(wE3508_PowerRate)*0.1; //divided to 10 PowerRate
+//GVL_IO.aMonitoring_PV[11] := WORD_TO_REAL(wE3508_PowerRate)*0.1; //divided to 10 PowerRate
 
 (* Read from Induction Heater Value *)
 
@@ -104,11 +104,7 @@ GVL_DEVICE_NET_E3508.aOutputThreshold[2]:=3;
 ]]></ST>
     </Implementation>
     <LineIds Name="P11_E3508">
-      <LineId Id="709" Count="8" />
-      <LineId Id="720" Count="3" />
-      <LineId Id="728" Count="3" />
-      <LineId Id="733" Count="6" />
-      <LineId Id="741" Count="34" />
+      <LineId Id="815" Count="58" />
       <LineId Id="668" Count="0" />
     </LineIds>
   </POU>

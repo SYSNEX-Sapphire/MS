@@ -112,6 +112,7 @@ ELSE
 	_103_Alarm_Reactor_OverPre_Temp();
 	_Alarm_Utility();	
 	_Button_Reset_Warning();
+	_Alarm_Utility_Parts();
 END_IF
 
 _01_Enable_RunRecipe();
@@ -121,10 +122,10 @@ _04_Enable_Heater_ON();
 _05_Enable_OpenPressure();
 _06_Enable_OpenTemp();
 
+
 (* Out to Device*)
 GVL_IO.aDigitalOutputIO[3].7 := bPowerResetLED;
 GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
-
 
 
 ]]></ST>
@@ -467,6 +468,72 @@ FOR i := 17 TO 19 DO
 	END_FOR]]></ST>
       </Implementation>
     </Action>
+    <Action Name="_Alarm_Utility_Parts" Id="{9a2dacee-2e4c-4b78-a14f-4fa3c303bb8d}">
+      <Implementation>
+        <ST><![CDATA[//SMPS,Circuit Power , Gas Detector ,
+	FOR i := 1 TO 4 DO
+		CASE i OF
+			1: //SMPS
+				bAlarmEnable := GVL_IO.aInterlockEnable[4].13;
+				bDeviceCurrentAlarmState := GVL_IO.aInputState[2].5 AND GVL_IO.aInputState[2].6 AND GVL_IO.aInputState[2].7 AND GVL_IO.aInputState[2].8;
+			2: //Circuit Power
+				bAlarmEnable := GVL_IO.aInterlockEnable[4].14;
+				bDeviceCurrentAlarmState := GVL_IO.aInputState[2].13 AND GVL_IO.aInputState[2].13 AND GVL_IO.aInputState[2].14 
+										AND GVL_IO.aInputState[2].13 AND GVL_IO.aInputState[3].0 AND GVL_IO.aInputState[3].1 AND GVL_IO.aInputState[3].2;
+				
+		//GVL_IO.aInputState[2].13:= GVL_IO_GAS_CABINET.DI_02_RotationMotorCP;
+		//GVL_IO.aInputState[2].14:= GVL_IO_GAS_CABINET.DI_02_CoverLiftMotorCP;
+		//GVL_IO.aInputState[2].15:= GVL_IO_GAS_CABINET.DI_02_T_VCP;
+		
+		//GVL_IO.aInputState[3].0:= GVL_IO_GAS_CABINET.DI_03_GasDetectorCP;
+		//GVL_IO.aInputState[3].1:= GVL_IO_GAS_CABINET.DI_03_CabinetLampsCP;
+		//GVL_IO.aInputState[3].2:= GVL_IO_GAS_CABINET.DI_03_MFCPowerCP;
+
+			3: //Gas Detector
+				bAlarmEnable := GVL_IO.aInterlockEnable[4].15;
+				bDeviceCurrentAlarmState := GVL_IO.aInputState[3].11 AND GVL_IO.aInputState[3].12 AND GVL_IO.aInputState[3].13 AND GVL_IO.aInputState[3].14;
+				
+
+		//GVL_IO.aInputState[3].11:= GVL_IO_GAS_CABINET.DI_04_GasDetectorH2;
+		//GVL_IO.aInputState[3].12:= GVL_IO_GAS_CABINET.DI_04_GasDetectorH2S;
+		//GVL_IO.aInputState[3].13:= GVL_IO_GAS_CABINET.DI_04_GasDetectorH2Se;
+		//GVL_IO.aInputState[3].14:= GVL_IO_GAS_CABINET.DI_04_FireSensor;
+			4: // External Alarm
+				bAlarmEnable := GVL_IO.aInterlockEnable[4].16;
+				bDeviceCurrentAlarmState := GVL_IO.aInputState[3].14 AND GVL_IO.aInputState[3].15 AND GVL_IO.aInputState[4].0 AND GVL_IO.aInputState[4].1 AND GVL_IO.aInputState[4].2
+														AND GVL_IO.aInputState[4].3 AND GVL_IO.aInputState[4].4;
+				
+						
+		//GVL_IO.aInputState[3].14:= GVL_IO_GAS_CABINET.DI_04_FireSensor;
+		//GVL_IO.aInputState[3].15 := GVL_IO_GAS_CABINET.DI_04_ExternalScrubberFault;
+		//GVL_IO.aInputState[4].0 := GVL_IO_GAS_CABINET.DI_05_ExternalH2GasCabinetFault;
+		//GVL_IO.aInputState[4].1 := GVL_IO_GAS_CABINET.DI_05_ExternalH2SGasCabinetFault;
+		//GVL_IO.aInputState[4].2 := GVL_IO_GAS_CABINET.DI_05_ExternalH2SeGasCabinetFault;
+		//GVL_IO.aInputState[4].3 := GVL_IO_GAS_CABINET.DI_05_ExternalUserInputAlarm;
+
+		END_CASE
+
+		GVL_SEQUENCE.fbFaultCheck_Utility[i](
+			bAlarmEnable := bAlarmEnable,
+			bWarningEnable := FALSE,
+			bCurrentAlarmState := bDeviceCurrentAlarmState,
+			bCurrentWarningState := FALSE,
+			tAlarmDelay := tAlarmDelay_D,
+			bAlarm => bFaultAlarm,
+			bWarning => bFaultWarning
+			);
+			
+		IF bFaultAlarm THEN
+			GVL_IO.aInterlock[1].0 := TRUE; //Alarm Trig
+			GVL_IO.nCaseSignalTower := 1; // Signal Tower RED - Alarm
+			//팝업 표시
+			wAlarm := ROR(GVL_IO.aInterlock[2], (i+13));
+			wAlarm.0 := TRUE;
+			GVL_IO.aInterlock[2] := ROL(wAlarm, (i+13));
+		END_IF
+	END_FOR]]></ST>
+      </Implementation>
+    </Action>
     <Action Name="_Button_Reset_Warning" Id="{11672cb1-8009-4337-b6f3-945de947a9f8}">
       <Implementation>
         <ST><![CDATA[IF GVL_IO.aInterlockEnable[1].0 THEN //알람 리셋 버턴을 눌렀을 때
@@ -492,7 +559,7 @@ bMainPowerMonitor := GVL_IO.aDigitalInputIO[7].5; /// ??????? 이게 뭐지 ?]]>
       </Implementation>
     </Action>
     <LineIds Name="P90_Interlock">
-      <LineId Id="1747" Count="53" />
+      <LineId Id="1926" Count="54" />
       <LineId Id="415" Count="0" />
     </LineIds>
     <LineIds Name="P90_Interlock._01_Enable_RunRecipe">
