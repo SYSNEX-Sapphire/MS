@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="P15_RotationOperation" Id="{7f828812-d1bb-49a4-a03d-f3e347855c39}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P15_RotationOperation
 VAR
@@ -29,7 +29,7 @@ END_VAR
 
 _DigitalInput();
 
-nConvertedRotation_PV := REAL_TO_INT(wRotaion_PV/(10*ConversionFactor));
+nConvertedRotation_PV := REAL_TO_INT(wRotaion_PV/ConversionFactor);
 
 // Interface with other PRGs
 GVL_IO.nRotation_Converted_PV := nConvertedRotation_PV;
@@ -38,10 +38,15 @@ rControlValue := GVL_IO.rRotation_ControlValue;
 //Write to Motor Driver
 rConvertedCV := rControlValue * ConversionFactor; // Convert from RPM to control value
 
-IF (GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.targetValue > 0) OR (rConvertedCV > 0) THEN // Motor Driver RUN
-	bBrake_Run := TRUE;
-ELSIF (GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.targetValue = 0) AND (rConvertedCV = 0) THEN
-	bBrake_Run := FALSE;
+
+IF GVL_io.aInterlockEnable[1].7 = TRUE THEN // UI 의 Auto Power ON 기능에 따라서 자동 On . oFF 사용 
+	IF (GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.targetValue > 0) OR (rConvertedCV > 0) THEN // Motor Driver RUN
+		bBrake_Run := TRUE;
+	ELSIF (GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_susceptorRotation].input.targetValue = 0) AND (rConvertedCV = 0) THEN
+		bBrake_Run := FALSE;
+	END_IF
+ELSE
+	bBrake_Run:=FALSE;
 END_IF
 
 _DigitalOutput();]]></ST>
@@ -69,20 +74,7 @@ GVL_IO_REACTOR_CABINET.AO_09_R01_SusceptorRotationSV:=REAL_TO_INT(rConvertedCV);
       </Implementation>
     </Action>
     <LineIds Name="P15_RotationOperation">
-      <LineId Id="44" Count="0" />
-      <LineId Id="142" Count="0" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="193" Count="0" />
-      <LineId Id="50" Count="0" />
-      <LineId Id="159" Count="2" />
-      <LineId Id="144" Count="0" />
-      <LineId Id="162" Count="0" />
-      <LineId Id="52" Count="1" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="148" Count="1" />
-      <LineId Id="151" Count="1" />
-      <LineId Id="154" Count="0" />
-      <LineId Id="95" Count="0" />
+      <LineId Id="216" Count="23" />
       <LineId Id="163" Count="0" />
     </LineIds>
     <LineIds Name="P15_RotationOperation._DigitalInput">

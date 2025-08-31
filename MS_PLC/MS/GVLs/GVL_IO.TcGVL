@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <GVL Name="GVL_IO" Id="{a5f3292d-798a-4b6c-af88-b59309d83086}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
@@ -29,12 +29,6 @@ VAR_GLOBAL
 	aInterlockSet			: ARRAY[1..16] OF REAL; // UI Interlokc Setting Value
 	aInterlockEnable		: ARRAY[1..6] OF DWORD; // UI Interlock Enable Setting
 	
-	//jhkang
-//	aInterlock_Alarm: ARRAY[1..E_AlarmList.E_AlarmList_END]OF BOOL;// Interlock
-//	aInterlock_Warning: ARRAY[1..E_WarningList.E_WarningList_END]OF BOOL;// Interlock
-//	aInterlock_jh:ARRAY[1..E_Interlock.E_Interlock_END]OF BOOL;
-//	aInterlockSet_jh: ARRAY[1..E_AlarmSetValue.E_AS_END] OF REAL; // UI Interlokc Setting Value
-//	aInterlockEnable_jh:ARRAY[1..6]OF BOOL;
 	
 	nCaseSignalTower		: INT;
 	nDorOperationError		: INT;

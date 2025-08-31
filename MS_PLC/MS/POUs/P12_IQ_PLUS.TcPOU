@@ -84,7 +84,7 @@ wByteCDG1_PV 		:= USINT_TO_WORD_jh(GVL_DEVICE_NET_IQ_PLUS.aInputPressurePV_CDG1)
 wByteCDG2_PV 		:= USINT_TO_WORD_jh(GVL_DEVICE_NET_IQ_PLUS.aInputPressurePV_CDG2);
 wByteValvePosition_PV:= USINT_TO_WORD_jh(GVL_DEVICE_NET_IQ_PLUS.aInputValvePosionPV);
 wByteValvePosition_PV_Monitoring:=REAL_TO_WORD(wByteValvePosition_PV/SetPointFactor);
-GVL_IO.aMonitoring_PV[11] := wByteValvePosition_PV_Monitoring;
+GVL_IO.aMonitoring_PV[12] := wByteValvePosition_PV_Monitoring;
 
 
 wControlValue		:= GVL_IO.wIqPlus_CV;
@@ -178,7 +178,7 @@ GVL_IO_REACTOR_CABINET.DO_05_VacuumPumpReset := bPumpReset;]]></ST>
       <LineId Id="401" Count="0" />
     </LineIds>
     <LineIds Name="P12_IQ_PLUS._CalData">
-      <LineId Id="108" Count="72" />
+      <LineId Id="181" Count="72" />
       <LineId Id="67" Count="0" />
     </LineIds>
     <LineIds Name="P12_IQ_PLUS._DigitalInput">

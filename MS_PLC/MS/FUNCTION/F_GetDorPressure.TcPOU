@@ -7,12 +7,16 @@ VAR_INPUT
 END_VAR
 
 VAR
+	Value:REAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_GetDorPressure := -190 * ((10 / 32767 ) * nPressurePV)+ 950;]]></ST>
+      <ST><![CDATA[//F_GetDorPressure := -190 * ((10 / 32767 ) * nPressurePV)+ 950;
+Value:= (10.0 / 32767.0) * nPressurePV;
+F_GetDorPressure := (190* (Value) ) - 190;]]></ST>
     </Implementation>
     <LineIds Name="F_GetDorPressure">
+      <LineId Id="23" Count="1" />
       <LineId Id="7" Count="0" />
     </LineIds>
   </POU>

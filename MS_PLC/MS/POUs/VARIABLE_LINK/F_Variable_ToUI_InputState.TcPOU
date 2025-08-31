@@ -73,8 +73,6 @@ GVL_IO.aInputState[4].10:= GVL_IO_GAS_CABINET.DI_06_ThermalBath_4DeviationAlarm;
 GVL_IO.aInputState[4].11:= GVL_IO_GAS_CABINET.DI_06_ThermalBath_3CutOffAlarm;
 
 
-
-
 GVL_IO.aInputState[5].0:= GVL_IO_REACTOR_CABINET.DO_04_SignalTowerRed;
 GVL_IO.aInputState[5].1:= GVL_IO_REACTOR_CABINET.DO_04_SignalTowerOrange;
 GVL_IO.aInputState[5].2:= GVL_IO_REACTOR_CABINET.DO_04_SignalTowerGreen;
@@ -117,8 +115,7 @@ GVL_IO.aInputState[6].12:= GVL_IO_REACTOR_CABINET.DI_03_ReactorDoorDownLimitSens
 ]]></ST>
     </Implementation>
     <LineIds Name="F_Variable_ToUI_InputState">
-      <LineId Id="400" Count="80" />
-      <LineId Id="483" Count="28" />
+      <LineId Id="513" Count="107" />
       <LineId Id="82" Count="0" />
     </LineIds>
   </POU>
