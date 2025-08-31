@@ -98,6 +98,8 @@ namespace SapphireXR_App.ViewModels
             ObservableManager<float>.Subscribe("TemperatureTV", temperatureTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetTemp = newValue));
             ObservableManager<float>.Subscribe("PressureTV", pressureTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetPress = newValue));
             ObservableManager<float>.Subscribe("RotationTV", rotationTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetRotation = newValue));
+            ObservableManager<bool>.Subscribe("MotorFaultAlarm", motorFaultAlarmSubscriber = new ReactorAlarmSubscriber((bool alarm) => MotorResetEnable = alarm));
+            ObservableManager<bool>.Subscribe("VaccumPumpFaultAlarm", vaccumPumpFaultAlarmSubscriber = new ReactorAlarmSubscriber((bool alarm) => { if (alarm == true) { ThrottleValveStatus = "Valve Fault"; } }));
 
             ThrottleValveControlModes = ["Control", "Open", "Close", "Hold", "Reset"];
 
@@ -218,6 +220,7 @@ namespace SapphireXR_App.ViewModels
                 {
                     PLCService.WriteOutputCmd1(PLCService.OutputCmd1Index.RotationReset, true);
                     MotorResetEnable = false;
+                    
                 }
             }
             catch (Exception exception)
@@ -485,6 +488,9 @@ namespace SapphireXR_App.ViewModels
         private bool showMsgOnTogglePressureControlModeEx = true;
         private bool showMsgOnThrottleValveModeChangedCommandEx = true;
         private bool showMsgOnLoadBatchOnRecipeEnd = true;
+
+        private ReactorAlarmSubscriber motorFaultAlarmSubscriber;
+        private ReactorAlarmSubscriber vaccumPumpFaultAlarmSubscriber;
     }
 }
 

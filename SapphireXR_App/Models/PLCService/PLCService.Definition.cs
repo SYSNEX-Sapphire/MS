@@ -187,7 +187,7 @@ namespace SapphireXR_App.Models
         private const uint NumAlarmWarningArraySize = 6;
         private const uint NumInterlockSet = 16;
         private const uint NumInterlock = 5;
-        public const uint NumDigitalDevice = 12;
+        public const uint NumDigitalDevice = 13;
         public const uint NumAnalogDevice = 19;
 
         // Variable handles to be connected plc variables
