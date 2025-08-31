@@ -325,6 +325,25 @@
                 Width="80" HorizontalContentAlignment="Center"/>
             <control:HomeFlowController x:Name="susceptorRotation" Canvas.Left="943" Canvas.Top="60" ControllerID="Rotation" Type="Reactor"/>
 
+                <!-- Total Flow 계산된 값 -->
+                <Label Canvas.Left="710" Canvas.Top="160" Foreground="{StaticResource SecondaryFontColor}" Content="Total Flow / Chalco"
+               HorizontalContentAlignment="Center"/>
+                <control:MonitoringMeter x:Name="totalFlow_Chalco" Canvas.Left="740" Canvas.Top="185" Type="TotalFlowChalco" />
+                
+                <Label Canvas.Left="710" Canvas.Top="216" Foreground="{StaticResource SecondaryFontColor}" Content="Total Flow / MO"
+               HorizontalContentAlignment="Center"/>
+                <control:MonitoringMeter x:Name="totalFlow_MO" Canvas.Left="740" Canvas.Top="241" Type="TotalFlowMO" />
+
+
+                <!-- Differntial Pressure for Manifold -->
+                <Label Canvas.Left="281" Canvas.Top="302" Foreground="{StaticResource SecondaryFontColor}" Content="D. Pressure Chalco"
+               HorizontalContentAlignment="Center"/>
+                <control:MonitoringMeter x:Name="dpPressure_Chalco" Canvas.Left="391" Canvas.Top="307" Type="DP_Chalco" />
+                <Label Canvas.Left="281" Canvas.Top="341" Foreground="{StaticResource SecondaryFontColor}" Content="D. Pressure MO"
+               HorizontalContentAlignment="Center"/>
+                <control:MonitoringMeter x:Name="dpPressure_MO" Canvas.Left="391" Canvas.Top="346" Type="DP_MO" />
+
+
                 <Label Canvas.Left="1220" Canvas.Top="92" Foreground="{StaticResource PrimaryFontColor}" Content="DOR"
                 Width="40" HorizontalContentAlignment="Center"/>
             <control:MonitoringMeter x:Name="dorPressure" Canvas.Left="1205" Canvas.Top="74" Type="DorPressure"/>
@@ -454,8 +473,9 @@
                 <Label Canvas.Left="860" Canvas.Top="160" Foreground="{StaticResource SecondaryFontColor}" Content="Out Liner Purge"
                HorizontalContentAlignment="Center"/>
                 <Label Canvas.Left="860" Canvas.Top="204" Foreground="{StaticResource SecondaryFontColor}" Content="Heater Purge"
-               HorizontalContentAlignment="Center"/>               
+               HorizontalContentAlignment="Center"/>
 
+                
                 <Border Canvas.Left="1027" Canvas.Top="286" BorderThickness="1" BorderBrush="{StaticResource ProcessLineColor}" Width="22" Height="22">
                     <TextBlock  Foreground="{StaticResource PrimaryFontColor}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">A</TextBlock>
                 </Border>
