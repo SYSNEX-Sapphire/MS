@@ -4,7 +4,7 @@
     {
         protected override void updatePresentValue(float value)
         {
-            PresentValue = ((int)value).ToString();
+            PresentValue = (value).ToString();
         }
     }
 }

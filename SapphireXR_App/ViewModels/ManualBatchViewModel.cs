@@ -135,6 +135,7 @@ namespace SapphireXR_App.ViewModels
                                 if(e.PropertyName == nameof(Batch.RampingTime))
                                 {
                                     RampingTimeErrorThickness = (batch.RampingTime != null ? RampingTimeThicknessNoError : RampingTimeThicknessError);
+                                    LoadToPLCCommand.NotifyCanExecuteChanged();
                                 }
                             };
                         }
