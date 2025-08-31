@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SapphireXR_App.Common;
 using SapphireXR_App.Models;
 using System.Windows;
 using System.Windows.Media;
@@ -216,7 +217,8 @@ namespace SapphireXR_App.ViewModels
                 string? notificationName = GetDigitalDeviceNotificationName(digitalDevice);
                 if (notificationName != null)
                 {
-                    if (PLCService.ReadBit(digitalDeviceAlarms, (int)digitalDevice) == true)
+                    bool on = PLCService.ReadBit(digitalDeviceAlarms, (int)digitalDevice);
+                    if (on == true)
                     {
                         onList.Add(notificationName);
                         if (keysEventLogged.Contains(notificationName) == false)
@@ -234,6 +236,20 @@ namespace SapphireXR_App.ViewModels
                     else
                     {
                         keysEventLogged.Remove(notificationName);
+                    }
+                    // Special handling for some alarms to notify other parts of the application
+                    if (triggerType == PLCService.TriggerType.Alarm)
+                    {
+                        switch (digitalDevice)
+                        {
+                            case 8:
+                                MotorFaultAlarmPublisher.Publish(on);
+                                break;
+
+                            case 9:
+                                VacuumPumpFaultAlarmPublisher.Publish(on);
+                                break;
+                        }
                     }
                 }
             }
@@ -299,5 +315,8 @@ namespace SapphireXR_App.ViewModels
         private static HashSet<string> KeysWarningEventLogged = new HashSet<string>();
 
         private DispatcherTimer onListUpdater;
+
+        private static ObservableManager<bool>.Publisher MotorFaultAlarmPublisher = ObservableManager<bool>.Get("MotorFaultAlarm");
+        private static ObservableManager<bool>.Publisher VacuumPumpFaultAlarmPublisher = ObservableManager<bool>.Get("VaccumPumpFaultAlarm");
     }
 }

@@ -140,5 +140,26 @@ namespace SapphireXR_App.ViewModels
             private Action<string> onNewValue;
             private float? prevTemperatureTV = null;
         }
+
+        private class ReactorAlarmSubscriber : IObserver<bool>
+        {
+            internal ReactorAlarmSubscriber(Action<bool> onAlarmedAct)
+            {
+                onAlarmed = onAlarmedAct;
+            }
+            void IObserver<bool>.OnCompleted()
+            {
+                throw new NotImplementedException();
+            }
+            void IObserver<bool>.OnError(Exception error)
+            {
+                throw new NotImplementedException();
+            }
+            void IObserver<bool>.OnNext(bool value)
+            {
+                onAlarmed(value);
+            }
+            private Action<bool> onAlarmed;
+        }
     }
 }
