@@ -233,7 +233,6 @@ namespace SapphireXR_App.Models
             dLogicalInterlockStateIssuer = ObservableManager<BitArray>.Get("LogicalInterlockState");
             dPLCConnectionPublisher = ObservableManager<PLCConnection>.Get("PLCService.Connected");
             dControlModeChangingPublisher = ObservableManager<ControlMode>.Get("ControlModeChanging");
-            ObservableManager<bool>.Subscribe("Leak Test Mode", leakTestModeSubscriber = new LeakTestModeSubscriber());
             temperatureTVPublisher = ObservableManager<float>.Get("TemperatureTV");
             pressureTVPublisher = ObservableManager<float>.Get("PressureTV");
             rotationTVPublisher = ObservableManager<float>.Get("RotationTV");

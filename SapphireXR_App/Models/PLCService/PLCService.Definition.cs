@@ -26,43 +26,6 @@ namespace SapphireXR_App.Models
             public ReadBufferException(string message) : base(message) { }
         }
 
-        internal class LeakTestModeSubscriber : IObserver<bool>
-        {
-            void IObserver<bool>.OnCompleted()
-            {
-                throw new NotImplementedException();
-            }
-
-            void IObserver<bool>.OnError(Exception error)
-            {
-                throw new NotImplementedException();
-            }
-
-            void IObserver<bool>.OnNext(bool value)
-            {
-                LeakTestMode = value;
-                if (value == false)
-                {
-                    foreach ((string valveID, string coupled) in LeftCoupled)
-                    {
-                        try
-                        {
-                          
-                        }
-                        catch (Exception exception)
-                        {
-                            if (ShowMessageOnLeakTestModeSubscriberWriteValveState == true)
-                            {
-                                ShowMessageOnLeakTestModeSubscriberWriteValveState = MessageBox.Show("PLC로부터 Valve 상태를 읽어오는데 실패했습니다. 이 메시지를 다시 표시하지 않으려면 Yes를 클릭하세요. 원인은 다음과 같습니다: " + exception.Message, "",
-                                    MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes ? false : true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct RecipeRunET
         {
@@ -228,8 +191,6 @@ namespace SapphireXR_App.Models
         private static ObservableManager<float>.Publisher? rotationTVPublisher;
         private static ObservableManager<float[]>.Publisher? dLineHeaterTemperatureIssuers;
 
-        private static LeakTestModeSubscriber? leakTestModeSubscriber = null;
-
         static Task<bool>? TryConnectAsync = null;
 
         public static PLCConnection Connected 
@@ -290,9 +251,6 @@ namespace SapphireXR_App.Models
         private static uint[] hAControllerInput = new uint[NumControllers];
 
         private static bool RecipeRunEndNotified = false;
-        private static bool LeakTestMode = true;
-
-        private static bool ShowMessageOnLeakTestModeSubscriberWriteValveState = true;
         private static bool ShowMessageOnOnTick = true;
 
         private static Dictionary<string, string> LeftCoupled = new Dictionary<string, string>();
