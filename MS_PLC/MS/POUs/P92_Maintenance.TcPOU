@@ -37,16 +37,21 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* Read from Device Value *)
-//Lamp
-bReactorCabientMagnet 	:= GVL_IO_REACTOR_CABINET.DI_03_ReactorCabinetDoorClose;
-bGasCabinetMagnet 		:= GVL_IO_GAS_CABINET.DI_01_GasCabinetDoorClose;
-bPowerDistributeMagnet	:= GVL_IO_GAS_CABINET.DI_01_ControlCabinetDoorClose;
 
-//SMPS
-bSMPS24V480WFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_1Alarm);
-bSMPS24V72WFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_2Alarm);
-bSMPS15VPlusFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_3Alarm);
-bSMPS15VMinusFault	:= NOT(GVL_IO_GAS_CABINET.DI_02_SMPS_4Alarm);
+
+//20250831 이후 UI 에서 데이터 확인 되면 삭제 예정
+////Lamp
+//bReactorCabientMagnet 	:= GVL_IO_REACTOR_CABINET.DI_03_ReactorCabinetDoorClose;
+//bGasCabinetMagnet 		:= GVL_IO_GAS_CABINET.DI_01_GasCabinetDoorClose;
+//bPowerDistributeMagnet	:= GVL_IO_GAS_CABINET.DI_01_ControlCabinetDoorClose;
+
+
+//20250831 이후 UI 에서 데이터 확인 되면 삭제 예정
+////SMPS
+//bSMPS24V480WFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_1Alarm);
+//bSMPS24V72WFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_2Alarm);
+//bSMPS15VPlusFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_3Alarm);
+//bSMPS15VMinusFault	:= NOT(GVL_IO_GAS_CABINET.DI_02_SMPS_4Alarm);
 
 
 // Reactor Cabinet Lamp
@@ -70,11 +75,27 @@ END_IF
 // Power Distribute Unit Lamp
 bPowerDistributeLamp := NOT(bPowerDistributeMagnet); //Magnet Switch
 
-(* Buzzer On/Off *)
+_Action_Buzzer();
+_Action_SignalTower();
+
+(* Write to Device Value *)
+GVL_IO_REACTOR_CABINET.DO_06_ReactorCabinetLamp := bReactorCabinetLamp;
+GVL_IO_GAS_CABINET.DO_07_GasCabinetLamp := bGasCabinetLamp;
+GVL_IO_GAS_CABINET.DO_07_ControlCabinetLamp := bPowerDistributeLamp;
+]]></ST>
+    </Implementation>
+    <Action Name="_Action_Buzzer" Id="{1605c9dc-c74f-44f7-9218-2a1bcf21db32}">
+      <Implementation>
+        <ST><![CDATA[(* Buzzer On/Off *)
 IF bBuzzer <> GVL_IO.aInterlockEnable[1].2 THEN
 	bBuzzer := GVL_IO.aInterlockEnable[1].2;
 END_IF
-
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="_Action_SignalTower" Id="{20d2a60a-15ef-4399-9c11-f9c7ed774576}">
+      <Implementation>
+        <ST><![CDATA[
 (* Blink Signal Tower *)
 CASE GVL_IO.nCaseSignalTower OF
 	1: //RED 
@@ -114,35 +135,24 @@ CASE GVL_IO.nCaseSignalTower OF
 		bSignalTower := 2#0001_0000;
 END_CASE
 
-(* Write to Device Value *)
-GVL_IO_REACTOR_CABINET.DO_06_ReactorCabinetLamp := bReactorCabinetLamp;
-GVL_IO_GAS_CABINET.DO_07_GasCabinetLamp := bGasCabinetLamp;
-GVL_IO_GAS_CABINET.DO_07_ControlCabinetLamp := bPowerDistributeLamp;
-
-
 GVL_IO_REACTOR_CABINET.DO_04_SignalTowerRed:=bSignalTower.0; //0:RED-Alarm,
 GVL_IO_REACTOR_CABINET.DO_04_SignalTowerOrange:=bSignalTower.1; //1:YELLOW,-Warning
 GVL_IO_REACTOR_CABINET.DO_04_SignalTowerGreen:=bSignalTower.2; //2:GREEN-Running
 GVL_IO_REACTOR_CABINET.DO_04_SignalTowerBlue:=bSignalTower.3; //3:BLUE-Idle
 GVL_IO_REACTOR_CABINET.DO_04_SignalTowerWhite:=bSignalTower.4; //4:WHITE-Maint
 GVL_IO_REACTOR_CABINET.DO_04_SignalTowerBuzzer:=bBuzzer; //5:BUZZER-Alarm
-
-
-////SignalTower
-//GVL_IO.aDigitalOutputIO[1].0 	:= bSignalTower.0; //0:RED-Alarm,
-//GVL_IO.aDigitalOutputIO[1].1 	:= bSignalTower.1; //1:YELLOW,-Warning 
-//GVL_IO.aDigitalOutputIO[1].2 	:= bSignalTower.2; //2:GREEN-Running
-//GVL_IO.aDigitalOutputIO[1].3 	:= bSignalTower.3; //3:BLUE-Idle
-//GVL_IO.aDigitalOutputIO[1].4 	:= bSignalTower.4; //4:WHITE-Maint
-//GVL_IO.aDigitalOutputIO[1].5 	:= bBuzzer; //5:BUZZER-Alarm
 ]]></ST>
-    </Implementation>
+      </Implementation>
+    </Action>
     <LineIds Name="P92_Maintenance">
       <LineId Id="5" Count="0" />
+      <LineId Id="598" Count="2" />
       <LineId Id="10" Count="0" />
       <LineId Id="540" Count="1" />
       <LineId Id="538" Count="0" />
       <LineId Id="395" Count="0" />
+      <LineId Id="597" Count="0" />
+      <LineId Id="596" Count="0" />
       <LineId Id="391" Count="0" />
       <LineId Id="543" Count="2" />
       <LineId Id="542" Count="0" />
@@ -163,45 +173,22 @@ GVL_IO_REACTOR_CABINET.DO_04_SignalTowerBuzzer:=bBuzzer; //5:BUZZER-Alarm
       <LineId Id="38" Count="0" />
       <LineId Id="381" Count="0" />
       <LineId Id="489" Count="0" />
-      <LineId Id="441" Count="0" />
-      <LineId Id="443" Count="0" />
-      <LineId Id="503" Count="1" />
       <LineId Id="499" Count="0" />
-      <LineId Id="459" Count="0" />
-      <LineId Id="156" Count="0" />
-      <LineId Id="487" Count="0" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="148" Count="1" />
-      <LineId Id="257" Count="0" />
-      <LineId Id="416" Count="0" />
-      <LineId Id="259" Count="2" />
-      <LineId Id="143" Count="0" />
-      <LineId Id="468" Count="1" />
-      <LineId Id="165" Count="2" />
-      <LineId Id="262" Count="3" />
-      <LineId Id="223" Count="0" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="170" Count="0" />
-      <LineId Id="399" Count="2" />
-      <LineId Id="403" Count="1" />
-      <LineId Id="406" Count="1" />
-      <LineId Id="405" Count="0" />
-      <LineId Id="402" Count="0" />
-      <LineId Id="175" Count="1" />
-      <LineId Id="178" Count="1" />
       <LineId Id="159" Count="0" />
       <LineId Id="144" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="553" Count="2" />
-      <LineId Id="551" Count="0" />
-      <LineId Id="550" Count="0" />
-      <LineId Id="556" Count="5" />
-      <LineId Id="549" Count="0" />
-      <LineId Id="387" Count="0" />
-      <LineId Id="134" Count="0" />
-      <LineId Id="132" Count="0" />
-      <LineId Id="338" Count="4" />
       <LineId Id="140" Count="0" />
+    </LineIds>
+    <LineIds Name="P92_Maintenance._Action_Buzzer">
+      <LineId Id="2" Count="3" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P92_Maintenance._Action_SignalTower">
+      <LineId Id="2" Count="37" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="42" Count="6" />
+      <LineId Id="40" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

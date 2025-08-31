@@ -141,6 +141,12 @@
     <Compile Include="FUNCTION\FB_TON_Pausable.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FUNCTION\F_GetDorPressure.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FUNCTION\F_State_All_Valve_Vent.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FUNCTION\HEXSTR_TO_REAL_LHeaterPV.TcPOU">
       <SubType>Code</SubType>
     </Compile>

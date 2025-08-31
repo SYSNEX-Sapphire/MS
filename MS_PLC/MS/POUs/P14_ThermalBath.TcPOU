@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="P14_ThermalBath" Id="{2c2b0e51-5635-46ea-83dc-d55165a0b5b4}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P14_ThermalBath
 VAR
@@ -158,12 +158,7 @@ IF TimeCycle.Q = TRUE THEN
 				END_IF
 			END_IF
 			index := nReceivedBathNumber + 11;
-			CASE index OF
-				1:GVL_IO.aMonitoring_PV[12] := rTemperature_PV[1];
-				2:GVL_IO.aMonitoring_PV[13] := rTemperature_PV[2];
-				3:GVL_IO.aMonitoring_PV[14] := rTemperature_PV[3];
-				4:GVL_IO.aMonitoring_PV[15] := rTemperature_PV[4];
-			END_CASE
+			
 			
 		END_IF
 	END_IF
@@ -198,13 +193,7 @@ bCutOffAlarm[4] := NOT(GVL_IO_GAS_CABINET.DI_06_ThermalBath_4CutOffAlarm);
       </Implementation>
     </Action>
     <LineIds Name="P14_ThermalBath">
-      <LineId Id="509" Count="9" />
-      <LineId Id="547" Count="1" />
-      <LineId Id="655" Count="96" />
-      <LineId Id="809" Count="1" />
-      <LineId Id="813" Count="2" />
-      <LineId Id="811" Count="0" />
-      <LineId Id="753" Count="9" />
+      <LineId Id="862" Count="119" />
       <LineId Id="201" Count="0" />
     </LineIds>
     <LineIds Name="P14_ThermalBath._DigitalInput">

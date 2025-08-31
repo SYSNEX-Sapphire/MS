@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="P17_DOROperation" Id="{47a43ac8-2dfa-477f-bf65-90da71792e7e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P17_DOROperation
 VAR
@@ -184,20 +184,20 @@ _DigitalOutput();]]></ST>
 bVacSwitch 			:= GVL_IO_REACTOR_CABINET.DI_01_DORVACButton; //Switch Input
 bAtmSwitch 			:= GVL_IO_REACTOR_CABINET.DI_01_DORATMButton; //Switch Input
 nPressurePV 		:= GVL_IO_REACTOR_CABINET.AI_07_S05_DORPressurePV;
-rPressurePV_kPa 	:= (nPressurePV-3256)*SlopeFactor;
+rPressurePV_kPa 	:= F_GetDorPressure(nPressurePV);
 
-//jhkang
-fTresholdPressure 	:= GVL_IO.aInterlockSet[15];
-fTresholdCount 		:= GVL_IO.aInterlockSet[16];
-bPressureEnable 	:= GVL_IO.aInterlockEnable[1].5;
-bCountEnable 		:= GVL_IO.aInterlockEnable[1].6;
-nTresholdCount 		:= REAL_TO_INT(fTresholdCount); //Try One more Vacuum ]]></ST>
+fTresholdPressure 	:= GVL_IO.aInterlockSet[11]; // Dor Pressure Limit
+fTresholdCount 		:= GVL_IO.aInterlockSet[12]; // Dor Retry Count
+
+bPressureEnable 	:= GVL_IO.aInterlockEnable[1].5; // Dor Pressure Limit
+bCountEnable 		:= GVL_IO.aInterlockEnable[1].6; // Dor Retry Count
+nTresholdCount 		:= REAL_TO_INT(fTresholdCount); //Try One more Vacuum 
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="_DigitalOutput" Id="{c005c8c9-4f22-4829-87e7-986e1253676c}">
       <Implementation>
-        <ST><![CDATA[
-(* Write to Device Value *)
+        <ST><![CDATA[(* Write to Device Value *)
 // Cover Operation Switch Lamp
 
 //GVL_IO_VALVE.DO_00_V22DORVaccumON :=GVL_IO.aOutputSolValve[2].5;
@@ -212,6 +212,7 @@ GVL_IO_REACTOR_CABINET.DO_05_DORVACButtonLamp := bVacLED;
 GVL_IO_REACTOR_CABINET.DO_06_DORATMButtonLamp := bAtmLED;
 
 GVL_IO.nDorOperationError := bError;
+//jhkang isDOROnState 뭐냐 
 GVL_IO.bDorState := isDOROnState;
 
 
@@ -273,24 +274,12 @@ GVL_IO.bDorState := isDOROnState;
       <LineId Id="645" Count="0" />
     </LineIds>
     <LineIds Name="P17_DOROperation._DigitalInput">
-      <LineId Id="70" Count="5" />
-      <LineId Id="100" Count="0" />
-      <LineId Id="76" Count="5" />
+      <LineId Id="124" Count="6" />
+      <LineId Id="132" Count="5" />
+      <LineId Id="81" Count="0" />
     </LineIds>
     <LineIds Name="P17_DOROperation._DigitalOutput">
-      <LineId Id="20" Count="2" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="50" Count="0" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="23" Count="1" />
-      <LineId Id="52" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="51" Count="0" />
-      <LineId Id="28" Count="3" />
-      <LineId Id="1" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="46" Count="0" />
+      <LineId Id="72" Count="18" />
       <LineId Id="32" Count="0" />
     </LineIds>
   </POU>
