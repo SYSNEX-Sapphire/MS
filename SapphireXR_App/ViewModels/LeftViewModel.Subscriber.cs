@@ -3,7 +3,6 @@ using System.Numerics;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using SapphireXR_App.Common;
-using SapphireXR_App.Enums;
 using SapphireXR_App.Models;
 
 namespace SapphireXR_App.ViewModels
@@ -364,41 +363,29 @@ namespace SapphireXR_App.ViewModels
             {
                 var updateCarrierStatus = (string prevGasName, string gasName) =>
                 {
-                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.NH3_1Carrier)
+                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.Gas3Carrier)
                     {
-                        leftViewModel.CurrentSourceStatusViewModel.NH3_1Carrier = gasName;
+                        leftViewModel.CurrentSourceStatusViewModel.Gas3Carrier = gasName;
                     }
-                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.NH3_2Carrier)
+                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.Gas4Carrier)
                     {
-                        leftViewModel.CurrentSourceStatusViewModel.NH3_2Carrier = gasName;
+                        leftViewModel.CurrentSourceStatusViewModel.Gas4Carrier = gasName;
                     }
-                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.SiH4Carrier)
+                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.Source1Carrier)
                     {
-                        leftViewModel.CurrentSourceStatusViewModel.SiH4Carrier = gasName;
+                        leftViewModel.CurrentSourceStatusViewModel.Source1Carrier = gasName;
                     }
-                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.TEBCarrier)
+                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.Source2Carrier)
                     {
-                        leftViewModel.CurrentSourceStatusViewModel.TEBCarrier = gasName;
+                        leftViewModel.CurrentSourceStatusViewModel.Source2Carrier = gasName;
                     }
-                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.TMAlCarrier)
+                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.Source3Carrier)
                     {
-                        leftViewModel.CurrentSourceStatusViewModel.TMAlCarrier = gasName;
+                        leftViewModel.CurrentSourceStatusViewModel.Source3Carrier = gasName;
                     }
-                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.TMGaCarrier)
+                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.Source4Carrier)
                     {
-                        leftViewModel.CurrentSourceStatusViewModel.TMGaCarrier = gasName;
-                    }
-                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.DTMGaCarrier)
-                    {
-                        leftViewModel.CurrentSourceStatusViewModel.DTMGaCarrier = gasName;
-                    }
-                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.Cp2MgCarrier)
-                    {
-                        leftViewModel.CurrentSourceStatusViewModel.Cp2MgCarrier = gasName;
-                    }
-                    if (prevGasName == leftViewModel.CurrentSourceStatusViewModel.TMInCarrier)
-                    {
-                        leftViewModel.CurrentSourceStatusViewModel.TMInCarrier = gasName;
+                        leftViewModel.CurrentSourceStatusViewModel.Source4Carrier = gasName;
                     }
                 };
                 switch (value.Item1)
@@ -416,8 +403,7 @@ namespace SapphireXR_App.ViewModels
                         break;
 
                     case "Gas3":
-                        leftViewModel.Gas3_1 = LeftViewModel.GetGas3Label(value.Item2, 1);
-                        leftViewModel.Gas3_2 = LeftViewModel.GetGas3Label(value.Item2, 2);
+                        leftViewModel.Gas3 = value.Item2;
                         leftViewModel.LogicalInterlockGas3 = LeftViewModel.GetIogicalInterlockLabel(value.Item2);
                         break;
 

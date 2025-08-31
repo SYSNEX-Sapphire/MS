@@ -76,7 +76,8 @@
     <SolidColorBrush x:Key="LampFaultolor" Color="Red" />
 
     <SolidColorBrush x:Key="SourceStatusDefault" Color="LightGray" />
-    <SolidColorBrush x:Key="SourceStatusH2" Color="#C13E3E" />
-    <SolidColorBrush x:Key="SourceStatusOn" Color="LawnGreen" />
-    <SolidColorBrush x:Key="SourceStatusRun" Color="#ed7812" />
+    <SolidColorBrush x:Key="SourceStatusGas1" Color="#00B050" />
+    <SolidColorBrush x:Key="SourceStatusGasDefault" Color="#FF00FF" />
+    <SolidColorBrush x:Key="SourceStatusVentBypass" Color="#00B0F0" />
+    <SolidColorBrush x:Key="SourceStatusRun" Color="#FF3300" />
 </ResourceDictionary>

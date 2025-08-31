@@ -98,7 +98,7 @@ namespace SapphireXR_App.Models
 
         public enum InterlockEnableSetting
         {
-            Buzzer = 2, CanOpenSusceptorTemperature, CanOpenReactorPressure, PressureLimit, RetryCount, InductionPowerSupply, SusceptorRotationMotor
+            Buzzer = 2, CanOpenSusceptorTemperature, CanOpenReactorPressure, PressureLimit, RetryCount, SusceptorRotationMotor
         };
 
         public enum InterlockValueSetting

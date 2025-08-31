@@ -1,14 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SapphireXR_App.Common;
-using System.Windows.Media;
-using System.Windows;
-using System.Collections;
-using System.ComponentModel;
-using TwinCAT.Ads;
 using SapphireXR_App.Enums;
 using SapphireXR_App.Models;
-using CommunityToolkit.Mvvm.Input;
 using SapphireXR_App.WindowServices;
+using System.Collections;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows;
+using System.Windows.Media;
+using TwinCAT.Ads;
 
 namespace SapphireXR_App.ViewModels
 {
@@ -54,31 +55,22 @@ namespace SapphireXR_App.ViewModels
             {
                 valveStateSubscsribePostfix = valveStateSubscsribePostfixStr;
                 valveStateSubscrbers = [
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { SiH4Carrier = NH3_2Carrier = NH3_1Carrier = vm.Gas1; SiH4CarrierColor = NH3_2CarrierColor = NH3_1CarrierColor = H2Color;  } 
-                        else { SiH4Carrier = NH3_2Carrier = NH3_1Carrier = vm.Gas2; SiH4CarrierColor = NH3_2CarrierColor = NH3_1CarrierColor = DefaultColor; }  }, "V01"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TEBCarrier = vm.Gas1; TEBCarrierColor = H2Color; } else { TEBCarrier = vm.Gas2; TEBCarrierColor = DefaultColor; }  }, "V05"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TMAlCarrier = vm.Gas1; TMAlCarrierColor = H2Color; } else { TMAlCarrier = vm.Gas2; TMAlCarrierColor = DefaultColor; } }, "V08"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TMInCarrier = vm.Gas1;  TMInCarrierColor = H2Color;} else { TMInCarrier = vm.Gas2;  TMInCarrierColor = DefaultColor;} }, "V11"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TMGaCarrier = vm.Gas1;  TMGaCarrierColor = H2Color;} else { TMGaCarrier = vm.Gas2;  TMGaCarrierColor =DefaultColor;} }, "V14"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { DTMGaCarrier = vm.Gas1;  DTMGaCarrierColor = H2Color;} else { DTMGaCarrier = vm.Gas2;  DTMGaCarrierColor = DefaultColor;}  }, "V17"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Cp2MgCarrier = vm.Gas1;  Cp2MgCarrierColor = H2Color;} else { Cp2MgCarrier = vm.Gas2;  Cp2MgCarrierColor = DefaultColor;} }, "V20"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { NH3_1Source = NH3_2Source = "On";  NH3_1SourceColor = NH3_2SourceColor = OnColor; } else { NH3_1Source = NH3_2Source = "Off";  NH3_1SourceColor = NH3_2SourceColor = DefaultColor;} }, "V04"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { SiH4Source = "On";  SiH4SourceColor = OnColor;} else { SiH4Source = "Off";  SiH4SourceColor =DefaultColor;} }, "V03"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TEBSource = "On";  TEBSourceColor =OnColor;} else { TEBSource = "Off";  TEBSourceColor = DefaultColor;}  }, "V07"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TMAlSource = "On";  TMAlSourceColor = OnColor;} else { TMAlSource = "Off";  TMAlSourceColor = DefaultColor;} }, "V10"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TMInSource = "On";  TMInSourceColor = OnColor;} else { TMInSource = "Off";  TMInSourceColor = DefaultColor;} }, "V13"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TMGaSource = "On"; TMGaSourceColor = OnColor; } else { TMGaSource = "Off"; TMGaSourceColor = DefaultColor; } }, "V16"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { DTMGaSource = "On"; DTMGaSourceColor = OnColor; } else { DTMGaSource = "Off"; DTMGaSourceColor =DefaultColor; } }, "V19"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Cp2MgSource = "On"; Cp2MgSourceColor = OnColor; } else { Cp2MgSource = "Off"; Cp2MgSourceColor = DefaultColor; }  }, "V22"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { NH3_1Vent = "Run"; NH3_1VentColor = RunColor; } else { NH3_1Vent = "Vent"; NH3_1VentColor = DefaultColor; } }, "V29"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { NH3_2Vent = "Run"; NH3_2VentColor = RunColor; } else { NH3_2Vent = "Vent"; NH3_2VentColor = DefaultColor; } }, "V30"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { SiH4Vent = "Run"; SiH4VentColor = RunColor; } else { SiH4Vent = "Vent"; SiH4VentColor = DefaultColor; } }, "V31"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TEBVent = "Run"; TEBVentColor = RunColor; } else { TEBVent = "Vent"; TEBVentColor = DefaultColor; }  }, "V23"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TMAlVent = "Run"; TMAlVentColor = RunColor; } else { TMAlVent = "Vent";  TMAlVentColor = DefaultColor;} }, "V24"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TMInVent = "Run"; TMInVentColor = RunColor; } else { TMInVent = "Vent"; TMInVentColor = DefaultColor; } }, "V25"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { TMGaVent = "Run"; TMGaVentColor = RunColor; } else { TMGaVent = "Vent"; TMGaVentColor = DefaultColor; } }, "V26"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { DTMGaVent = "Run"; DTMGaVentColor =RunColor; } else { DTMGaVent = "Vent"; DTMGaVentColor = DefaultColor; } }, "V27"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Cp2MgVent = "Run"; Cp2MgVentColor =RunColor; } else { Cp2MgVent = "Vent"; Cp2MgVentColor = DefaultColor; } }, "V28")
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Gas3Source = vm.Gas1; Gas3SourceColor = Gas1Color; } else { Gas3Source = vm.Gas3; Gas3SourceColor = GasColor; }  }, "V03"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Gas4Source = vm.Gas1; Gas4SourceColor = Gas1Color; } else { Gas4Source = vm.Gas4; Gas4SourceColor = GasColor; }  }, "V04"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source1Carrier = vm.Gas2; Source1CarrierColor = GasColor; } else { Source1Carrier = vm.Gas1; Source1CarrierColor = Gas1Color; }  }, "V05"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source1Source = "Run"; Source1SourceColor = RunColor; } else { Source1Source = "Bypass"; Source1SourceColor = VentBypassColor; } }, "V06"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source2Carrier = vm.Gas2;  Source2CarrierColor = GasColor;} else { Source2Carrier = vm.Gas1; Source2CarrierColor = Gas1Color; }  }, "V07"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source2Source = "Run"; Source2SourceColor = RunColor;} else { Source2Source = "Bypass"; Source2SourceColor = VentBypassColor; } }, "V08"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source3Carrier = vm.Gas2;  Source3CarrierColor = GasColor;} else { Source3Carrier = vm.Gas1; Source3CarrierColor = Gas1Color; }  }, "V09"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source3Source = "Run"; Source3SourceColor = RunColor; } else { Source3Source = "Bypass"; Source3SourceColor = VentBypassColor; } }, "V10"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source4Carrier = vm.Gas2;  Source4CarrierColor = GasColor;} else { Source4Carrier = vm.Gas1; Source4CarrierColor = Gas1Color; }  }, "V11"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source4Source = "Run"; Source4SourceColor = RunColor; } else { Source4Source = "Bypass"; Source4SourceColor = VentBypassColor; } }, "V12"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source1Vent = "Run"; Source1VentColor = RunColor; } else { Source1Vent = "Vent"; Source1VentColor = VentBypassColor; }  }, "V14"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source2Vent = "Run"; Source2VentColor = RunColor; } else { Source2Vent = "Vent"; Source2VentColor = VentBypassColor; }  }, "V15"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source3Vent = "Run"; Source3VentColor = RunColor; } else { Source3Vent = "Vent"; Source3VentColor = VentBypassColor; }  }, "V16"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Gas3Vent = "Run"; Gas3VentColor = RunColor; } else { Gas3Vent = "Vent"; Gas3VentColor = VentBypassColor; }  }, "V17"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Gas4Vent = "Run"; Gas4VentColor = RunColor; } else { Gas4Vent = "Vent"; Gas4VentColor = VentBypassColor; }  }, "V18"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source4Vent = "Run"; Source4VentColor = RunColor; } else { Source4Vent = "Vent"; Source4VentColor = VentBypassColor; }  }, "V19")
                 ];
                 foreach (ValveStateSubscriber valveStateSubscriber in valveStateSubscrbers)
                 {
@@ -116,124 +108,89 @@ namespace SapphireXR_App.ViewModels
             {
                 Dispose(disposing: true);
             }
-
+          
             [ObservableProperty]
-            private string _nH3_1Carrier = "";
+            private string gas3Carrier = Util.GetGasDeviceName("Gas1") ?? "";
             [ObservableProperty]
-            private string _nH3_1Source = "";
+            private string gas3Source = "";
             [ObservableProperty]
-            private string _nH3_1Vent = "";
+            private string gas3Vent = "";
             [ObservableProperty]
-            private string _nH3_2Carrier = "";
+            private string gas4Carrier = Util.GetGasDeviceName("Gas1") ?? "";
             [ObservableProperty]
-            private string _nH3_2Source = "";
+            private string gas4Source = "";
             [ObservableProperty]
-            private string _nH3_2Vent = "";
+            private string gas4Vent = "";
             [ObservableProperty]
-            private string _siH4Carrier = "";
+            private string source1Carrier = "";
             [ObservableProperty]
-            private string _siH4Source = "";
+            private string source1Source = "";
             [ObservableProperty]
-            private string _siH4Vent = "";
+            private string source1Vent = "";
             [ObservableProperty]
-            private string _tEBCarrier = "";
+            private string source2Carrier = "";
             [ObservableProperty]
-            private string _tEBSource = "";
+            private string source2Source = "";
             [ObservableProperty]
-            private string _tEBVent = "";
+            private string source2Vent = "";
             [ObservableProperty]
-            private string _tMAlCarrier = "";
+            private string source3Carrier = "";
             [ObservableProperty]
-            private string _tMAlSource = "";
+            private string source3Source = "";
             [ObservableProperty]
-            private string _tMAlVent = "";
+            private string source3Vent = "";
             [ObservableProperty]
-            private string _tMInCarrier = "";
+            private string source4Carrier = "";
             [ObservableProperty]
-            private string _tMInSource = "";
+            private string source4Source = "";
             [ObservableProperty]
-            private string _tMInVent = "";
+            private string source4Vent = "";
+          
             [ObservableProperty]
-            private string _tMGaCarrier = "";
+            private Brush gas3CarrierColor = DefaultColor;
             [ObservableProperty]
-            private string _tMGaSource = "";
+            private Brush gas3SourceColor = DefaultColor;
             [ObservableProperty]
-            private string _tMGaVent = "";
+            private Brush gas3VentColor = DefaultColor;
             [ObservableProperty]
-            private string _dTMGaCarrier = "";
+            private Brush gas4CarrierColor = DefaultColor;
             [ObservableProperty]
-            private string _dTMGaSource = "";
+            private Brush gas4SourceColor = DefaultColor;
             [ObservableProperty]
-            private string _dTMGaVent = "";
+            private Brush gas4VentColor = DefaultColor;
             [ObservableProperty]
-            private string _cp2MgCarrier = "";
+            private Brush source1CarrierColor = DefaultColor;
             [ObservableProperty]
-            private string _cp2MgSource = "";
+            private Brush source1SourceColor = DefaultColor;
             [ObservableProperty]
-            private string _cp2MgVent = "";
-
+            private Brush source1VentColor = DefaultColor;
             [ObservableProperty]
-            private Brush _nH3_1CarrierColor = DefaultColor;
+            private Brush source2CarrierColor = DefaultColor;
             [ObservableProperty]
-            private Brush _nH3_1SourceColor = DefaultColor;
+            private Brush source2SourceColor = DefaultColor;
             [ObservableProperty]
-            private Brush _nH3_1VentColor = DefaultColor;
+            private Brush source2VentColor = DefaultColor;
             [ObservableProperty]
-            private Brush _nH3_2CarrierColor = DefaultColor;
+            private Brush source3CarrierColor = DefaultColor;
             [ObservableProperty]
-            private Brush _nH3_2SourceColor = DefaultColor;
+            private Brush source3SourceColor = DefaultColor;
             [ObservableProperty]
-            private Brush _nH3_2VentColor = DefaultColor;
+            private Brush source3VentColor = DefaultColor;
             [ObservableProperty]
-            private Brush _siH4CarrierColor = DefaultColor;
+            private Brush source4CarrierColor = DefaultColor;
             [ObservableProperty]
-            private Brush _siH4SourceColor = DefaultColor;
+            private Brush source4SourceColor = DefaultColor;
             [ObservableProperty]
-            private Brush _siH4VentColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tEBCarrierColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tEBSourceColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tEBVentColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tMAlCarrierColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tMAlSourceColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tMAlVentColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tMInCarrierColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tMInSourceColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tMInVentColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tMGaCarrierColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tMGaSourceColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _tMGaVentColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _dTMGaCarrierColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _dTMGaSourceColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _dTMGaVentColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _cp2MgCarrierColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _cp2MgSourceColor = DefaultColor;
-            [ObservableProperty]
-            private Brush _cp2MgVentColor = DefaultColor;
+            private Brush source4VentColor = DefaultColor;
 
             private readonly ValveStateSubscriber[] valveStateSubscrbers;
             private IList<IDisposable> unsubscribers = new List<IDisposable>();
             private readonly string valveStateSubscsribePostfix;
 
             private static Brush DefaultColor = Application.Current.Resources.MergedDictionaries[0]["SourceStatusDefault"] as Brush ?? Brushes.Black;
-            private static Brush H2Color = Application.Current.Resources.MergedDictionaries[0]["SourceStatusH2"] as Brush ?? Brushes.Black;
-            private static Brush OnColor = Application.Current.Resources.MergedDictionaries[0]["SourceStatusOn"] as Brush ?? Brushes.Black;
+            private static Brush Gas1Color = Application.Current.Resources.MergedDictionaries[0]["SourceStatusGas1"] as Brush ?? Brushes.Black;
+            private static Brush GasColor = Application.Current.Resources.MergedDictionaries[0]["SourceStatusGasDefault"] as Brush ?? Brushes.Black;
+            private static Brush VentBypassColor = Application.Current.Resources.MergedDictionaries[0]["SourceStatusVentBypass"] as Brush ?? Brushes.Black;
             private static Brush RunColor = Application.Current.Resources.MergedDictionaries[0]["SourceStatusRun"] as Brush ?? Brushes.Black;
 
             private bool disposedValue = false;
@@ -298,18 +255,6 @@ namespace SapphireXR_App.ViewModels
             };
         }
 
-        public static string GetGas3Label(string? gas3Name, int index)
-        {
-            if (gas3Name != default)
-            {
-                return gas3Name + "#" + index;
-            }
-            else
-            {
-                return "";
-            }
-        }
-
         public static string GetIogicalInterlockLabel(string? gasName)
         {
             if (gasName != default)
@@ -358,9 +303,7 @@ namespace SapphireXR_App.ViewModels
         }
 
         [ObservableProperty]
-        private static string _gas3_1 = GetGas3Label(Util.GetGasDeviceName("Gas3"), 1);
-        [ObservableProperty]
-        private static string _gas3_2 = GetGas3Label(Util.GetGasDeviceName("Gas3"), 2);
+        private static string _gas3 = Util.GetGasDeviceName("Gas3") ?? "";
         [ObservableProperty]
         private static string _gas4 = Util.GetGasDeviceName("Gas4") ?? "";
         [ObservableProperty]
@@ -386,8 +329,8 @@ namespace SapphireXR_App.ViewModels
         private static readonly Brush RunLampColor = Application.Current.Resources.MergedDictionaries[0]["LampRunolor"] as Brush ?? Brushes.Lime;
         private static readonly Brush FaultLampColor = Application.Current.Resources.MergedDictionaries[0]["LampFaultColor"] as Brush ?? Brushes.Red;
 
-        private static readonly Brush PLCConnectedFontColor = Application.Current.Resources.MergedDictionaries[0]["Sapphire_Blue"] as Brush ?? new SolidColorBrush(Color.FromRgb(0x60, 0xCD, 0xFF));
-        private static readonly Brush PLCDisconnectedFontColor = Application.Current.Resources.MergedDictionaries[0]["Alert_Red_02"] as Brush ?? new SolidColorBrush(Color.FromRgb(0xEC, 0x3D, 0x3F));
+        private static readonly Brush PLCConnectedFontColor = Application.Current.Resources.MergedDictionaries[0]["Sapphire_Blue"] as Brush ?? new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x60, 0xCD, 0xFF));
+        private static readonly Brush PLCDisconnectedFontColor = Application.Current.Resources.MergedDictionaries[0]["Alert_Red_02"] as Brush ?? new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xEC, 0x3D, 0x3F));
 
         private static readonly string BuzzerOnPath = "/Resources/icons/icon=buzzeron.png";
         private static readonly string BuzzerOffPath = "/Resources/icons/icon=buzzeroff.png";

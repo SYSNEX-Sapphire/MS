@@ -80,10 +80,6 @@ namespace SapphireXR_App.ViewModels
                         PLCService.InterlockEnableSetting? plcArg = null;
                         switch (name)
                         {
-                            case "InductionPowerSupply":
-                                plcArg = PLCService.InterlockEnableSetting.InductionPowerSupply;
-                                break;
-
                             case "SusceptorRotationMotor":
                                 plcArg = PLCService.InterlockEnableSetting.SusceptorRotationMotor;
                                 break;

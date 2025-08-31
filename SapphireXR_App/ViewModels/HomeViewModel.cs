@@ -99,7 +99,16 @@ namespace SapphireXR_App.ViewModels
             ObservableManager<float>.Subscribe("PressureTV", pressureTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetPress = newValue));
             ObservableManager<float>.Subscribe("RotationTV", rotationTVSubscriber = new ReactorTargetValueSubscriber((string newValue) => TargetRotation = newValue));
             ObservableManager<bool>.Subscribe("MotorFaultAlarm", motorFaultAlarmSubscriber = new ReactorAlarmSubscriber((bool alarm) => MotorResetEnable = alarm));
-            ObservableManager<bool>.Subscribe("VaccumPumpFaultAlarm", vaccumPumpFaultAlarmSubscriber = new ReactorAlarmSubscriber((bool alarm) => { if (alarm == true) { ThrottleValveStatus = "Valve Fault"; } }));
+            ObservableManager<bool>.Subscribe("VaccumPumpFaultAlarm", vaccumPumpFaultAlarmSubscriber = new ReactorAlarmSubscriber((bool alarm) => { 
+                if (alarm == true) 
+                { 
+                    ThrottleValveStatus = "Valve Fault"; 
+                }
+                else
+                {
+                    ThrottleValveStatus = "Normal";
+                }
+            }));
 
             ThrottleValveControlModes = ["Control", "Open", "Close", "Hold", "Reset"];
 
