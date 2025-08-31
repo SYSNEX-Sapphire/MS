@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="F_StateAllValve" Id="{416bcdfe-aa9b-46a2-89d5-9de465f90e80}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_StateAllValve : bool
 VAR_INPUT
@@ -8,42 +8,21 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_StateAllValve:= GVL_IO_VALVE.DO_00_V01ChalcogenCarrierChange AND
-				GVL_IO_VALVE.DO_00_V02MOCarreirChange and
-				GVL_IO_VALVE.DO_00_V03H2SeSourceChange and
-				GVL_IO_VALVE.DO_00_V04H2SSourceChange and
-				GVL_IO_VALVE.DO_00_V05Source_1TMInCarrierChange and
-				GVL_IO_VALVE.DO_00_V06Source_1TMInBypass and
-				GVL_IO_VALVE.DO_00_V07Source_2TMGaCarrierChange and
-				GVL_IO_VALVE.DO_00_V08Source_2TMGaBypass and
-				GVL_IO_VALVE.DO_00_V09Source_3DMSeCarrierChange and
-				GVL_IO_VALVE.DO_00_V10Source_3DMSeBypass and
-				GVL_IO_VALVE.DO_00_V11Source_4ChalcogenCarrierChange and
-				GVL_IO_VALVE.DO_00_V12Source_4ChalcogenBypass and
-				GVL_IO_VALVE.DO_00_V13ReactorPurgeCarrierChange and
-				GVL_IO_VALVE.DO_00_V14Source_1TMInManifoldRun and
-				GVL_IO_VALVE.DO_00_V15Source_2TMGaManifoldRun and
-				GVL_IO_VALVE.DO_00_V16Source_3DMSeManifoldRun and
-				GVL_IO_VALVE.DO_00_V17GasH2SeManifoldRun and
-				GVL_IO_VALVE.DO_00_V18GasH2SManifoldRun and
-				GVL_IO_VALVE.DO_00_V19Source_4ChalcogenManifoldRun and
-				GVL_IO_VALVE.DO_00_V20VentPress_Change and
-				GVL_IO_VALVE.DO_00_V21PumpByPass and
-				GVL_IO_VALVE.DO_00_V22DORVaccumON and
-				GVL_IO_VALVE.DO_00_V23DORFilling and
-				GVL_IO_VALVE.DO_00_V24Source_1LeakTest_IN and
-				GVL_IO_VALVE.DO_00_V25Source_1LeakTest_OUT and
-				GVL_IO_VALVE.DO_00_V26Source_2LeakTest_IN and
-				GVL_IO_VALVE.DO_00_V27Source_2LeakTest_OUT and
-				GVL_IO_VALVE.DO_00_V28Source_3LeakTest_IN and
-				GVL_IO_VALVE.DO_00_V29Source_3LeakTest_OUT and
-				GVL_IO_VALVE.DO_00_V30Source_4LeakTest_IN and
-				GVL_IO_VALVE.DO_00_V31Source_4LeakTest_OUT and
-				GVL_IO_VALVE.DO_00_V32SourceVacuumON;]]></ST>
+      <ST><![CDATA[F_StateAllValve:= GVL_IO_VALVE.DO_00_V01ChalcogenCarrierChange = false  or
+				GVL_IO_VALVE.DO_00_V02MOCarreirChange = false  or
+				GVL_IO_VALVE.DO_00_V03H2SeSourceChange = false  or
+				GVL_IO_VALVE.DO_00_V04H2SSourceChange = false  or
+				GVL_IO_VALVE.DO_00_V05Source_1TMInCarrierChange = false  or
+				GVL_IO_VALVE.DO_00_V06Source_1TMInBypass = false  or
+				GVL_IO_VALVE.DO_00_V07Source_2TMGaCarrierChange = false  or
+				GVL_IO_VALVE.DO_00_V08Source_2TMGaBypass = false  or
+				GVL_IO_VALVE.DO_00_V09Source_3DMSeCarrierChange = false  or
+				GVL_IO_VALVE.DO_00_V10Source_3DMSeBypass = false  or
+				GVL_IO_VALVE.DO_00_V11Source_4ChalcogenCarrierChange = false  or
+				GVL_IO_VALVE.DO_00_V12Source_4ChalcogenBypass = false; ]]></ST>
     </Implementation>
     <LineIds Name="F_StateAllValve">
-      <LineId Id="8" Count="30" />
-      <LineId Id="7" Count="0" />
+      <LineId Id="8" Count="11" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="P12_IQ_PLUS" Id="{e511b755-5d71-4ab9-9c97-639ef910a29b}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P12_IQ_PLUS
 VAR
@@ -18,6 +18,7 @@ VAR
 	isValveFaultState 		: BOOL;
 	ingValveInitializing 	: BOOL;
 	ingHoldState 			: BOOL;
+	isPressureControl:BOOL;
 	
 	// Vacuum Pump Status
 	isPumpFault				: BOOL;
@@ -119,6 +120,7 @@ IF GVL_DEVICE_NET_IQ_PLUS.nInputStatus <> nInputStatusOld THEN
 	isValveFaultState := FALSE;
 	ingValveInitializing := FALSE;
 	ingHoldState := FALSE;
+	isPressureControl:=FALSE;
 	// Status Update	
 	nInputStatusOld := GVL_DEVICE_NET_IQ_PLUS.nInputStatus;
 END_IF
@@ -132,6 +134,7 @@ CASE GVL_DEVICE_NET_IQ_PLUS.nInputStatus OF
 	4 : isValveClosed := TRUE; //Valve Closed, Stopped, Not Controlling.
 	5 : isValveFaultState := TRUE; //Has faulted during valve initialization or operation.
 	6 : ingValveInitializing := TRUE; //Initailizing Process.
+	7 :	isPressureControl:=TRUE;
 	8 : ingHoldState := TRUE; //intermediate position, not at open or close and not controlling pressure.
 END_CASE
 ]]></ST>
@@ -175,28 +178,7 @@ GVL_IO_REACTOR_CABINET.DO_05_VacuumPumpReset := bPumpReset;]]></ST>
       <LineId Id="401" Count="0" />
     </LineIds>
     <LineIds Name="P12_IQ_PLUS._CalData">
-      <LineId Id="57" Count="8" />
-      <LineId Id="96" Count="0" />
-      <LineId Id="99" Count="0" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="5" Count="3" />
-      <LineId Id="101" Count="0" />
-      <LineId Id="104" Count="0" />
-      <LineId Id="103" Count="0" />
-      <LineId Id="102" Count="0" />
-      <LineId Id="9" Count="2" />
-      <LineId Id="105" Count="0" />
-      <LineId Id="107" Count="0" />
-      <LineId Id="106" Count="0" />
-      <LineId Id="12" Count="3" />
-      <LineId Id="98" Count="0" />
-      <LineId Id="97" Count="0" />
-      <LineId Id="18" Count="7" />
-      <LineId Id="1" Count="0" />
-      <LineId Id="69" Count="26" />
+      <LineId Id="108" Count="72" />
       <LineId Id="67" Count="0" />
     </LineIds>
     <LineIds Name="P12_IQ_PLUS._DigitalInput">
