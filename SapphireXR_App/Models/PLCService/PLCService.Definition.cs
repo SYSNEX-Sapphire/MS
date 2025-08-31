@@ -167,8 +167,9 @@ namespace SapphireXR_App.Models
 
         public static readonly Dictionary<string, int> dMonitoringMeterIndex = new Dictionary<string, int>
         {
-            { "UltimatePressure", 0 },  { "ExtPressure", 1},  { "DorPressure", 2}, { "Gas1", 3}, { "Gas2", 4}, { "Gas3", 5}, { "Gas4", 6}, { "ShowerHeadTemp", 7},
-            { "HeaterPowerRate", 10 }, { "ValvePosition", 11 }, { "Source1", 12}, { "Source2", 13},  { "Source3", 14},  { "Source4", 15}
+            { "UltimatePressure", 0 },  { "ExtPressure", 1},  { "DorPressure", 2}, { "Gas1", 3}, { "Gas2", 4}, { "Gas3", 5}, { "Gas4", 6}, { "ShowerHeadTemp", 7}, { "DP1_Chalcogen", 8 }, 
+            { "DP2_MODP", 9 }, { "HeaterPowerRate", 10 }, { "ValvePosition", 11 }, { "Source1", 12}, { "Source2", 13},  { "Source3", 14},  { "Source4", 15}, { "TotalFlow_CAL", 16 }, 
+            { "TotalFlow_MO", 17 }
         };
 
         private static readonly Dictionary<string, int> dAnalogDeviceAlarmWarningBit = new Dictionary<string, int>

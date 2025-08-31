@@ -257,11 +257,11 @@
                     <!-- Total Flow 계산된 값 -->
                     <Label Canvas.Left="1100" Canvas.Top="209" Foreground="{StaticResource SecondaryFontColor}" Content="Total Flow / Chalco"
                         HorizontalContentAlignment="Center"/>
-                    <control:MonitoringMeter x:Name="totalFlow_Chalco" Canvas.Left="1215" Canvas.Top="214" Type="TotalFlowChalco" />
+                    <control:MonitoringMeter x:Name="totalFlow_Chalco" Canvas.Left="1215" Canvas.Top="214" Type="TotalFlow_CAL" />
 
                     <Label Canvas.Left="1100" Canvas.Top="245" Foreground="{StaticResource SecondaryFontColor}" Content="Total Flow / MO"
                         HorizontalContentAlignment="Center"/>
-                    <control:MonitoringMeter x:Name="totalFlow_MO" Canvas.Left="1215" Canvas.Top="250" Type="TotalFlowMO" />
+                    <control:MonitoringMeter x:Name="totalFlow_MO" Canvas.Left="1215" Canvas.Top="250" Type="TotalFlow_MO" />
                     <!--#endregion-->
 
                     <!-- #Region 4. 가스제어용 밸브 -->
