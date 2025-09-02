@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.Input;
-using SapphireXR_App.Models;
 
 namespace SapphireXR_App.ViewModels
 {

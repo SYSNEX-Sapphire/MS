@@ -147,13 +147,13 @@ namespace SapphireXR_App.ViewModels
             private string source4Vent = "";
           
             [ObservableProperty]
-            private Brush gas3CarrierColor = DefaultColor;
+            private Brush gas3CarrierColor = Gas1Color;
             [ObservableProperty]
             private Brush gas3SourceColor = DefaultColor;
             [ObservableProperty]
             private Brush gas3VentColor = DefaultColor;
             [ObservableProperty]
-            private Brush gas4CarrierColor = DefaultColor;
+            private Brush gas4CarrierColor = Gas1Color;
             [ObservableProperty]
             private Brush gas4SourceColor = DefaultColor;
             [ObservableProperty]
