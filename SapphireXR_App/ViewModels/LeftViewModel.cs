@@ -6,7 +6,6 @@ using SapphireXR_App.Models;
 using SapphireXR_App.WindowServices;
 using System.Collections;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Media;
 using TwinCAT.Ads;
