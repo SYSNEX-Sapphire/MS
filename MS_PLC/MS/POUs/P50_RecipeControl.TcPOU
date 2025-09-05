@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
   <POU Name="P50_RecipeControl" Id="{e332a806-fd31-4290-a7c3-27f42c11d38e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P50_RecipeControl
 VAR
@@ -59,7 +59,7 @@ END_VAR
 				END_IF				
 				
 			E_RecipeRun.CheckHoldTemp: //Hold Temp 확인
-				IF RCP.aRecipe[nRcpIndex].cTemp = 0 THEN
+				IF RCP.aRecipe[nRcpIndex].cTemp = 0.0 THEN
 					Hold_TON(IN:=TRUE, PT:= RCP.aRecipe[nRcpIndex].iRecipe[3] * T#1S, ET=>RCP.RecipeRunET.ET);
 					RCP.RecipeRunET.Mode := E_RecipeRunETMode.Hold;
 					IF Hold_TON.Q THEN

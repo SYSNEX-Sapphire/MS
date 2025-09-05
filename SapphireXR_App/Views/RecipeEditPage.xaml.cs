@@ -38,7 +38,7 @@ namespace SapphireXR_App.Views
 
         private void flowDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            Util.ConstraintEmptyToZeroOnDataGridCellCommitForRecipeRunEdit(sender, e);
+            Util.ConstraintEmptyToDefaultValueOnDataGridCellCommit(sender, e, ColumnDefaultValue);
         }
 
         private void TextBox_LostFocusTrimLastDot(object sender, System.Windows.RoutedEventArgs e)
@@ -48,5 +48,7 @@ namespace SapphireXR_App.Views
 
         FlowControllerDataGridTextColumnTextBoxValidaterMaxValue flowControllerDataGridTextColumnTextBoxValidaterMaxValue;
         FlowControllerDataGridTextColumnTextBoxValidaterOnlyNumber flowControllerDataGridTextColumnTextBoxValidaterOnlyNumber;
+
+        private static readonly Dictionary<string, string> ColumnDefaultValue = new Dictionary<string, string>() { { "Ramp", "1" }, { "Hold", "1" } };
     }
 }

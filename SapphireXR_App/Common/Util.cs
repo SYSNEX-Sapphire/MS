@@ -1,18 +1,19 @@
-﻿using System.Windows.Media;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SapphireXR_App.Enums;
+using SapphireXR_App.Models;
+using SapphireXR_App.ViewModels;
+using SapphireXR_App.WindowServices;
+using System.Collections;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Diagnostics;
-using System.Numerics;
-using SapphireXR_App.Models;
-using static SapphireXR_App.ViewModels.ManualBatchViewModel;
-using System.Collections;
-using System.Globalization;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using SapphireXR_App.ViewModels;
-using SapphireXR_App.Enums;
-using SapphireXR_App.WindowServices;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using static SapphireXR_App.ViewModels.ManualBatchViewModel;
 
 namespace SapphireXR_App.Common
 {
@@ -126,6 +127,11 @@ namespace SapphireXR_App.Common
 
         public static void ConstraintEmptyToZeroOnDataGridCellCommit(object sender, DataGridCellEditEndingEventArgs e, IList<string> headers)
         {
+            ConstraintEmptyToDefaultValueOnDataGridCellCommit(sender, e, headers, "0");
+        }
+
+        public static void ConstraintEmptyToDefaultValueOnDataGridCellCommit(object sender, DataGridCellEditEndingEventArgs e, IList<string> headers, string defaultValue)
+        {
             if (e.EditAction == DataGridEditAction.Commit)
             {
                 string? columnHeader = e.Column.Header as string;
@@ -134,7 +140,23 @@ namespace SapphireXR_App.Common
                     TextBox? editingElement = e.EditingElement as TextBox;
                     if (editingElement != null && editingElement.Text == "")
                     {
-                        editingElement.Text = "0";
+                        editingElement.Text = defaultValue;
+                    }
+                }
+            }
+        }
+
+        public static void ConstraintEmptyToDefaultValueOnDataGridCellCommit(object sender, DataGridCellEditEndingEventArgs e, Dictionary<string, string> headerDefaultValuePair)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                string? columnHeader = e.Column.Header as string;
+                if (columnHeader != null && headerDefaultValuePair.TryGetValue(columnHeader, out string? defaultValue) == true)
+                {
+                    TextBox? editingElement = e.EditingElement as TextBox;
+                    if (editingElement != null && editingElement.Text == "")
+                    {
+                        editingElement.Text = defaultValue;
                     }
                 }
             }

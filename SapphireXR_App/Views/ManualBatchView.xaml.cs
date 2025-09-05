@@ -32,34 +32,7 @@ namespace SapphireXR_App.Views
             return value;
         }
     }
-
-    internal class TargetValueConverter : IValueConverter
-    {
-        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
-        }
-
-        object? IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string? targetValue = value as string;
-            if (targetValue != null)
-            {
-                if (targetValue == string.Empty)
-                {
-                    return null;
-                }
-                else
-                {
-                    return value;
-                }
-            }
-            else
-            {
-                return Binding.DoNothing;
-            }
-        }
-    }
+   
     /// <summary>
     /// ManualBatchView.xaml에 대한 상호 작용 논리
     /// </summary>
