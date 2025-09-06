@@ -10,5 +10,14 @@ namespace SapphireXR_App.Views
             InitializeComponent();
             DataContext = App.Current.Services.GetService(typeof(LeftViewModel));
         }
+
+        private void LineHeater_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            TextBox? lineHeaterPV = sender as TextBox;
+            if (lineHeaterPV != null)
+            {
+                ((LeftViewModel)DataContext).LineHeaterDoubleClickedCommand.Execute(lineHeaterPV.Name);
+            }
+        }
     }
 }

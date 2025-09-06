@@ -7,6 +7,7 @@ using SapphireXR_App.WindowServices;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using TwinCAT.Ads;
 
@@ -426,5 +427,17 @@ namespace SapphireXR_App.ViewModels
         private readonly ResetCurrentRecipeSubscriber resetCurrentRecipeSubscriber;
         private readonly LogicalInterlockSubscriber logicalInterlockSubscriber;
         private readonly GasIOLabelSubscriber gasIOLabelSubscriber;
+
+        public ICommand LineHeaterDoubleClickedCommand  => new RelayCommand<object?>((object? arg) => {
+            string? lineHeaterName = arg as string;
+            if(lineHeaterName != null)
+            {
+                string lineHeaterNumber = lineHeaterName.Substring("lineHeater".Length);
+                if (int.TryParse(lineHeaterNumber, out int number) == true)
+                {
+                    LineHeaterControlWindow.Show("Line Heater", "Line Heater " + lineHeaterNumber + "의 온도를 조절하시겠습니까?", lineHeaterNumber);
+                }
+            }
+        });
     }
 }
