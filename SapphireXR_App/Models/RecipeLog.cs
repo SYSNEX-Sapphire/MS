@@ -8,26 +8,26 @@
         public RecipeLog(Recipe recipe)
         {
             Step = recipe.Name;
-            SV_M01 = recipe.M01;
-            SV_M02 = recipe.M02;
-            SV_M03 = recipe.M03;
-            SV_M04 = recipe.M04;
-            SV_M05 = recipe.M05;
-            SV_M06 = recipe.M06;
-            SV_M07 = recipe.M07;
-            SV_M08 = recipe.M08;
-            SV_M09 = recipe.M09;
-            SV_M10 = recipe.M10;
-            SV_M11 = recipe.M11;
-            SV_M12 = recipe.M12;
+            PrevSV.M01 = SV_M01 = recipe.M01 ?? PrevSV.M01;
+            PrevSV.M02 = SV_M02 = recipe.M02 ?? PrevSV.M02;
+            PrevSV.M03 = SV_M03 = recipe.M03 ?? PrevSV.M03;
+            PrevSV.M04 = SV_M04 = recipe.M04 ?? PrevSV.M04;
+            PrevSV.M05 = SV_M05 = recipe.M05 ?? PrevSV.M05;
+            PrevSV.M06 = SV_M06 = recipe.M06 ?? PrevSV.M06;
+            PrevSV.M07 = SV_M07 = recipe.M07 ?? PrevSV.M07;
+            PrevSV.M08 = SV_M08 = recipe.M08 ?? PrevSV.M08;
+            PrevSV.M09 = SV_M09 = recipe.M09 ?? PrevSV.M09;
+            PrevSV.M10 = SV_M10 = recipe.M10 ?? PrevSV.M10;
+            PrevSV.M11 = SV_M11 = recipe.M11 ?? PrevSV.M11;
+            PrevSV.M12 = SV_M12 = recipe.M12 ?? PrevSV.M12;
             
-            SV_E01 = recipe.E01;
-            SV_E02 = recipe.E02;
-            SV_E03 = recipe.E03;
-            SV_E04 = recipe.E04;
-            SV_TEMP = recipe.STemp;
-            SV_PRES = recipe.RPress;
-            SV_ROT = recipe.SRotation;
+            PrevSV.E01 = SV_E01 = recipe.E01 ?? PrevSV.E01;
+            PrevSV.E02 = SV_E02 = recipe.E02 ?? PrevSV.E02;
+            PrevSV.E03 = SV_E03 = recipe.E03 ?? PrevSV.E03;
+            PrevSV.E04 = SV_E04 = recipe.E04 ?? PrevSV.E04;
+            PrevSV.STemp = SV_TEMP = recipe.STemp ?? PrevSV.STemp;
+            PrevSV.RPress = SV_PRES = recipe.RPress ?? PrevSV.RPress;
+            PrevSV.SRotation = SV_ROT = recipe.SRotation ?? PrevSV.SRotation;
 
             PV_M01 = PLCService.ReadCurrentValue("MFC01");
             PV_M02 = PLCService.ReadCurrentValue("MFC02");
@@ -96,5 +96,28 @@
         public float SV_ROT { get; set; }
                           
         public DateTime LogTime { get; set; }
+
+        private static class PrevSV
+        {
+            public static float M01 { get; set; }
+            public static float M02 { get; set; }
+            public static float M03 { get; set; }
+            public static float M04 { get; set; }
+            public static float M05 { get; set; }
+            public static float M06 { get; set; }
+            public static float M07 { get; set; }
+            public static float M08 { get; set; }
+            public static float M09 { get; set; }
+            public static float M10 { get; set; }
+            public static float M11 { get; set; }
+            public static float M12 { get; set; }
+            public static float E01 { get; set; }
+            public static float E02 { get; set; }
+            public static float E03 { get; set; }
+            public static float E04 { get; set; }
+            public static float STemp { get; set; }
+            public static float RPress { get; set; }
+            public static float SRotation { get; set; }
+        }
     }
 }

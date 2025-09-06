@@ -27,7 +27,7 @@ namespace SapphireXR_App.ViewModels
         public partial class AnalogIOUserState: IOUserState
         {
             [ObservableProperty]
-            private float _value;
+            private float? _value = null;
 
             [ObservableProperty]
             private int _maxValue;

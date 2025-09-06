@@ -32,6 +32,7 @@ namespace SapphireXR_App.Views
             return value;
         }
     }
+   
     /// <summary>
     /// ManualBatchView.xaml에 대한 상호 작용 논리
     /// </summary>
@@ -68,7 +69,7 @@ namespace SapphireXR_App.Views
 
         private void dgUserSettingA_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            Util.ConstraintEmptyToZeroOnDataGridCellCommit(sender, e, ["Value"]);
+            //Util.ConstraintEmptyToZeroOnDataGridCellCommit(sender, e, ["Value"]);
         }
 
         private void NumberBox_LostFocus(object sender, RoutedEventArgs e)

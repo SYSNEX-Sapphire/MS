@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CsvHelper.Configuration.Attributes;
+using SapphireXR_App.Common;
 using SapphireXR_App.ViewModels;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
-using SapphireXR_App.Common;
 
 namespace SapphireXR_App.Models
 {
@@ -72,8 +72,13 @@ namespace SapphireXR_App.Models
         {
             PropertyChanged += (sender, args) =>
             {
-                var constraintValue = (string fullName, float curValue) =>
+                var constraintValue = (string fullName, float? curValue) =>
                 {
+                    if (curValue == null)
+                    {
+                        return curValue;
+                    }
+
                     int? maxValue = SettingViewModel.ReadMaxValue(fullName) ?? 0;
                     if (maxValue < curValue)
                     {
@@ -162,6 +167,20 @@ namespace SapphireXR_App.Models
                     case nameof(SRotation):
                         SRotation = constraintValue("Rotation", SRotation);
                         break;
+
+                    case nameof(LoopRepeat):
+                        if(LoopRepeat == null)
+                        {
+                            LoopEndStep = null;
+                        }
+                        break;
+
+                    case nameof(LoopEndStep):
+                        if(LoopEndStep == null)
+                        {
+                            LoopRepeat = null;
+                        }
+                        break;
                 }
             };
         }
@@ -175,47 +194,50 @@ namespace SapphireXR_App.Models
         [ObservableProperty]
         public short _hTime;
         [ObservableProperty]
-        public float _sTemp;
+        public float? _sTemp;
         [ObservableProperty]
-        public float _rPress;
+        public float? _rPress;
         [ObservableProperty]
-        public float _sRotation;
-        public float cTemp { get; set; }
-        public short LoopRepeat { get; set; }
-        public short LoopEndStep { get; set; }
+        public float? _sRotation;
+        [ObservableProperty]
+        public float? cTemp;
+        [ObservableProperty]
+        public short? loopRepeat;
+        [ObservableProperty]
+        public short? loopEndStep;
         //RecipeFloat Array
         [ObservableProperty]
-        private float _m01;
+        private float? _m01;
         [ObservableProperty]
-        private float _m02;
+        private float? _m02;
         [ObservableProperty]
-        private float _m03;
+        private float? _m03;
         [ObservableProperty]
-        private float _m04;
+        private float? _m04;
         [ObservableProperty]
-        private float _m05;
+        private float? _m05;
         [ObservableProperty]
-        private float _m06;
+        private float? _m06;
         [ObservableProperty]
-        private float _m07;
+        private float? _m07;
         [ObservableProperty]
-        private float _m08;
+        private float? _m08;
         [ObservableProperty]
-        private float _m09;
+        private float? _m09;
         [ObservableProperty]
-        private float _m10;
+        private float? _m10;
         [ObservableProperty]
-        private float _m11;
+        private float? _m11;
         [ObservableProperty]
-        private float _m12;
+        private float? _m12;
         [ObservableProperty]
-        private float _e01;
+        private float? _e01;
         [ObservableProperty]
-        private float _e02;
+        private float? _e02;
         [ObservableProperty]
-        private float _e03;
+        private float? _e03;
         [ObservableProperty]
-        private float _e04;
+        private float? _e04;
         //RecipeDouble Array
         [ObservableProperty]
         private bool _v01;
@@ -315,27 +337,27 @@ namespace SapphireXR_App.Models
             aRecipeShort[3] = rhs.JumpStride;
             aRecipeShort[4] = rhs.LoopCount;
             //Float Type Array
-            aRecipeFloat[0] = rhs.M01;
-            aRecipeFloat[1] = rhs.M02;
-            aRecipeFloat[2] = rhs.M03;
-            aRecipeFloat[3] = rhs.M04;
-            aRecipeFloat[4] = rhs.M05;
-            aRecipeFloat[5] = rhs.M06;
-            aRecipeFloat[6] = rhs.M07;
-            aRecipeFloat[7] = rhs.M08;
-            aRecipeFloat[8] = rhs.M09;
-            aRecipeFloat[9] = rhs.M10;
-            aRecipeFloat[10] = rhs.M11;
-            aRecipeFloat[11] = rhs.M12;
-            aRecipeFloat[12] = rhs.E01;
-            aRecipeFloat[13] = rhs.E02;
-            aRecipeFloat[14] = rhs.E03;
-            aRecipeFloat[15] = rhs.E04;
-            aRecipeFloat[16] = rhs.STemp;
-            aRecipeFloat[17] = rhs.RPress;
-            aRecipeFloat[18] = rhs.SRotation;
+            aRecipeFloat[0] = rhs.M01 ?? -1.0f;
+            aRecipeFloat[1] = rhs.M02 ?? -1.0f;
+            aRecipeFloat[2] = rhs.M03 ?? -1.0f;
+            aRecipeFloat[3] = rhs.M04 ?? -1.0f;
+            aRecipeFloat[4] = rhs.M05 ?? -1.0f;
+            aRecipeFloat[5] = rhs.M06 ?? -1.0f;
+            aRecipeFloat[6] = rhs.M07 ?? -1.0f;
+            aRecipeFloat[7] = rhs.M08 ?? -1.0f;
+            aRecipeFloat[8] = rhs.M09 ?? -1.0f;
+            aRecipeFloat[9] = rhs.M10 ?? -1.0f;
+            aRecipeFloat[10] = rhs.M11 ?? -1.0f;
+            aRecipeFloat[11] = rhs.M12 ?? -1.0f;
+            aRecipeFloat[12] = rhs.E01 ?? -1.0f;
+            aRecipeFloat[13] = rhs.E02 ?? -1.0f;
+            aRecipeFloat[14] = rhs.E03 ?? -1.0f;
+            aRecipeFloat[15] = rhs.E04 ?? -1.0f;
+            aRecipeFloat[16] = rhs.STemp ?? -1.0f;
+            aRecipeFloat[17] = rhs.RPress ?? -1.0f;
+            aRecipeFloat[18] = rhs.SRotation ?? -1.0f;
             
-            cTemp = rhs.cTemp;
+            cTemp = rhs.CTemp ?? 0;
 
             //BitArray from Valve Data
             BitArray aRecipeBit = new(32);

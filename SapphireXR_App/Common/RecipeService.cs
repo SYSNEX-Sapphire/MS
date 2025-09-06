@@ -61,6 +61,13 @@ namespace SapphireXR_App.Common
                     using (var unsubscriber = ObservableManager<string>.Subscribe("Recipe.MaxValueExceed", maxValueExceedSubscriber = new MaxValueExceedSubscriber()))
                     {
                         List<Recipe> recipe = csvReader.GetRecords<Recipe>().ToList();
+                        (bool success, string message) = RecipeValidator.Validate(recipe);
+                        if (success == false)
+                        {
+                            throw new OpenRecipeFileException(message);
+                        }
+
+
                         return (true, recipeFilePath, recipe, maxValueExceedSubscriber.fcMaxValueExceeded);
                     }
                 }
