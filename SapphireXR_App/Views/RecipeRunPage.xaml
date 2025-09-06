@@ -231,8 +231,8 @@
 
                     <!-- #Region 3. 상태 모니터링(가스압력, 항온조, 반응기)-->
                     <!-- 가스압력 모니터링 -->
-                    <control:GasMonitor x:Name="gasMonitor_H2" Canvas.Left="30" Canvas.Top="20"  MonitorID="Gas1"/>
-                    <control:GasMonitor x:Name="gasMonitor_N2" Canvas.Left="155" Canvas.Top="20"  MonitorID="Gas2"/>
+                    <control:GasMonitor x:Name="gasMonitor_H2" Canvas.Left="155" Canvas.Top="20" MonitorID="Gas1"/>
+                    <control:GasMonitor x:Name="gasMonitor_N2" Canvas.Left="30" Canvas.Top="20"  MonitorID="Gas2"/>
                     <control:GasMonitor x:Name="gasMonitor_H2S" Canvas.Left="616" Canvas.Top="20"  MonitorID="Gas3"/>
                     <control:GasMonitor x:Name="gasMonitor_H2Se" Canvas.Left="816" Canvas.Top="20"  MonitorID="Gas4"/>
 
