@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="P15_RotationOperation" Id="{7f828812-d1bb-49a4-a03d-f3e347855c39}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P15_RotationOperation
 VAR
@@ -16,6 +16,7 @@ VAR
 	(* Rotation Operation Parameter*)
 	wRotaion_PV				: WORD;
 	isRotationFault			: BOOL; //Motor Driver
+	calcRotation: REAL;
 END_VAR
 
 VAR CONSTANT
@@ -29,7 +30,10 @@ END_VAR
 
 _DigitalInput();
 
-nConvertedRotation_PV := REAL_TO_INT(wRotaion_PV/ConversionFactor);
+calcRotation := (wRotaion_PV / ConversionFactor) * (5.0/3.0);
+
+
+nConvertedRotation_PV := REAL_TO_INT(calcRotation);
 
 // Interface with other PRGs
 GVL_IO.nRotation_Converted_PV := nConvertedRotation_PV;
@@ -58,7 +62,6 @@ bRotationCP := GVL_IO_GAS_CABINET.DI_02_RotationMotorCP;
 
 //from Device Value
 isRotationFault := NOT(GVL_IO_REACTOR_CABINET.DI_02_SusceptorRotationMotorFault);
-//wRotaion_PV := UINT_TO_WORD(GVL_IO.aAnalogInputIO2[1]);
 wRotaion_PV := UINT_TO_WORD(GVL_IO_REACTOR_CABINET.AI_08_R01SusceptorRotationPV);]]></ST>
       </Implementation>
     </Action>
@@ -74,11 +77,13 @@ GVL_IO_REACTOR_CABINET.AO_09_R01_SusceptorRotationSV:=REAL_TO_INT(rConvertedCV);
       </Implementation>
     </Action>
     <LineIds Name="P15_RotationOperation">
-      <LineId Id="216" Count="23" />
+      <LineId Id="216" Count="2" />
+      <LineId Id="262" Count="2" />
+      <LineId Id="219" Count="20" />
       <LineId Id="163" Count="0" />
     </LineIds>
     <LineIds Name="P15_RotationOperation._DigitalInput">
-      <LineId Id="23" Count="5" />
+      <LineId Id="23" Count="4" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="P15_RotationOperation._DigitalOutput">

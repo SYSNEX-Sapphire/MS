@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="P12_IQ_PLUS" Id="{e511b755-5d71-4ab9-9c97-639ef910a29b}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P12_IQ_PLUS
 VAR
@@ -41,6 +41,8 @@ VAR
 	nInputStatusOld : USINT := 9; //Value Change Monitoring, First Temp value
 	wByteValvePosition_PV_Monitoring: WORD;
 	CDG1_RealValue: REAL;
+	nOutputSetType:USINT; //1:Pressure Conrol, 2:Position Control
+	CDG_1_Value_RealType: REAL;
 END_VAR
 
 VAR CONSTANT
@@ -52,15 +54,22 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//Model : IQ Plus 
 //Pressure Range : 0 ~ 1,000 Torr
-IF GVL_COMMAND_FROM_UI.CMD_THROTTLE_PRESSURE_POSITION_MODE THEN // Pressure Mode Setting
-	GVL_DEVICE_NET_IQ_PLUS.nOutputSetType := 1; // Pressure Control
-ELSE
+IF GVL_COMMAND_FROM_UI.CMD_THROTTLE_PRESSURE_POSITION_MODE THEN //true: Position False:Pressure
 	GVL_DEVICE_NET_IQ_PLUS.nOutputSetType := 2; // Position Control
+ELSE
+	GVL_DEVICE_NET_IQ_PLUS.nOutputSetType := 1; // Pressure Control
 END_IF
+
+nSetType := GVL_DEVICE_NET_IQ_PLUS.nOutputSetType;
+nOutputSetType:=nSetType;
+
 
 _DIgitalInput();
 _CalData();
-_DigitalOutput();]]></ST>
+_DigitalOutput();
+
+
+nTValveMode := WORD_TO_USINT(GVL_IO.aOutputCmd[2]); //Throttle Valve Mode Setting 0:Normal 1:Close 2:Open 3:Hold 4:Reset]]></ST>
     </Implementation>
     <Action Name="_CalData" Id="{217fbe83-a237-4fef-960a-68490e85a19a}">
       <Implementation>
@@ -74,9 +83,7 @@ _DigitalOutput();]]></ST>
 GVL_IO.nIQPLUS_SetType 	:= GVL_DEVICE_NET_IQ_PLUS.nOutputSetType;
 GVL_IO.nIQPLUS_Mode 	:= GVL_DEVICE_NET_IQ_PLUS.nOutputMode;
 GVL_DEVICE_NET_IQ_PLUS.nOutputMode := GVL_COMMAND_FROM_UI.CMD_THROTTLE_OUTPUT_MODE;
-
 GVL_IO.aMonitoring_PV[E_Morning_Index.E_Morning_TV_Position] := wByteValvePosition_PV/SetPointFactor;
-
 
 (* Read from Device Value *)
 // 2USINT to WORD
@@ -87,16 +94,18 @@ wByteValvePosition_PV_Monitoring:=REAL_TO_WORD(wByteValvePosition_PV/SetPointFac
 GVL_IO.aMonitoring_PV[12] := wByteValvePosition_PV_Monitoring;
 
 
+
+
 wControlValue		:= GVL_IO.wIqPlus_CV;
 
 //From IQ Plus
 CDG1_RealValue :=wByteCDG1_PV/PressureFactor; 
-
-
 GVL_IO.wIqPlus_CDG1_PV 	:= REAL_TO_WORD(wByteCDG1_PV/PressureFactor);
-GVL_IO.wIqPlus_CDG2_PV 	:= REAL_TO_WORD(wByteCDG2_PV/PressureFactor);
+GVL_IO.wIqPlus_CDG2_PV:=GVL_IO.wIqPlus_CDG1_PV;
 
-//To IQ Plus
+CDG_1_Value_RealType:=wByteCDG1_PV/PressureFactor;
+
+
 //nSetType //1:Pressure Conrol, 2:Position Control
 
 IF GVL_DEVICE_NET_IQ_PLUS.nOutputMode = 0 AND nSetType = 1 THEN(*Pressure Mode*)
@@ -155,8 +164,8 @@ bThrottleValveCP 	:= GVL_IO_GAS_CABINET.DI_02_T_VCP;
 isPumpFault			:= GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFail;
 isPumpWarning		:= GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpWarning;
 isPumpAlarm			:= GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpAlarm;
-isPumpRunning		:= GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpRunning;
-isFBRunning			:= GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFBRunning;
+isPumpRunning		:= GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFBRunning;
+isFBRunning			:= GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpRunning;
 
 
 GVL_IO.isPumpRunning := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFBRunning;]]></ST>
@@ -172,13 +181,34 @@ GVL_IO_REACTOR_CABINET.DO_05_VacuumPumpReset := bPumpReset;]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="P12_IQ_PLUS">
-      <LineId Id="557" Count="6" />
+      <LineId Id="557" Count="2" />
+      <LineId Id="774" Count="0" />
+      <LineId Id="561" Count="2" />
+      <LineId Id="672" Count="0" />
+      <LineId Id="671" Count="0" />
       <LineId Id="623" Count="0" />
+      <LineId Id="773" Count="0" />
+      <LineId Id="721" Count="0" />
       <LineId Id="565" Count="1" />
       <LineId Id="401" Count="0" />
+      <LineId Id="776" Count="1" />
+      <LineId Id="775" Count="0" />
     </LineIds>
     <LineIds Name="P12_IQ_PLUS._CalData">
-      <LineId Id="181" Count="72" />
+      <LineId Id="181" Count="9" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="194" Count="7" />
+      <LineId Id="260" Count="1" />
+      <LineId Id="263" Count="0" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="204" Count="3" />
+      <LineId Id="210" Count="0" />
+      <LineId Id="254" Count="0" />
+      <LineId Id="266" Count="0" />
+      <LineId Id="265" Count="0" />
+      <LineId Id="267" Count="0" />
+      <LineId Id="259" Count="0" />
+      <LineId Id="214" Count="39" />
       <LineId Id="67" Count="0" />
     </LineIds>
     <LineIds Name="P12_IQ_PLUS._DigitalInput">

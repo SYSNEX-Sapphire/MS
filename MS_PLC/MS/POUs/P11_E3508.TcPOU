@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="P11_E3508" Id="{a7e3d6a1-82f0-4607-8ac9-093cb5f931f5}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P11_E3508
 VAR
@@ -65,8 +65,7 @@ wE3508_P 				:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputProportional[1], GV
 wE3508_I 				:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputIntegral[1], GVL_DEVICE_NET_E3508.aInputIntegral[2]);
 wE3508_D 				:= USINT_TO_WORD_Bit(GVL_DEVICE_NET_E3508.aInputDerivative[1], GVL_DEVICE_NET_E3508.aInputDerivative[2]);
 
-//Temp Controller Alarm
-GVL_IO.aInputState[5].9:= GVL_DEVICE_NET_E3508.aInputAlarmStatus[1] > 0 OR GVL_DEVICE_NET_E3508.aInputAlarmStatus[2] > 0 ;
+
 
 //bAlarmState_E3508 		:= nInputAlarmBytes.7;
 
@@ -84,11 +83,11 @@ GVL_IO.wE3508_PV		:= wE3508_PV;
 // nOutputManAutoBytes.0 	:= GVL_IO.aOutputCmd[1].11; //Command
 
 IF GVL_DEVICE_NET_E3508.aInputManAutoBytes[1].0 THEN // Read form E3508 Mode, 0:Man 1:Auto
-	wOutputPowerSVBytes 	:= WORD_TO_USINT_Bit(wControlValue*10); //multiple to 10, Power Reate Set Value
+	wOutputPowerSVBytes 	:= WORD_TO_USINT_Bit(wControlValue); //multiple to 10, Power Reate Set Value
 	GVL_DEVICE_NET_E3508.aOutputPowerBytes[1] 	:= wOutputPowerSVBytes.Lower;
 	GVL_DEVICE_NET_E3508.aOutputPowerBytes[2] 	:= wOutputPowerSVBytes.Upper;
 ELSE
-	wOutputSVBytes 			:= WORD_TO_USINT_Bit(wControlValue); // Temperature Set Value
+	wOutputSVBytes 			:= WORD_TO_USINT_Bit(wControlValue / 10 ); // Temperature Set Value
 	GVL_DEVICE_NET_E3508.aOutputSVBytes[1] 		:= wOutputSVBytes.Lower;
 	GVL_DEVICE_NET_E3508.aOutputSVBytes[2] 		:= wOutputSVBytes.Upper;
 END_IF
@@ -104,7 +103,8 @@ GVL_DEVICE_NET_E3508.aOutputThreshold[2]:=3;
 ]]></ST>
     </Implementation>
     <LineIds Name="P11_E3508">
-      <LineId Id="815" Count="58" />
+      <LineId Id="815" Count="22" />
+      <LineId Id="839" Count="34" />
       <LineId Id="668" Count="0" />
     </LineIds>
   </POU>
