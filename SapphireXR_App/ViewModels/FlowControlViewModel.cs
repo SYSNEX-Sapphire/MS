@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using SapphireXR_App.Common;
 using SapphireXR_App.Enums;
+using SapphireXR_App.Models;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
@@ -134,7 +135,15 @@ namespace SapphireXR_App.ViewModels
             Deviation = string.Empty;
             CurrentValue = string.Empty;
             ControlValue = string.Empty;
-            int? redMaxValue = SettingViewModel.ReadMaxValue(fcID);
+            int? redMaxValue = null;
+            if (fcID != "Pressure" || PLCService.ReadPressureControlMode() == 1)
+            {
+                redMaxValue = SettingViewModel.ReadMaxValue(fcID);
+            }
+            else
+            {
+                redMaxValue = 100;
+            }
             if (redMaxValue != null && redMaxValue != 0)
             {
                 MaxValue = redMaxValue.Value;

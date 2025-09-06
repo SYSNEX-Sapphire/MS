@@ -349,5 +349,10 @@ namespace SapphireXR_App.Models
                     break;
             }
         }
+
+        public static void WriteLineHeaterTargetValue(int lineHeaterNum, float targetValue)
+        {
+            Ads.WriteAny(hInterlockset[lineHeaterNum + 11], targetValue);
+        }
     }
 }

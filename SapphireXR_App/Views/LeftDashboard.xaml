@@ -527,6 +527,7 @@
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource InfoTextBox}" x:Key="LineHeaterInfoBox">
                                     <Setter Property="Width" Value="43"/>
                                     <Setter Property="Height" Value="20"/>
+                                    <EventSetter Event="MouseDoubleClick" Handler="LineHeater_MouseDoubleClick" />
                                 </Style>
                             </Grid.Resources>
                             <Grid.RowDefinitions>
@@ -539,47 +540,47 @@
                                     <Thickness Top="{StaticResource p_2}" />
                                 </StackPanel.Margin>
                                 <TextBlock Text="1" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12"/>
-                                <TextBox x:Name="tbLineHeater1" Text="{Binding LineHeater1, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
+                                <TextBox x:Name="lineHeater1" Text="{Binding LineHeater1, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
                                     <TextBox.Margin>
                                         <Thickness Right="{StaticResource p_2}" />
                                     </TextBox.Margin>
                                 </TextBox>
                                 <TextBlock Text="2" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12"/>
-                                <TextBox x:Name="tbLineHeater2" Text="{Binding LineHeater2, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
+                                <TextBox x:Name="lineHeater2" Text="{Binding LineHeater2, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
                                     <TextBox.Margin>
                                         <Thickness Right="{StaticResource p_2}" />
                                     </TextBox.Margin>
                                 </TextBox>
                                 <TextBlock Text="3" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12"/>
-                                <TextBox x:Name="tbLineHeater3" Text="{Binding LineHeater3, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
+                                <TextBox x:Name="lineHeater3" Text="{Binding LineHeater3, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
                                     <TextBox.Margin>
                                         <Thickness Right="{StaticResource p_2}" />
                                     </TextBox.Margin>
                                 </TextBox>
                                 <TextBlock Text="4" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12"/>
-                                <TextBox x:Name="tbLineHeater4" Text="{Binding LineHeater4, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}" />
+                                <TextBox x:Name="lineHeater4" Text="{Binding LineHeater4, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}" />
                             </StackPanel>
                             <StackPanel Grid.Row="2" Orientation="Horizontal">
                                 <TextBlock Text="5" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12"/>
-                                <TextBox x:Name="tbLineHeater5" Text="{Binding LineHeater5, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
+                                <TextBox x:Name="lineHeater5" Text="{Binding LineHeater5, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
                                     <TextBox.Margin>
                                         <Thickness Right="{StaticResource p_2}" />
                                     </TextBox.Margin>
                                 </TextBox>
                                 <TextBlock Text="6" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12"/>
-                                <TextBox x:Name="tbLineHeater6" Text="{Binding LineHeater6, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
+                                <TextBox x:Name="lineHeater6" Text="{Binding LineHeater6, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
                                     <TextBox.Margin>
                                         <Thickness Right="{StaticResource p_2}" />
                                     </TextBox.Margin>
                                 </TextBox>
                                 <TextBlock Text="7" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12"/>
-                                <TextBox x:Name="tbLineHeater7" Text="{Binding LineHeater7, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
+                                <TextBox x:Name="lineHeater7" Text="{Binding LineHeater7, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}">
                                     <TextBox.Margin>
                                         <Thickness Right="{StaticResource p_2}" />
                                     </TextBox.Margin>
                                 </TextBox>
                                 <TextBlock Text="8" FontFamily="Segoe UI" Foreground="{DynamicResource Gray_900}" FontSize="12"/>
-                                <TextBox x:Name="tbLineHeater8" Text="{Binding LineHeater8, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}" />
+                                <TextBox x:Name="lineHeater8" Text="{Binding LineHeater8, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LineHeaterInfoBox}" />
                             </StackPanel>
                         </Grid>
                     </StackPanel>

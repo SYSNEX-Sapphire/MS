@@ -148,7 +148,7 @@ namespace SapphireXR_App.Models
 
         public const uint LineHeaterTemperature = 8;
         private const uint NumAlarmWarningArraySize = 6;
-        private const uint NumInterlockSet = 16;
+        private const uint NumInterlockSet = 20;
         private const uint NumInterlock = 5;
         public const uint NumDigitalDevice = 17;
         public const uint NumAnalogDevice = 19;
