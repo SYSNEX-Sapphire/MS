@@ -61,14 +61,15 @@ VAR
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[_DIgitalInput();
-
 TimeOnDelay(IN:= GVL_IO_GAS_CABINET.DI_02_LineHeatersELCB, PT :=T#5S); //Time Delay after a Thermal Bath MC ON
 
 IF TimeOnDelay.Q THEN
+	
+	_GetSP();
+	
 	TimeOnDelay(IN:=FALSE);
 	FOR nHeaterNumber:= 1 TO 8 DO
 		IF (rTemperatureTV[nHeaterNumber] <> rTemperatureSV[nHeaterNumber]) THEN
-			// if SetValue are different to TargetValue, change Target vale to setvalue
 			rTemperatureTV[nHeaterNumber] := rTemperatureSV[nHeaterNumber];
 			
 			_SendTemp();
@@ -77,17 +78,7 @@ IF TimeOnDelay.Q THEN
 END_IF
 
 
-rTemperaturePV[1] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_1_PV_VALUE;
-rTemperaturePV[2] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_2_PV_VALUE;
-rTemperaturePV[3] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_3_PV_VALUE;
-rTemperaturePV[4] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_4_PV_VALUE;
-
-rTemperaturePV[5] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_1_PV_VALUE;
-rTemperaturePV[6] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_2_PV_VALUE;
-rTemperaturePV[7] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_3_PV_VALUE;
-rTemperaturePV[8] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_4_PV_VALUE;
-
-GVL_IO.aLineHeater_rTemperaturePV := rTemperaturePV;]]></ST>
+_Update_Data();]]></ST>
     </Implementation>
     <Action Name="_DigitalInput" Id="{2361a466-4910-4461-afdc-6cafae2346a8}">
       <Implementation>
@@ -101,6 +92,19 @@ bLineHeaterCP.4 	:= GVL_IO_GAS_CABINET.DI_03_LineHeater_5CP;
 bLineHeaterCP.5 	:= GVL_IO_GAS_CABINET.DI_04_LineHeater_6CP;
 bLineHeaterCP.6 	:= GVL_IO_GAS_CABINET.DI_04_LineHeater_7CP;
 bLineHeaterCP.7 	:= GVL_IO_GAS_CABINET.DI_04_LineHeater_8CP;]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="_GetSP" Id="{7b5a566c-409f-4ac0-878f-eada1ac61ae6}">
+      <Implementation>
+        <ST><![CDATA[
+rTemperatureSV[1] := GVL_IO.aInterlockSet[13];
+rTemperatureSV[2] := GVL_IO.aInterlockSet[14];
+rTemperatureSV[3] := GVL_IO.aInterlockSet[15];
+rTemperatureSV[4] := GVL_IO.aInterlockSet[16];
+rTemperatureSV[5] := GVL_IO.aInterlockSet[17];
+rTemperatureSV[6] := GVL_IO.aInterlockSet[18];
+rTemperatureSV[7] := GVL_IO.aInterlockSet[19];
+rTemperatureSV[8] := GVL_IO.aInterlockSet[20];]]></ST>
       </Implementation>
     </Action>
     <Action Name="_SendTemp" Id="{6923cb2d-46df-49ee-941e-35090a9ce3ea}">
@@ -135,14 +139,38 @@ bLineHeaterCP.7 	:= GVL_IO_GAS_CABINET.DI_04_LineHeater_8CP;]]></ST>
 END_CASE]]></ST>
       </Implementation>
     </Action>
+    <Action Name="_Update_Data" Id="{e9f12455-21d4-4682-890d-00e0e68cf189}">
+      <Implementation>
+        <ST><![CDATA[rTemperaturePV[1] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_1_PV_VALUE;
+rTemperaturePV[2] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_2_PV_VALUE;
+rTemperaturePV[3] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_3_PV_VALUE;
+rTemperaturePV[4] := GVL_Serial.LineHeater_data_1.LINE_HEATER_CH_4_PV_VALUE;
+
+rTemperaturePV[5] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_1_PV_VALUE;
+rTemperaturePV[6] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_2_PV_VALUE;
+rTemperaturePV[7] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_3_PV_VALUE;
+rTemperaturePV[8] := GVL_Serial.LineHeater_data_2.LINE_HEATER_CH_4_PV_VALUE;
+
+GVL_IO.aLineHeater_rTemperaturePV := rTemperaturePV;]]></ST>
+      </Implementation>
+    </Action>
     <LineIds Name="P13_LineHeater">
       <LineId Id="550" Count="0" />
-      <LineId Id="552" Count="13" />
+      <LineId Id="553" Count="2" />
+      <LineId Id="705" Count="0" />
+      <LineId Id="703" Count="1" />
+      <LineId Id="556" Count="2" />
+      <LineId Id="560" Count="5" />
       <LineId Id="635" Count="0" />
-      <LineId Id="566" Count="11" />
+      <LineId Id="566" Count="0" />
+      <LineId Id="577" Count="0" />
     </LineIds>
     <LineIds Name="P13_LineHeater._DigitalInput">
       <LineId Id="2" Count="8" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P13_LineHeater._GetSP">
+      <LineId Id="2" Count="7" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="P13_LineHeater._SendTemp">
@@ -159,6 +187,10 @@ END_CASE]]></ST>
       <LineId Id="19" Count="10" />
       <LineId Id="18" Count="0" />
       <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="P13_LineHeater._Update_Data">
+      <LineId Id="2" Count="9" />
+      <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -96,6 +96,9 @@
     <Compile Include="DUTs\DUTs\ENUM\E_WarningList.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\DUTs\F_GetReal_USINT.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\E_ControlMode.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -236,7 +239,10 @@
     <Compile Include="POUs\FB_ValveControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FUNCTION\F_StateAllValve.TcPOU">
+    <Compile Include="POUs\FUNCTION\F_StateValve_Process_Source.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FUNCTION\F_StateValve_Process.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\F_ResetTimersAndRCPTimes.TcPOU">

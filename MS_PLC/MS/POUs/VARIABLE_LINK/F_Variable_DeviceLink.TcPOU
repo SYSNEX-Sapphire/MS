@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="F_Variable_DeviceLink" Id="{aa039e23-7245-4b4f-9453-7c5a8340a52e}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_Variable_DeviceLink: BOOL
 ]]></Declaration>
@@ -72,8 +72,8 @@ GVL_IO.aDigitalInputIO[8].1:=GVL_IO_REACTOR_CABINET.DI_02_SusceptorRotationMotor
 GVL_IO.aDigitalInputIO[8].2:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFail ;
 GVL_IO.aDigitalInputIO[8].3:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpWarning ;
 GVL_IO.aDigitalInputIO[8].4:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpAlarm ;
-GVL_IO.aDigitalInputIO[8].5:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpRunning ;
-GVL_IO.aDigitalInputIO[8].6:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFBRunning ;
+GVL_IO.aDigitalInputIO[8].5:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFBRunning ;
+GVL_IO.aDigitalInputIO[8].6:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpRunning ;
 GVL_IO.aDigitalInputIO[8].7:=GVL_IO_REACTOR_CABINET.DI_02_ReactorDoorUpLimitSensor ;
 
 GVL_IO.aDigitalInputIO[9].0:=GVL_IO_REACTOR_CABINET.DI_03_ReactorDoorDownLimitSensor ;
@@ -194,14 +194,23 @@ GVL_IO_GAS_CABINET.AO_16_E02Source_2TMGaPressureSV :=GVL_IO.aAnalogOutputIO[14];
 GVL_IO_GAS_CABINET.AO_16_E03Source_3DMSePressureSV :=GVL_IO.aAnalogOutputIO[15];
 GVL_IO_GAS_CABINET.AO_16_E04Source_4ChalcoPressureSV :=GVL_IO.aAnalogOutputIO[16];
 
-GVL_IO_REACTOR_CABINET.AO_09_P03_ExhaustPressureAM215Input:=GVL_IO.aAnalogOutputIO[17];
+//GVL_IO_REACTOR_CABINET.AO_09_P03_ExhaustPressureAM215Input:=GVL_IO.aAnalogOutputIO[17];
+
+GVL_IO_REACTOR_CABINET.AO_09_P03_ExhaustPressureAM215Input:=GVL_IO_REACTOR_CABINET.AI_07_P03_ExhaustPressurePV;
+
+
 GVL_IO_REACTOR_CABINET.AO_09_R01_SusceptorRotationSV:=GVL_IO.aAnalogOutputIO[18];
 GVL_IO_REACTOR_CABINET.AO_09_Spare_03:=GVL_IO.aAnalogOutputIO[19];
 GVL_IO_REACTOR_CABINET.AO_09_Spare_04 :=GVL_IO.aAnalogOutputIO[20];
 ]]></ST>
     </Implementation>
     <LineIds Name="F_Variable_DeviceLink">
-      <LineId Id="906" Count="193" />
+      <LineId Id="906" Count="190" />
+      <LineId Id="1102" Count="0" />
+      <LineId Id="1101" Count="0" />
+      <LineId Id="1104" Count="0" />
+      <LineId Id="1103" Count="0" />
+      <LineId Id="1097" Count="2" />
       <LineId Id="479" Count="0" />
     </LineIds>
   </POU>

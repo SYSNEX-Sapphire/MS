@@ -38,22 +38,6 @@ END_VAR
     <Implementation>
       <ST><![CDATA[(* Read from Device Value *)
 
-
-//20250831 이후 UI 에서 데이터 확인 되면 삭제 예정
-////Lamp
-//bReactorCabientMagnet 	:= GVL_IO_REACTOR_CABINET.DI_03_ReactorCabinetDoorClose;
-//bGasCabinetMagnet 		:= GVL_IO_GAS_CABINET.DI_01_GasCabinetDoorClose;
-//bPowerDistributeMagnet	:= GVL_IO_GAS_CABINET.DI_01_ControlCabinetDoorClose;
-
-
-//20250831 이후 UI 에서 데이터 확인 되면 삭제 예정
-////SMPS
-//bSMPS24V480WFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_1Alarm);
-//bSMPS24V72WFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_2Alarm);
-//bSMPS15VPlusFault	:= NOT(GVL_IO_GAS_CABINET.DI_01_SMPS_3Alarm);
-//bSMPS15VMinusFault	:= NOT(GVL_IO_GAS_CABINET.DI_02_SMPS_4Alarm);
-
-
 // Reactor Cabinet Lamp
 rTrigReactorCabinetSwitch(CLK:=GVL_IO_REACTOR_CABINET.DI_01_ReactorCabinetLampButton);
 fTrigReactorCabinetMagnet(CLK:=GVL_IO_REACTOR_CABINET.DI_03_ReactorCabinetDoorClose);
@@ -72,8 +56,16 @@ ELSIF fTrigGasCabinetMagnet.Q THEN
 ELSIF rTrigGasCabinetMagnet.Q THEN
 	bGasCabinetLamp := FALSE;
 END_IF
+
+IF GVL_IO_GAS_CABINET.DI_01_ControlCabinetDoorClose = TRUE THEN
+	IF bPowerDistributeLamp THEN 
+		bPowerDistributeLamp:=FALSE;
+	END_IF
+ELSE
+	bPowerDistributeLamp := NOT(bPowerDistributeMagnet); //Magnet Switch	
+END_IF
 // Power Distribute Unit Lamp
-bPowerDistributeLamp := NOT(bPowerDistributeMagnet); //Magnet Switch
+
 
 _Action_Buzzer();
 _Action_SignalTower();
@@ -146,18 +138,8 @@ GVL_IO_REACTOR_CABINET.DO_04_SignalTowerBuzzer:=bBuzzer; //5:BUZZER-Alarm
     </Action>
     <LineIds Name="P92_Maintenance">
       <LineId Id="5" Count="0" />
-      <LineId Id="598" Count="2" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="540" Count="1" />
-      <LineId Id="538" Count="0" />
-      <LineId Id="395" Count="0" />
-      <LineId Id="597" Count="0" />
-      <LineId Id="596" Count="0" />
-      <LineId Id="391" Count="0" />
-      <LineId Id="543" Count="2" />
-      <LineId Id="542" Count="0" />
-      <LineId Id="546" Count="0" />
-      <LineId Id="55" Count="1" />
+      <LineId Id="598" Count="0" />
+      <LineId Id="56" Count="0" />
       <LineId Id="93" Count="0" />
       <LineId Id="104" Count="0" />
       <LineId Id="547" Count="0" />
@@ -170,6 +152,13 @@ GVL_IO_REACTOR_CABINET.DO_04_SignalTowerBuzzer:=bBuzzer; //5:BUZZER-Alarm
       <LineId Id="299" Count="0" />
       <LineId Id="301" Count="2" />
       <LineId Id="42" Count="0" />
+      <LineId Id="635" Count="0" />
+      <LineId Id="634" Count="0" />
+      <LineId Id="642" Count="0" />
+      <LineId Id="641" Count="0" />
+      <LineId Id="644" Count="0" />
+      <LineId Id="638" Count="0" />
+      <LineId Id="636" Count="1" />
       <LineId Id="38" Count="0" />
       <LineId Id="381" Count="0" />
       <LineId Id="489" Count="0" />

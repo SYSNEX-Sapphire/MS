@@ -19,7 +19,7 @@ END_FOR
 
 //jhkang aController 의 Input은 언제 들어감?
 //Temp Controller
-GVL_IO.wE3508_CV := LREAL_TO_WORD(GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp].rControlValue); //Write to Temperature Controller
+GVL_IO.wE3508_CV := LREAL_TO_WORD(GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp].rControlValue * 10 )  ; //Write to Temperature Controller
 GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp] := WORD_TO_REAL(GVL_IO.wE3508_PV);
 GVL_IO.aController_CV[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp] := WORD_TO_REAL(GVL_IO.wE3508_CV);
 GVL_IO.aController[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp]();
