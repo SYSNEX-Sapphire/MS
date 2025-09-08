@@ -4,7 +4,7 @@ namespace SapphireXR_App.Common
 {
     internal static class RecipeValidator
     {
-        public static (bool, string) Validate(List<Recipe> recipe)
+        public static (bool, string) Validate(IList<Recipe> recipe)
         {
             if(0 < recipe.Count)
             {

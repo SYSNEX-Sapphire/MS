@@ -78,23 +78,68 @@ namespace SapphireXR_App.Common
             }
         }
 
-        public static void PLCLoad(IList<Recipe> recipes)
+        public static PlcRecipe[] ToPLCRecipe(IList<Recipe> recipes)
+        {
+            (bool success, string message) = RecipeValidator.Validate(recipes);
+            if (success == false)
+            {
+                throw new Exception(message);
+            }
+
+            Recipe first = recipes.First();
+            AnalogRecipe analogRecipe = new()
+            {
+                M01 = first.M01!.Value,
+                M02 = first.M02!.Value,
+                M03 = first.M03!.Value,
+                M04 = first.M04!.Value,
+                M05 = first.M05!.Value,
+                M06 = first.M06!.Value,
+                M07 = first.M07!.Value,
+                M08 = first.M08!.Value,
+                M09 = first.M09!.Value,
+                M10 = first.M10!.Value,
+                M11 = first.M11!.Value,
+                M12 = first.M12!.Value,
+                E01 = first.E01!.Value,
+                E02 = first.E02!.Value,
+                E03 = first.E03!.Value,
+                E04 = first.E04!.Value,
+                RPress = first.RPress!.Value,
+                SRotation = first.SRotation!.Value,
+                STemp = first.STemp!.Value
+            };
+
+            PlcRecipe[] aRecipePLC = new PlcRecipe[recipes.Count];
+            int i = 0;
+            foreach (Recipe iRecipeRow in recipes)
+            {
+                aRecipePLC[i] = new PlcRecipe(iRecipeRow, analogRecipe);
+                analogRecipe.update(aRecipePLC[i]);
+                i += 1;
+            }
+
+            return aRecipePLC;
+        }
+
+        public static bool PLCLoad(IList<Recipe> recipes)
         {
             try
             {
-                PlcRecipe[] aRecipePLC = new PlcRecipe[recipes.Count];
-                int i = 0;
-                foreach (Recipe iRecipeRow in recipes)
+                if(recipes.Count == 0)
                 {
-                    aRecipePLC[i] = new PlcRecipe(iRecipeRow);
-                    i += 1;
-                };
+                    return false;
+                }
+
+                PlcRecipe[] aRecipePLC = ToPLCRecipe(recipes);
                 PLCService.WriteRecipe(aRecipePLC);
                 PLCService.WriteTotalStep((short)aRecipePLC.Length);
+
+                return true;
             }
-            catch (Exception err)
+            catch 
             {
-                Console.WriteLine(err.Message);
+                return false;
             }
         }
     }

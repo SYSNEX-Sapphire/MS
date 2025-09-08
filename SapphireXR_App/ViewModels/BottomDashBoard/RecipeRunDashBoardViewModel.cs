@@ -108,11 +108,19 @@ namespace SapphireXR_App.ViewModels.BottomDashBoard
                     series1.Points.Add(new DataPoint(accumTime, 0));
                     foreach (Recipe recipe in recipes)
                     {
-                        float flowControllerValue = GetFlowControllerValue(plotModel.Title, recipe) ?? (float)series1.Points.Last().Y;
-                        accumTime += (uint)recipe.RTime;
-                        series1.Points.Add(new DataPoint(TimeSpanAxis.ToDouble(TimeSpan.FromSeconds(accumTime)), flowControllerValue));
-                        accumTime += (uint)recipe.HTime;
-                        series1.Points.Add(new DataPoint(TimeSpanAxis.ToDouble(TimeSpan.FromSeconds(accumTime)), flowControllerValue));
+                        try
+                        {
+                            float flowControllerValue = GetFlowControllerValue(plotModel.Title, recipe) ?? (float)series1.Points.Last().Y;
+                            accumTime += (uint)recipe.RTime;
+                            series1.Points.Add(new DataPoint(TimeSpanAxis.ToDouble(TimeSpan.FromSeconds(accumTime)), flowControllerValue));
+                            accumTime += (uint)recipe.HTime;
+                            series1.Points.Add(new DataPoint(TimeSpanAxis.ToDouble(TimeSpan.FromSeconds(accumTime)), flowControllerValue));
+                        }
+                        catch(Exception)
+                        {
+                            //System.Diagnostics.Debug.WriteLine(excepetion.Message);
+                            continue;
+                        }
                     }
                     plotModel.Axes[0].Maximum = TimeSpanAxis.ToDouble(TimeSpan.FromSeconds(accumTime));
                 }

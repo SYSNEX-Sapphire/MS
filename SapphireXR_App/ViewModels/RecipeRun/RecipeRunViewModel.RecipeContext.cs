@@ -244,7 +244,6 @@ namespace SapphireXR_App.ViewModels
                 recipeControlPauseTimeSubscriber = null;
                 PauseTime = null;
 
-
                 startLog();
             }
 
@@ -315,7 +314,8 @@ namespace SapphireXR_App.ViewModels
 
                 if (currentRecipe != null)
                 {
-                    PlcRecipe[] plcRecipes = modifiedRecipeIndice.Where((int recipeIndex) => currentRecipeIndex < recipeIndex).Select((int recipeIndex) => new PlcRecipe(Recipes[recipeIndex])).ToArray();
+                    PlcRecipe[] plcRecipes = RecipeService.ToPLCRecipe(Recipes);
+                    plcRecipes = modifiedRecipeIndice.Where((int recipeIndex) => currentRecipeIndex < recipeIndex).Select((int recipeIndex) => plcRecipes[recipeIndex]).ToArray();
                     if (0 < plcRecipes.Length)
                     {
                         PLCService.RefreshRecipe(plcRecipes);

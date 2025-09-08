@@ -328,7 +328,7 @@ namespace SapphireXR_App.Models
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
     public class PlcRecipe
     {
-        public PlcRecipe(Recipe rhs)
+        public PlcRecipe(Recipe rhs, AnalogRecipe alternative)
         {
             //Short Type Array
             aRecipeShort[0] = rhs.No;
@@ -337,27 +337,27 @@ namespace SapphireXR_App.Models
             aRecipeShort[3] = rhs.JumpStride;
             aRecipeShort[4] = rhs.LoopCount;
             //Float Type Array
-            aRecipeFloat[0] = rhs.M01 ?? -1.0f;
-            aRecipeFloat[1] = rhs.M02 ?? -1.0f;
-            aRecipeFloat[2] = rhs.M03 ?? -1.0f;
-            aRecipeFloat[3] = rhs.M04 ?? -1.0f;
-            aRecipeFloat[4] = rhs.M05 ?? -1.0f;
-            aRecipeFloat[5] = rhs.M06 ?? -1.0f;
-            aRecipeFloat[6] = rhs.M07 ?? -1.0f;
-            aRecipeFloat[7] = rhs.M08 ?? -1.0f;
-            aRecipeFloat[8] = rhs.M09 ?? -1.0f;
-            aRecipeFloat[9] = rhs.M10 ?? -1.0f;
-            aRecipeFloat[10] = rhs.M11 ?? -1.0f;
-            aRecipeFloat[11] = rhs.M12 ?? -1.0f;
-            aRecipeFloat[12] = rhs.E01 ?? -1.0f;
-            aRecipeFloat[13] = rhs.E02 ?? -1.0f;
-            aRecipeFloat[14] = rhs.E03 ?? -1.0f;
-            aRecipeFloat[15] = rhs.E04 ?? -1.0f;
-            aRecipeFloat[16] = rhs.STemp ?? -1.0f;
-            aRecipeFloat[17] = rhs.RPress ?? -1.0f;
-            aRecipeFloat[18] = rhs.SRotation ?? -1.0f;
+            aRecipeFloat[0] = rhs.M01 ?? alternative.M01;
+            aRecipeFloat[1] = rhs.M02 ?? alternative.M02;
+            aRecipeFloat[2] = rhs.M03 ?? alternative.M03;
+            aRecipeFloat[3] = rhs.M04 ?? alternative.M04;
+            aRecipeFloat[4] = rhs.M05 ?? alternative.M05;
+            aRecipeFloat[5] = rhs.M06 ?? alternative.M06;
+            aRecipeFloat[6] = rhs.M07 ?? alternative.M07;
+            aRecipeFloat[7] = rhs.M08 ?? alternative.M08;
+            aRecipeFloat[8] = rhs.M09 ?? alternative.M09;
+            aRecipeFloat[9] = rhs.M10 ?? alternative.M10;
+            aRecipeFloat[10] = rhs.M11 ?? alternative.M11;
+            aRecipeFloat[11] = rhs.M12 ?? alternative.M12;
+            aRecipeFloat[12] = rhs.E01 ?? alternative.E01;
+            aRecipeFloat[13] = rhs.E02 ?? alternative.E02;
+            aRecipeFloat[14] = rhs.E03 ?? alternative.E03;
+            aRecipeFloat[15] = rhs.E04 ?? alternative.E04;
+            aRecipeFloat[16] = rhs.STemp ?? alternative.STemp;
+            aRecipeFloat[17] = rhs.RPress ?? alternative.RPress;
+            aRecipeFloat[18] = rhs.SRotation ?? alternative.SRotation;
             
-            cTemp = rhs.CTemp ?? 0;
+            cTemp = rhs.CTemp ?? alternative.CTemp;
 
             //BitArray from Valve Data
             BitArray aRecipeBit = new(32);
@@ -400,5 +400,53 @@ namespace SapphireXR_App.Models
 
         public float cTemp;
         public int iValve;
+    }
+
+    public class AnalogRecipe
+    {
+        public void update(PlcRecipe recipe)
+        {
+            M01 = recipe.aRecipeFloat[0];
+            M02 = recipe.aRecipeFloat[1];
+            M03 = recipe.aRecipeFloat[2];
+            M04 = recipe.aRecipeFloat[3];
+            M05 = recipe.aRecipeFloat[4];
+            M06 = recipe.aRecipeFloat[5];
+            M07 = recipe.aRecipeFloat[6];
+            M08 = recipe.aRecipeFloat[7];
+            M09 = recipe.aRecipeFloat[8];
+            M10 = recipe.aRecipeFloat[9];
+            M11 = recipe.aRecipeFloat[10];
+            M12 = recipe.aRecipeFloat[11];
+            E01 = recipe.aRecipeFloat[12];
+            E02 = recipe.aRecipeFloat[13];
+            E03 = recipe.aRecipeFloat[14];
+            E04 = recipe.aRecipeFloat[15];
+            STemp = recipe.aRecipeFloat[16];
+            RPress = recipe.aRecipeFloat[17];
+            SRotation = recipe.aRecipeFloat[18];
+            CTemp = recipe.cTemp;
+        }
+
+        public float M01 { get; set; }
+        public float M02 { get; set; }
+        public float M03 { get; set; }
+        public float M04 { get; set; }
+        public float M05 { get; set; }
+        public float M06 { get; set; }
+        public float M07 { get; set; }
+        public float M08 { get; set; }
+        public float M09 { get; set; }
+        public float M10 { get; set; }
+        public float M11 { get; set; }
+        public float M12 { get; set; }
+        public float E01 { get; set; }
+        public float E02 { get; set; }
+        public float E03 { get; set; }
+        public float E04 { get; set; }
+        public float STemp { get; set; }
+        public float RPress { get; set; }
+        public float SRotation { get; set; }
+        public float CTemp { get; set; }
     }
 }
