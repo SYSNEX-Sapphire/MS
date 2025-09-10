@@ -107,19 +107,19 @@
                     <Border Grid.Row="4" Grid.Column="4" Style="{StaticResource readOnlyTextInput}">
                         <Label x:Name="txtFlowMaxValue" Content="{Binding MaxValue}" Style="{StaticResource valueLabel}" />
                     </Border>
-                    <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.ColumnSpan="5">
+                    <DockPanel Grid.Row="6" Grid.ColumnSpan="5">
                         <Label Content="Pressure Control Mode" FontFamily="Segoe UI" Foreground="{StaticResource Gray_900}" FontSize="12" VerticalContentAlignment="Center">
                             <Label.Padding>
                                 <Thickness Top="0" Left="0" Right="0" Bottom="{StaticResource p_1}" />
                             </Label.Padding>
                         </Label>
-                        <Button Command="{Binding TogglePressureControlModeCommand}" Style="{StaticResource DefaultButton}" Height="32" Width="230" Margin="8, 0, 0, 0">
+                        <Button Command="{Binding TogglePressureControlModeCommand}" Style="{StaticResource DefaultButton}" Height="32" Margin="8, 0, 0, 0">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="/Resources/icons/icon=line_pressure.png" Width="12" Height="12"/>
                                 <Label FontFamily="Segoe UI" FontSize="12" Content="{Binding ControlMode}" Foreground="{StaticResource Gray_900}" />
                             </StackPanel>
                         </Button>
-                    </StackPanel>
+                    </DockPanel>
                 </Grid>
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
