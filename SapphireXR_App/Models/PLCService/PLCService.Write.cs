@@ -12,6 +12,7 @@ namespace SapphireXR_App.Models
             valveUpdate.CopyTo(sentBuffer, 0);
             Ads.WriteAny(hReadValveStatePLC, sentBuffer, [1]);
         }
+
         public static void WriteValveState(string valveID, bool onOff)
         {
             int index;

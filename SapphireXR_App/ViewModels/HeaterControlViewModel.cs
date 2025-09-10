@@ -92,7 +92,7 @@ namespace SapphireXR_App.ViewModels
         [RelayCommand]
         public void ToggleHeaterControlMode()
         {
-            ControlMode = ((int)ControlMode) + 1) % 2;
+            ControlMode = (ControlMode == HeaterControlMode.Auto ? HeaterControlMode.Manual : HeaterControlMode.Auto);
         }
 
         [ObservableProperty]

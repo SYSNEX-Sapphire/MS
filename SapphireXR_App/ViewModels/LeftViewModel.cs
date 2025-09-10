@@ -302,6 +302,18 @@ namespace SapphireXR_App.ViewModels
             
         }
 
+        [RelayCommand]
+        private void ShowBuzzerOnOfRect()
+        {
+            BuzzerOnOffRectOpacity = 0.6;
+        }
+
+        [RelayCommand]
+        private void HideBuzzerOnOfRect()
+        {
+            BuzzerOnOffRectOpacity = 0.0;
+        }
+
         [ObservableProperty]
         private static string _gas3 = Util.GetGasDeviceName("Gas3") ?? "";
         [ObservableProperty]
@@ -418,6 +430,9 @@ namespace SapphireXR_App.ViewModels
 
         [ObservableProperty]
         private string signalTowerImage = SignalTowerDefaultPath;
+
+        [ObservableProperty]
+        private double buzzerOnOffRectOpacity = 0.0;
 
         private readonly CoolingWaterValueSubscriber showerHeaderTempSubscriber;
         private readonly HardWiringInterlockStateSubscriber hardWiringInterlockStateSubscriber;

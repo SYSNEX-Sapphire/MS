@@ -15,7 +15,7 @@ namespace SapphireXR_App.WindowServices
             }
             else if(controllerID == "Temperature")
             {
-                view = new PressControlView {DataContext = new PressControlViewModel(title, message, controllerID)};
+                view = new HeaterControlView {DataContext = new HeaterControlViewModel(title, message, controllerID)};
             }
             else
             {

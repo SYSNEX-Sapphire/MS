@@ -125,7 +125,6 @@ namespace SapphireXR_App.ViewModels
                         initRightDashBoard();
                     }
                     OnThrottleValveModeChangedCommand.NotifyCanExecuteChanged();
-                    ToggleHeaterControlModeCommand.NotifyCanExecuteChanged();
                     VacuumPumpResetCommand.NotifyCanExecuteChanged();
                     manualBatchViewModel.LoadToPLCCommand.NotifyCanExecuteChanged();
                 }
@@ -164,7 +163,6 @@ namespace SapphireXR_App.ViewModels
                 }
                 BitArray outputCmd1 = PLCService.ReadOutputCmd1();
                 IsVaccumPumpOn = outputCmd1[(int)PLCService.OutputCmd1Index.VaccumPumpControl];
-                InputManualAuto = PLCService.ReadInputManAuto(10) == false ? "Auto" : "Manual";
             }
             catch (Exception ex)
             {
@@ -236,34 +234,6 @@ namespace SapphireXR_App.ViewModels
                 {
                     showMsgOnMotorResetEx = MessageBox.Show("PLC로 Vaccum Reset 값을 쓰는데 실패했습니다. 이 메시지를 다시 표시하지 않으려면 Yes를 클릭하세요. 원인은 다음과 같습니다: "
                             + exception.Message, "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes ? false : true;
-                }
-            }
-        }
-
-        private bool canToggleHeaterControlModeExecute()
-        {
-            return PLCConnectionState.Instance.Online == true;
-        }
-
-        [RelayCommand(CanExecute = "canToggleHeaterControlModeExecute")]
-        private void ToggleHeaterControlMode()
-        {
-            try
-            {
-                string nextState = InputManualAuto == "Auto" ? "Manual" : "Auto";
-                if (OutputCmd1ToggleConfirmService.Toggle(PLCService.OutputCmd1Index.TempControllerManAuto, "Induction Power Supply Manual/Auto", nextState + " 상태로 바꾸시겠습니까?", InputManualAuto,
-                    "Manual", "Auto") == true)
-                {
-                    SynchronizeExpected(InputManualAuto == "Auto" ? 1 : 0, () => (PLCService.ReadInputManAuto(10) == true ? 1 : 0), (int manualAuto) => InputManualAuto = (manualAuto == 0 ? "Auto" : "Manual"),
-                        null, 3000, "장비의 Input Heater Control Mode가 " + nextState + "로 설정되지 않았습니다. 프로그램과 장비 간에 Heater Control Mode 상태 동기화가 되지 않았습니다.");
-                }
-            }
-            catch(Exception exception)
-            {
-                if (showMsgOnToggleHeaterControlModeEx == true)
-                {
-                    showMsgOnToggleHeaterControlModeEx = MessageBox.Show("PLC로 Heater Control Mode 값을 쓰는데 실패했습니다. 이 메시지를 다시 표시하지 않으려면 Yes를 클릭하세요. 원인은 다음과 같습니다: "
-                                + exception.Message, "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes ? false : true;
                 }
             }
         }
@@ -399,8 +369,6 @@ namespace SapphireXR_App.ViewModels
         [ObservableProperty]
         private string _rotationReset = "";
         [ObservableProperty]
-        private string _inputManualAuto = "";
-        [ObservableProperty]
         private List<string> _throttleValveControlModes;
         [ObservableProperty]
         private string? _currentThrottleValveControlMode = null;
@@ -435,7 +403,6 @@ namespace SapphireXR_App.ViewModels
         private bool showMsgOnVacuumPumpToggleEx = true;
         private bool showMsgOnVacuumPumpResetEx = true;
         private bool showMsgOnMotorResetEx = true;
-        private bool showMsgOnToggleHeaterControlModeEx = true;
         private bool showMsgOnThrottleValveModeChangedCommandEx = true;
         private bool showMsgOnLoadBatchOnRecipeEnd = true;
 

@@ -99,7 +99,7 @@ namespace SapphireXR_App.ViewModels
         [RelayCommand]
         public void TogglePressureControlMode()
         {
-            ControlMode = (PressControlMode)(((int)ControlMode) % 2 + 1);
+            ControlMode = (ControlMode == PressControlMode.Pressure ? PressControlMode.Position : PressControlMode.Pressure);
         }
 
         [ObservableProperty]
