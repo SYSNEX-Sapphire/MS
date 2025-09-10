@@ -5,9 +5,8 @@
 #pragma warning disable CS8618 // null을 허용하지 않는 필드는 생성자를 종료할 때 null이 아닌 값을 포함해야 합니다. 'required' 한정자를 추가하거나 nullable로 선언하는 것이 좋습니다.
         public RecipeLog() { }
 #pragma warning restore CS8618 // null을 허용하지 않는 필드는 생성자를 종료할 때 null이 아닌 값을 포함해야 합니다. 'required' 한정자를 추가하거나 nullable로 선언하는 것이 좋습니다.
-        public RecipeLog(string recipeName)
+        public RecipeLog(List<Recipe> recipes)
         {
-            Step = recipeName;
             SV_M01 = PLCService.ReadFlowControllerTargetValue("MFC01");
             SV_M02 = PLCService.ReadFlowControllerTargetValue("MFC02");
             SV_M03 = PLCService.ReadFlowControllerTargetValue("MFC03");
@@ -48,6 +47,8 @@
             PV_TEMP = PLCService.ReadCurrentValue("Temperature");
             PV_PRES = PLCService.ReadCurrentValue("Pressure");
             PV_ROT = PLCService.ReadCurrentValue("Rotation");
+
+            Step = recipes[PLCService.ReadCurrentStep() - 1].Name;
 
             LogTime = DateTime.Now;
         }

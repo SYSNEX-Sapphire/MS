@@ -243,5 +243,10 @@ namespace SapphireXR_App.Models
         {
             return Ads.ReadAny<RampGeneratorInput>(hAControllerInput[dIndexController[controllerID]]).targetValue;
         }
+
+        public static short ReadCurrentStep()
+        {
+            return Ads.ReadAny<short>(hRcpStepN);
+        }
     }
 }
