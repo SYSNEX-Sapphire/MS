@@ -43,7 +43,7 @@ namespace SapphireXR_App.ViewModels
                     try
                     {
                         PLCService.WriteLineHeaterTargetValue(int.Parse(lineHeaterNumber), targetValue);
-                        App.Current.MainWindow.Dispatcher.InvokeAsync(() => ToastMessage.Show("Line Heater " + lineHeaterNumber + " Target Value 설정 완료", ToastMessage.MessageType.Sucess));
+                        App.Current.MainWindow.Dispatcher.InvokeAsync(() => ToastMessage.Show("Line Heater " + lineHeaterNumber + " Target Value 설정 완료", ToastMessage.MessageType.Success));
                         //Dispatcher.CurrentDispatcher.InvokeAsync(() => ToastMessage.Show("Line Heater " + lineHeaterNumber + " Target Value 설정 완료", ToastMessage.MessageType.Sucess));
                     }
                     catch (Exception ex)

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SapphireXR_App.Common;
 using SapphireXR_App.Enums;
 using SapphireXR_App.Models;
+using SapphireXR_App.WindowServices;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
@@ -81,11 +82,16 @@ namespace SapphireXR_App.ViewModels
             private FlowControlViewModel flowControlViewModel;
         }
 
-        [RelayCommand]
-        private void Confirm(Window window)
+        private bool canConfirmExecute()
+        {
+            return TargetValue != string.Empty && RampTime != string.Empty && 0 < short.Parse(RampTime);
+        }
+
+        [RelayCommand(CanExecute = "canConfirmExecute")]
+        protected virtual void Confirm(Window window)
         {
             PopupExResult = PopupExResult.Confirm;
-            if (Confirmed!(PopupExResult.Confirm, new ControlValues
+            if (confirmed(new ControlValues
             {
                 targetValue = (string.IsNullOrEmpty(TargetValue) ? null : float.Parse(TargetValue)),
                 rampTime = (string.IsNullOrEmpty(RampTime) ? null : short.Parse(RampTime))
@@ -100,7 +106,6 @@ namespace SapphireXR_App.ViewModels
         private void Close(Window window)
         {
             PopupExResult = PopupExResult.Close;
-            Canceled!(PopupExResult.Close);
             dispose();
             window.Close();
         }
@@ -130,6 +135,7 @@ namespace SapphireXR_App.ViewModels
         {
             Title = title;
             Message = message;
+            controllerID = fcID;
             TargetValue = string.Empty;
             RampTime = string.Empty;
             Deviation = string.Empty;
@@ -163,11 +169,63 @@ namespace SapphireXR_App.ViewModels
                         Deviation = Util.FloatingPointStrWithMaxDigit((((float)(Math.Abs(float.Parse(CurrentValue) - float.Parse(ControlValue))) / ((float)MaxValue)) * 100.0f), AppSetting.FloatingPointMaxNumberDigit);
                     }
                 }
+                switch (e.PropertyName)
+                {
+                    case nameof(TargetValue):
+                    case nameof(RampTime):
+                        ConfirmCommand.NotifyCanExecuteChanged();
+                        break;
+                }
             };
             controlValueSubscriber = new ControlValueSubscriber(this);
             currentValueSubscriber = new CurrentValueSubscriber(this);
             currentValueSubscriberDisposable = ObservableManager<float>.Subscribe("FlowControl." + fcID + ".CurrentValue", currentValueSubscriber);
             controlValueSubscriberDisposable = ObservableManager<float>.Subscribe("FlowControl." + fcID + ".ControlValue", controlValueSubscriber);
+        }
+
+        protected virtual bool confirmed(ControlValues controlValues)
+        {
+            string message = string.Empty;
+            if (controlValues.targetValue != null)
+            {
+                message += "Target Value " + controlValues.targetValue;
+            }
+            if (controlValues.rampTime != null)
+            {
+                if (message != string.Empty)
+                {
+                    message += ", ";
+                }
+                message += "Ramp Time Value " + controlValues.rampTime;
+            }
+            if (message != string.Empty)
+            {
+                message += "으로 설정하시겠습니까?";
+            }
+
+            if (message != string.Empty)
+            {
+                if (FlowControlConfirmEx.Show("변경 확인", message) == DialogResult.Ok)
+                {
+                    try
+                    {
+                        if (controlValues.targetValue != null && controlValues.rampTime != null)
+                        {
+                            PLCService.WriteFlowControllerTargetValue(controllerID, controlValues.targetValue.Value, controlValues.rampTime.Value);
+                            App.Current.MainWindow.Dispatcher.InvokeAsync(() => ToastMessage.Show("PLC로 목표 유량과 램프 시간이 성공적으로 전송되었습니다.", ToastMessage.MessageType.Success));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        App.Current.MainWindow.Dispatcher.InvokeAsync(() => ToastMessage.Show("PLC로 값을 쓰는데 문제가 발생하였습니다. 자세한 원인은 다음과 같습니다: " + ex.Message, ToastMessage.MessageType.Error));                           
+                        return false;
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public struct ControlValues
@@ -176,16 +234,12 @@ namespace SapphireXR_App.ViewModels
             public short? rampTime;
         }
 
-        public delegate bool ConfirmedEventHandler(PopupExResult result, ControlValues controlValues);
-        public event ConfirmedEventHandler? Confirmed;
-        public delegate void CanceledEventHandler(PopupExResult result);
-        public event CanceledEventHandler? Canceled;
-
         private static readonly SolidColorBrush OnNormal = new SolidColorBrush(Colors.Red);
 
         private ControlValueSubscriber controlValueSubscriber;
         private CurrentValueSubscriber currentValueSubscriber;
         private IDisposable currentValueSubscriberDisposable;
         private IDisposable controlValueSubscriberDisposable;
+        protected string controllerID;
     }
 }

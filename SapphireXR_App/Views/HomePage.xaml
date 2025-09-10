@@ -839,17 +839,6 @@
                                             <Thickness Top="{StaticResource p_1}" Bottom="{StaticResource p_1}" />
                                         </Border.Margin>
                                         <StackPanel Orientation="Vertical">
-                                            <Label Content="Pressure Control Mode" FontFamily="Segoe UI" Foreground="{StaticResource Gray_900}" FontSize="12">
-                                                <Label.Padding>
-                                                    <Thickness Top="0" Left="0" Right="0" Bottom="{StaticResource p_1}" />
-                                                </Label.Padding>
-                                            </Label>
-                                            <Button Command="{Binding TogglePressureControlModeCommand}" Style="{StaticResource DefaultButton}" Height="26">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="/Resources/icons/icon=line_pressure.png" Width="12" Height="12"/>
-                                                    <Label FontFamily="Segoe UI" FontSize="12" Content="{Binding PressureControlMode}" Foreground="{StaticResource Gray_900}" />
-                                                </StackPanel>
-                                            </Button>
                                             <Label Content="Throttle Valve Mode" FontFamily="Segoe UI" Foreground="{StaticResource Gray_900}" FontSize="12">
                                                 <Label.Padding>
                                                     <Thickness Top="{StaticResource p_2}" Left="0" Right="0" Bottom="{StaticResource p_1}" />
