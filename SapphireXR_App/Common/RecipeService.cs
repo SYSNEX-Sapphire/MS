@@ -107,7 +107,8 @@ namespace SapphireXR_App.Common
                 E04 = first.E04!.Value,
                 RPress = first.RPress!.Value,
                 SRotation = first.SRotation!.Value,
-                STemp = first.STemp!.Value
+                STemp = first.STemp!.Value,
+                CTemp = first.CTemp!.Value
             };
 
             PlcRecipe[] aRecipePLC = new PlcRecipe[recipes.Count];
