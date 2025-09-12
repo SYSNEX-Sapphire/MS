@@ -17,7 +17,7 @@ GVL_IO.aInputState[1].8 := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFail; //Vacuum
 GVL_IO.aInputState[1].9 := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpWarning; //Vacuum Pump
 GVL_IO.aInputState[1].10 := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpAlarm; //Vacuum Pump
 GVL_IO.aInputState[1].11 := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFBRunning; //Vacuum Pump
-GVL_IO.aInputState[1].12 := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpRunning; //Vacuum Pump
+GVL_IO.aInputState[1].12 := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFBRunning; //Vacuum Pump
 
 GVL_IO.aInputState[1].13 := GVL_IO_REACTOR_CABINET.DI_03_ReactorCabinetDoorClose;
 GVL_IO.aInputState[1].14 := GVL_IO_GAS_CABINET.DI_01_GasCabinetDoorClose;

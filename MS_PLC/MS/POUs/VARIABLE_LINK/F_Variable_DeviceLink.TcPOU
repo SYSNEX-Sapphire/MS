@@ -73,7 +73,7 @@ GVL_IO.aDigitalInputIO[8].2:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFail ;
 GVL_IO.aDigitalInputIO[8].3:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpWarning ;
 GVL_IO.aDigitalInputIO[8].4:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpAlarm ;
 GVL_IO.aDigitalInputIO[8].5:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFBRunning ;
-GVL_IO.aDigitalInputIO[8].6:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpRunning ;
+GVL_IO.aDigitalInputIO[8].6:=GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFBRunning ;
 GVL_IO.aDigitalInputIO[8].7:=GVL_IO_REACTOR_CABINET.DI_02_ReactorDoorUpLimitSensor ;
 
 GVL_IO.aDigitalInputIO[9].0:=GVL_IO_REACTOR_CABINET.DI_03_ReactorDoorDownLimitSensor ;

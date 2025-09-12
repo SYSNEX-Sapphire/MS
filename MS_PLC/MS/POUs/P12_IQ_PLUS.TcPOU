@@ -54,10 +54,10 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//Model : IQ Plus 
 //Pressure Range : 0 ~ 1,000 Torr
-IF GVL_COMMAND_FROM_UI.CMD_THROTTLE_PRESSURE_POSITION_MODE THEN //true: Position False:Pressure
-	GVL_DEVICE_NET_IQ_PLUS.nOutputSetType := 2; // Position Control
-ELSE
+IF GVL_COMMAND_FROM_UI.CMD_THROTTLE_PRESSURE_POSITION_MODE THEN //true: Pressure False:Position
 	GVL_DEVICE_NET_IQ_PLUS.nOutputSetType := 1; // Pressure Control
+ELSE
+	GVL_DEVICE_NET_IQ_PLUS.nOutputSetType := 2; // Position Control
 END_IF
 
 nSetType := GVL_DEVICE_NET_IQ_PLUS.nOutputSetType;
@@ -183,7 +183,9 @@ GVL_IO_REACTOR_CABINET.DO_05_VacuumPumpReset := bPumpReset;]]></ST>
     <LineIds Name="P12_IQ_PLUS">
       <LineId Id="557" Count="2" />
       <LineId Id="774" Count="0" />
-      <LineId Id="561" Count="2" />
+      <LineId Id="828" Count="0" />
+      <LineId Id="827" Count="0" />
+      <LineId Id="563" Count="0" />
       <LineId Id="672" Count="0" />
       <LineId Id="671" Count="0" />
       <LineId Id="623" Count="0" />

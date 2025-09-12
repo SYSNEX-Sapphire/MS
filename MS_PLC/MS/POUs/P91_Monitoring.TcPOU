@@ -9,6 +9,8 @@ VAR
 	
 	(*Utility Input*)
 	bUtilityFault		: BYTE;	
+	JhValue_DOR: REAL;
+	JhValue_EXHAUST: REAL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[//jhkang
@@ -24,11 +26,11 @@ bUtilityFault.3		:= GVL_IO_GAS_CABINET.DI_05_ExternalUserInputAlarm;
 TimeCycle(IN:=TRUE, PT:=T#100MS); // 100MS Refresh Reading Time
 IF TimeCycle.Q THEN
 	TimeCycle(IN:=FALSE);
-	
+	_DOR_EXHAUST();
 	// Reactor Ultimate Pressure Gauge
 	GVL_IO.aMonitoring_PV[1] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_Ultimate_Pressure] / GVL_CONSTANT.EL3064MaxValue * 10; //Ultimate Pressure 10Torr, 0~10V, Cal. x10
-	GVL_IO.aMonitoring_PV[2] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_Exhaust_Pressure] / GVL_CONSTANT.EL3064MaxValue * 1000; //1,000Torr, 0~10V, Cal. x1000
-	GVL_IO.aMonitoring_PV[3] := F_GetDorPressure(GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_DOR_PRESSURE]);
+	GVL_IO.aMonitoring_PV[2] := JhValue_EXHAUST;
+	GVL_IO.aMonitoring_PV[3] := JhValue_DOR;
 	GVL_IO.aMonitoring_PV[4] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_GAS_Pressure_N2] / GVL_CONSTANT.EL3064MaxValue * 10; //N2 Cal. 6.89 bar  
 	GVL_IO.aMonitoring_PV[5] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_GAS_Pressure_H2] / GVL_CONSTANT.EL3064MaxValue * 10; //H2 Cal. 6.89 bar
 	GVL_IO.aMonitoring_PV[6] := GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_GAS_Pressure_H2S] / GVL_CONSTANT.EL3064MaxValue * 10; //NH3 Cal. 6.89 bar
@@ -73,9 +75,19 @@ IF TimeCycle.Q THEN
 	END_IF
 END_IF]]></ST>
     </Implementation>
+    <Action Name="_DOR_EXHAUST" Id="{3a544091-2a8a-431a-9449-2e6822a37084}">
+      <Implementation>
+        <ST><![CDATA[GVL_SEQUENCE.FB_DOR_PRESSURE_AVG(newValue:=F_GetDorPressure(GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_DOR_PRESSURE]),Output=>JhValue_DOR);
+GVL_SEQUENCE.FB_EXHAUST_AVG(newValue:=F_GetDorPressure(GVL_IO.aAnalogInputIO[E_aAnalogInputIO_Index.E_PV_Exhaust_Pressure]),Output=>JhValue_EXHAUST);]]></ST>
+      </Implementation>
+    </Action>
     <LineIds Name="P91_Monitoring">
       <LineId Id="315" Count="59" />
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="P91_Monitoring._DOR_EXHAUST">
+      <LineId Id="1" Count="0" />
+      <LineId Id="8" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

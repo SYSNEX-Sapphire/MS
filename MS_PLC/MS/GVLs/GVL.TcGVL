@@ -5,6 +5,9 @@
 VAR_GLOBAL
 	MainModule:ST_MAIN_MODULE;
 	fbLineHeater_Manager:FB_LINE_HEATER_MANAGER;
+	
+	RotationResetTon: TON;
+
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

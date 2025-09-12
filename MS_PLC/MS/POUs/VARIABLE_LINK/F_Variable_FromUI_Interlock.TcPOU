@@ -4,10 +4,12 @@
     <Declaration><![CDATA[FUNCTION F_Variable_FromUI_Interlock: BOOL
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//F_Variable_DeviceLink
+]]></ST>
     </Implementation>
     <LineIds Name="F_Variable_FromUI_Interlock">
       <LineId Id="82" Count="0" />
+      <LineId Id="84" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
