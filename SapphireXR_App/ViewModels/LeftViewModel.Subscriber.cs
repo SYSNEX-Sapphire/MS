@@ -82,15 +82,15 @@ namespace SapphireXR_App.ViewModels
                 };
                 var convertFourStateColor = (BitArray value, int startIndex) =>
                 {
-                    if (value[startIndex] == true && value[startIndex + 1] == true && value[startIndex + 2] == true && value[startIndex + 4] == false)
+                    if (value[startIndex] == false && value[startIndex + 1] == true && value[startIndex + 2] == true && value[startIndex + 4] == true)
                     {
                         return RunLampColor;
                     }
-                    else if (value[startIndex + 4] == true || value[startIndex + 1] == false)
+                    else if (value[startIndex] == true || value[startIndex + 2] == false)
                     {
                         return FaultLampColor;
                     }
-                    else if (value[startIndex + 2] == false)
+                    else if (value[startIndex + 1] == false)
                     {
                         return ReadyLampColor;
                     }
