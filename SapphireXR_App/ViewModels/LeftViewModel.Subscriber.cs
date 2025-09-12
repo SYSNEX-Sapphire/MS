@@ -78,26 +78,26 @@ namespace SapphireXR_App.ViewModels
                         return FaultLampColor;
                     }
 
-                    return null;
+                    return OffLampColor;
                 };
                 var convertFourStateColor = (BitArray value, int startIndex) =>
                 {
-                    if (value[startIndex] == true || value[startIndex + 2] == true)
-                    {
-                        return FaultLampColor ;
-                    }
-
-                    if (value[startIndex + 1] == true)
-                    {
-                        return ReadyLampColor;
-                    }
-
-                    if (value[startIndex + 3] == true)
+                    if (value[startIndex] == true && value[startIndex + 1] == true && value[startIndex + 2] == true && value[startIndex + 4] == false)
                     {
                         return RunLampColor;
                     }
-
-                    return null;
+                    else if (value[startIndex + 4] == true || value[startIndex + 1] == false)
+                    {
+                        return FaultLampColor;
+                    }
+                    else if (value[startIndex + 2] == false)
+                    {
+                        return ReadyLampColor;
+                    }
+                    else
+                    {
+                        return OffLampColor;
+                    }
                 };
 
                 leftViewModel.MaintenanceKeyLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.MaintenanceKey]);
@@ -107,8 +107,8 @@ namespace SapphireXR_App.ViewModels
                 leftViewModel.CleanDryAirLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.CleanDryAir]);
                 leftViewModel.CoolingWaterLampColor = convertOnOffStateColor(value[(int)PLCService.HardWiringInterlockStateIndex.CoolingWater]);
   
-                leftViewModel.SusceptorMotorLampColor = convertThreeStateColor(value, (int)PLCService.HardWiringInterlockStateIndex.SusceptorMotorRun) ?? leftViewModel.SusceptorMotorLampColor;
-                leftViewModel.VacuumPumpLampColor = convertFourStateColor(value, (int)PLCService.HardWiringInterlockStateIndex.VacuumPumpFault) ?? leftViewModel.VacuumPumpLampColor;
+                leftViewModel.SusceptorMotorLampColor = convertThreeStateColor(value, (int)PLCService.HardWiringInterlockStateIndex.SusceptorMotorRun);
+                leftViewModel.VacuumPumpLampColor = convertFourStateColor(value, (int)PLCService.HardWiringInterlockStateIndex.VacuumPumpFault);
             }
 
             LeftViewModel leftViewModel;

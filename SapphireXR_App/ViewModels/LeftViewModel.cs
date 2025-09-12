@@ -55,8 +55,8 @@ namespace SapphireXR_App.ViewModels
             {
                 valveStateSubscsribePostfix = valveStateSubscsribePostfixStr;
                 valveStateSubscrbers = [
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Gas3Source = vm.Gas1; Gas3SourceColor = Gas1Color; } else { Gas3Source = vm.Gas3; Gas3SourceColor = GasColor; }  }, "V03"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Gas4Source = vm.Gas1; Gas4SourceColor = Gas1Color; } else { Gas4Source = vm.Gas4; Gas4SourceColor = GasColor; }  }, "V04"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) {  Gas3Source = vm.Gas3; Gas3SourceColor = Gas1Color; } else { Gas3Source = vm.Gas1; Gas3SourceColor = GasColor; }  }, "V03"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Gas4Source = vm.Gas4; Gas4SourceColor = Gas1Color; } else { Gas4Source = vm.Gas1; Gas4SourceColor = GasColor; }  }, "V04"),
                     new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source1Carrier = vm.Gas2; Source1CarrierColor = GasColor; } else { Source1Carrier = vm.Gas1; Source1CarrierColor = Gas1Color; }  }, "V05"),
                     new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source1Source = "Run"; Source1SourceColor = RunColor; } else { Source1Source = "Bypass"; Source1SourceColor = VentBypassColor; } }, "V06"),
                     new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source2Carrier = vm.Gas2;  Source2CarrierColor = GasColor;} else { Source2Carrier = vm.Gas1; Source2CarrierColor = Gas1Color; }  }, "V07"),
