@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SapphireXR_App.Common;
 using SapphireXR_App.Models;
+using SapphireXR_App.WindowServices;
 
 namespace SapphireXR_App.ViewModels
 {
@@ -308,7 +309,7 @@ namespace SapphireXR_App.ViewModels
             {
                 PLCService.WriteControlModeCmd(PLCService.ControlMode.Priority);
                 Util.LoadBatchToPLC(BatchOnRecipeEnd);
-                WindowServices.ToastMessage.Show("Recipe 종료 시 실행되도록 설정된 사용자 정의 Batch인 " + BatchOnRecipeEnd.Name + "가 실행됩니다. 실행이 완료될때까지 대기상태가 됩니다.", WindowServices.ToastMessage.MessageType.Information);
+                ToastMessage.Show("Recipe 종료 시 실행되도록 설정된 사용자 정의 Batch인 " + BatchOnRecipeEnd.Name + "가 실행됩니다. 실행이 완료될때까지 대기상태가 됩니다.", WindowServices.ToastMessage.MessageType.Information);
             }
         }
 
@@ -318,7 +319,7 @@ namespace SapphireXR_App.ViewModels
             {
                 PLCService.WriteControlModeCmd(PLCService.ControlMode.Priority);
                 Util.LoadBatchToPLC(BatchOnAlarmState);
-                WindowServices.ToastMessage.Show("알람 시 설정된 사용자 정의 Batch인 " + BatchOnAlarmState.Name + "가 실행됩니다. 실행이 완료될때까지 대기상태가 됩니다.", WindowServices.ToastMessage.MessageType.Information);
+                ToastMessage.Show("알람 시 설정된 사용자 정의 Batch인 " + BatchOnAlarmState.Name + "가 실행됩니다. 실행이 완료될때까지 대기상태가 됩니다.", WindowServices.ToastMessage.MessageType.Information);
             }
         }
 

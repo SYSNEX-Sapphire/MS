@@ -92,12 +92,14 @@ namespace SapphireXR_App.ViewModels
                         {
                             PLCService.WriteOutputCmd1(PLCService.OutputCmd1Index.TempControllerManAuto, ControlMode == HeaterControlMode.Manual ? true : false);
                             PLCService.WriteFlowControllerTargetValue(controllerID, controlValues.targetValue.Value, currentMode == ControlMode ? controlValues.rampTime.Value : (short)0);
-                            App.Current.MainWindow.Dispatcher.InvokeAsync(() => ToastMessage.Show("PLC로 목표 유량과 램프 시간이 성공적으로 전송되었습니다.", ToastMessage.MessageType.Success));
+                            //App.Current.MainWindow.Dispatcher.InvokeAsync(() => ToastMessage.Show("PLC로 목표 유량과 램프 시간이 성공적으로 전송되었습니다.", ToastMessage.MessageType.Success));
+                            ToastMessage.Show("PLC로 목표 유량과 램프 시간이 성공적으로 전송되었습니다.", ToastMessage.MessageType.Success);
                         }
                     }
                     catch (Exception ex)
                     {
-                        App.Current.MainWindow.Dispatcher.InvokeAsync(() => ToastMessage.Show("PLC로 값을 쓰는데 문제가 발생하였습니다. 자세한 원인은 다음과 같습니다: " + ex.Message, ToastMessage.MessageType.Error));
+                        //App.Current.MainWindow.Dispatcher.InvokeAsync(() => ToastMessage.Show("PLC로 값을 쓰는데 문제가 발생하였습니다. 자세한 원인은 다음과 같습니다: " + ex.Message, ToastMessage.MessageType.Error));
+                        ToastMessage.Show("PLC로 값을 쓰는데 문제가 발생하였습니다. 자세한 원인은 다음과 같습니다: " + ex.Message, ToastMessage.MessageType.Error);
                         return false;
                     }
 

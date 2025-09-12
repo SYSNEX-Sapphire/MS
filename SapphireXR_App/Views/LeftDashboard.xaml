@@ -534,6 +534,24 @@
                                     <Setter Property="Width" Value="43"/>
                                     <Setter Property="Height" Value="20"/>
                                     <EventSetter Event="MouseDoubleClick" Handler="LineHeater_MouseDoubleClick" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="TextBox">
+                                                <Border Background="{StaticResource Gray_50}" BorderBrush="{StaticResource Gray_300}" BorderThickness="1.2" x:Name="innerBorder">
+                                                    <Border.CornerRadius>
+                                                        <CornerRadius TopLeft="{StaticResource r_1}" TopRight="{StaticResource r_1}" BottomLeft="{StaticResource r_1}" BottomRight="{StaticResource r_1}" />
+                                                    </Border.CornerRadius>
+                                                    <ScrollViewer x:Name="PART_ContentHost" Margin="0" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="innerBorder" Property="BorderBrush" Value="{StaticResource Sapphire_Blue}" />
+                                                        <Setter Property="Cursor" Value="Hand" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
                                 </Style>
                             </Grid.Resources>
                             <Grid.RowDefinitions>
