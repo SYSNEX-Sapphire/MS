@@ -278,9 +278,6 @@
     <Compile Include="POUs\P30_ManualControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\P30_ManualControlExt.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\P31_PriorityControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
