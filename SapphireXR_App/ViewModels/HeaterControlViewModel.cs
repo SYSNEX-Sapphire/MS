@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SapphireXR_App.Enums;
 using SapphireXR_App.Models;
 using SapphireXR_App.WindowServices;
+using static SapphireXR_App.ViewModels.PressControlViewModel;
 
 namespace SapphireXR_App.ViewModels
 {
@@ -36,10 +37,28 @@ namespace SapphireXR_App.ViewModels
                                 MaxValue = 100;
                                 break;
                         }
+                        TargetValue = "";
+                        RampTimeEnabled = currentMode == ControlMode;
+                        break;
+
+                    case nameof(RampTimeEnabled):
+                        RampTime = RampTimeEnabled == true ? "" : "0";
                         break;
                 }
             };
-            ControlMode = PLCService.ReadInputManAuto(10) == true ? HeaterControlMode.Manual : HeaterControlMode.Auto;
+            ControlMode = currentMode = PLCService.ReadInputManAuto(10) == true ? HeaterControlMode.Manual : HeaterControlMode.Auto;
+        }
+
+        protected override bool canConfirmExecute()
+        {
+            if (currentMode == ControlMode)
+            {
+                return base.canConfirmExecute();
+            }
+            else
+            {
+                return TargetValue != string.Empty;
+            }
         }
 
         protected override bool confirmed(ControlValues controlValues)
@@ -72,7 +91,7 @@ namespace SapphireXR_App.ViewModels
                         if (controlValues.targetValue != null && controlValues.rampTime != null)
                         {
                             PLCService.WriteOutputCmd1(PLCService.OutputCmd1Index.TempControllerManAuto, ControlMode == HeaterControlMode.Manual ? true : false);
-                            PLCService.WriteFlowControllerTargetValue(controllerID, controlValues.targetValue.Value, controlValues.rampTime.Value);
+                            PLCService.WriteFlowControllerTargetValue(controllerID, controlValues.targetValue.Value, currentMode == ControlMode ? controlValues.rampTime.Value : (short)0);
                             App.Current.MainWindow.Dispatcher.InvokeAsync(() => ToastMessage.Show("PLC로 목표 유량과 램프 시간이 성공적으로 전송되었습니다.", ToastMessage.MessageType.Success));
                         }
                     }
@@ -96,6 +115,9 @@ namespace SapphireXR_App.ViewModels
         }
 
         [ObservableProperty]
+        private bool rampTimeEnabled = true;
+        [ObservableProperty]
         private HeaterControlMode controlMode;
+        private HeaterControlMode currentMode;
     }
 }

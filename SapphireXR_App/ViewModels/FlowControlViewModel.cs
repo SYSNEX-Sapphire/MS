@@ -82,7 +82,7 @@ namespace SapphireXR_App.ViewModels
             private FlowControlViewModel flowControlViewModel;
         }
 
-        private bool canConfirmExecute()
+        protected virtual bool canConfirmExecute()
         {
             return TargetValue != string.Empty && RampTime != string.Empty && 0 < short.Parse(RampTime);
         }
