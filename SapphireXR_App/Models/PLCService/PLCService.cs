@@ -176,7 +176,7 @@ namespace SapphireXR_App.Models
             hUserState = Ads.CreateVariableHandle("RCP.userState");
             hRecipeControlPauseTime = Ads.CreateVariableHandle("RCP.Pause_ET");
             hRecipeRunET = Ads.CreateVariableHandle("RCP.RecipeRunET");
-            hOutputSetType = Ads.CreateVariableHandle("GVL_IO.nIQPLUS_SetType");
+            hOutputSetType = Ads.CreateVariableHandle("P12_IQ_PLUS.nOutputSetType");
             hOutputMode = Ads.CreateVariableHandle("P12_IQ_PLUS.nTValveMode");
             hTemperaturePV = Ads.CreateVariableHandle("GVL_IO.aLineHeater_rTemperaturePV");
             for (uint analogDevice = 0; analogDevice < NumControllers; ++analogDevice)
