@@ -4,7 +4,6 @@
     <Declaration><![CDATA[FUNCTION F_Variable_ToUI_InputState: BOOL
 
 VAR
-	Cout: INT;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* UI Right Dashboard Variable*)
@@ -15,9 +14,6 @@ GVL_IO.aInputState[1].3	:= GVL_IO_GAS_CABINET.DI_01_PneumaticPressureSensor; // 
 GVL_IO.aInputState[1].4 := GVL_IO_REACTOR_CABINET.DI_02_C_WFlowSensor; //CDA Alarm Switch
 GVL_IO.aInputState[1].5	:=GVL_IO_REACTOR_CABINET.DO_05_SusceptorRotationFWD;
 
-IF GVL_IO_REACTOR_CABINET.DO_05_SusceptorRotationFWD = FALSE THEN
-	Cout:=Cout+1;
-END_IF
 GVL_IO.aInputState[1].6 :=GVL_IO_REACTOR_CABINET.DO_05_SusceptorRotationSTOP; 
 GVL_IO.aInputState[1].7 :=NOT GVL_IO_REACTOR_CABINET.DI_02_SusceptorRotationMotorFault; //Susceptor Rotation Motor
 GVL_IO.aInputState[1].8 := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFail; //Vacuum Pump
@@ -124,8 +120,6 @@ GVL_IO.aInputState[6].12:= GVL_IO_REACTOR_CABINET.DI_03_ReactorDoorDownLimitSens
     <LineIds Name="F_Variable_ToUI_InputState">
       <LineId Id="513" Count="6" />
       <LineId Id="623" Count="0" />
-      <LineId Id="622" Count="0" />
-      <LineId Id="624" Count="1" />
       <LineId Id="520" Count="100" />
       <LineId Id="82" Count="0" />
     </LineIds>

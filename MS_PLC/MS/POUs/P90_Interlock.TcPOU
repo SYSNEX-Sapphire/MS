@@ -134,6 +134,9 @@ GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
 	GVL_DEVICE_NET_IQ_PLUS.nOutputSetType = 1 AND
 	GVL_IO_REACTOR_CABINET.DI_03_CylinderAutoSwitch_Closed = TRUE ; 
 	 
+//jhkang 임시  on
+bRecipeStartAvailable:=TRUE; 
+
 
 GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.0:=(AlarmTrig = FALSE); //알람 상태 아닐것
 GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.1:=(WarningTrig = FALSE); // 어닝 상태 사닐것
@@ -670,6 +673,8 @@ bMainPowerMonitor := GVL_IO.aDigitalInputIO[7].5; /// ??????? 이게 뭐지 ?]]>
       <LineId Id="15" Count="0" />
       <LineId Id="26" Count="0" />
       <LineId Id="29" Count="0" />
+      <LineId Id="57" Count="1" />
+      <LineId Id="56" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="31" Count="4" />
       <LineId Id="37" Count="1" />
