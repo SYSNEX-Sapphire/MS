@@ -103,6 +103,11 @@ CDG1_RealValue :=wByteCDG1_PV/PressureFactor;
 GVL_IO.wIqPlus_CDG1_PV 	:= REAL_TO_WORD(wByteCDG1_PV/PressureFactor);
 GVL_IO.wIqPlus_CDG2_PV:=GVL_IO.wIqPlus_CDG1_PV;
 
+IF GVL_IO.wIqPlus_CDG1_PV > 800 OR GVL_IO.wIqPlus_CDG1_PV <=1 THEN
+	GVL_IO.wIqPlus_CDG1_PV:=0;
+	GVL_IO.wIqPlus_CDG2_PV:=0;
+END_IF
+
 CDG_1_Value_RealType:=wByteCDG1_PV/PressureFactor;
 
 
@@ -206,7 +211,10 @@ GVL_IO_REACTOR_CABINET.DO_05_VacuumPumpReset := bPumpReset;]]></ST>
       <LineId Id="204" Count="3" />
       <LineId Id="210" Count="0" />
       <LineId Id="254" Count="0" />
-      <LineId Id="266" Count="0" />
+      <LineId Id="269" Count="2" />
+      <LineId Id="273" Count="0" />
+      <LineId Id="272" Count="0" />
+      <LineId Id="268" Count="0" />
       <LineId Id="265" Count="0" />
       <LineId Id="267" Count="0" />
       <LineId Id="259" Count="0" />

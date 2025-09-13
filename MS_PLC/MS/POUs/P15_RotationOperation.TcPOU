@@ -70,10 +70,7 @@ wRotaion_PV := UINT_TO_WORD(GVL_IO_REACTOR_CABINET.AI_08_R01SusceptorRotationPV)
         <ST><![CDATA[GVL_IO_REACTOR_CABINET.DO_05_SusceptorRotationFWD := bBrake_Run;
 GVL_IO_REACTOR_CABINET.AO_09_R01_SusceptorRotationSV:=REAL_TO_INT(rConvertedCV);
  
-
-//GVL_IO.aDigitalOutputIO[3].5 	:= bBrake_Run;
-//GVL_IO.aAnalogOutputIO[28] 		:= REAL_TO_INT(rConvertedCV);
-//GVL_IO.aInputState[1].11		:= isRotationFault;]]></ST>
+]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="P15_RotationOperation">
@@ -89,8 +86,6 @@ GVL_IO_REACTOR_CABINET.AO_09_R01_SusceptorRotationSV:=REAL_TO_INT(rConvertedCV);
     <LineIds Name="P15_RotationOperation._DigitalOutput">
       <LineId Id="6" Count="1" />
       <LineId Id="1" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="14" Count="1" />
       <LineId Id="11" Count="0" />
     </LineIds>
   </POU>
