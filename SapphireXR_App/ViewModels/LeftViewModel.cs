@@ -288,6 +288,7 @@ namespace SapphireXR_App.ViewModels
 
                 case false:
                     PLCConnectionStatus = "Disconnected";
+                    BuzzerIcon = null;
                     break;
             }
         }
