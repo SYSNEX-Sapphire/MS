@@ -8,7 +8,7 @@ VAR
 	bAlarmReset				: BOOL; //Motor Driver Alarm
 
 	bRotationCP				: BOOL;
-	nConvertedRotation_PV	: INT; //PV 0~100 rpm
+	nConvertedRotation_PV	: REAL; //PV 0~100 rpm
 
 	rConvertedCV			:REAL;
 	(* Motor Driver *)
@@ -33,7 +33,7 @@ _DigitalInput();
 calcRotation := (wRotaion_PV / ConversionFactor) * (5.0/3.0);
 
 
-nConvertedRotation_PV := REAL_TO_INT(calcRotation);
+nConvertedRotation_PV := (calcRotation);
 
 // Interface with other PRGs
 GVL_IO.nRotation_Converted_PV := nConvertedRotation_PV;
