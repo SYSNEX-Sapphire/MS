@@ -106,7 +106,7 @@ namespace SapphireXR_App.ViewModels
                     {
                         try
                         {
-                            csvWriter!.WriteRecord(new RecipeLog((recipeContext.Recipes as List<Recipe>)!));
+                            csvWriter!.WriteRecord(new RecipeLog(recipeContext.Recipes));
                             csvWriter!.NextRecord();
                         }
                         catch (Exception) { }
