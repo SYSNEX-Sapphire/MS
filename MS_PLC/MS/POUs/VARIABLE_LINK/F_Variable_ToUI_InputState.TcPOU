@@ -2,7 +2,9 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="F_Variable_ToUI_InputState" Id="{ce868db6-6f39-41e0-a65d-161125454884}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_Variable_ToUI_InputState: BOOL
-]]></Declaration>
+
+VAR
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* UI Right Dashboard Variable*)
 GVL_IO.aInputState[1].0 := GVL_IO_REACTOR_CABINET.DI_01_MaintenanceModeKey; //Maintenance Key
@@ -11,6 +13,7 @@ GVL_IO.aInputState[1].2	:= GVL_IO_GAS_CABINET.DO_07_GasCabinetLamp; // Gas Cabin
 GVL_IO.aInputState[1].3	:= GVL_IO_GAS_CABINET.DI_01_PneumaticPressureSensor; // Power Cabinet Lamp
 GVL_IO.aInputState[1].4 := GVL_IO_REACTOR_CABINET.DI_02_C_WFlowSensor; //CDA Alarm Switch
 GVL_IO.aInputState[1].5	:=GVL_IO_REACTOR_CABINET.DO_05_SusceptorRotationFWD;
+
 GVL_IO.aInputState[1].6 :=GVL_IO_REACTOR_CABINET.DO_05_SusceptorRotationSTOP; 
 GVL_IO.aInputState[1].7 :=NOT GVL_IO_REACTOR_CABINET.DI_02_SusceptorRotationMotorFault; //Susceptor Rotation Motor
 GVL_IO.aInputState[1].8 := GVL_IO_REACTOR_CABINET.DI_02_VacuumPumpFail; //Vacuum Pump
@@ -115,7 +118,9 @@ GVL_IO.aInputState[6].12:= GVL_IO_REACTOR_CABINET.DI_03_ReactorDoorDownLimitSens
 ]]></ST>
     </Implementation>
     <LineIds Name="F_Variable_ToUI_InputState">
-      <LineId Id="513" Count="107" />
+      <LineId Id="513" Count="6" />
+      <LineId Id="623" Count="0" />
+      <LineId Id="520" Count="100" />
       <LineId Id="82" Count="0" />
     </LineIds>
   </POU>
