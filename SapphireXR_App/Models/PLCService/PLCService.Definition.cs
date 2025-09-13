@@ -4,6 +4,7 @@ using System.Windows.Threading;
 using TwinCAT.Ads;
 using SapphireXR_App.Enums;
 using System.Runtime.InteropServices;
+using System.Printing;
 
 namespace SapphireXR_App.Models
 {
@@ -152,6 +153,8 @@ namespace SapphireXR_App.Models
         private const uint NumInterlock = 5;
         public const uint NumDigitalDevice = 17;
         public const uint NumAnalogDevice = 19;
+        public const int NumRecipeEnableSubConditions = 12;
+        public const int NumReactorEnableSubConditions = 10;
 
         // Variable handles to be connected plc variables
         private static BitArray? baReadValveStatePLC = null;
@@ -179,6 +182,8 @@ namespace SapphireXR_App.Models
         private static ObservableManager<BitArray>.Publisher? dDigitalOutput2;
         private static ObservableManager<BitArray>.Publisher? dDigitalOutput3;
         private static ObservableManager<BitArray>.Publisher? dOutputCmd1;
+        private static ObservableManager<BitArray>.Publisher? recipeEnableSubConditionPublisher;
+        private static ObservableManager<BitArray>.Publisher? reactorEnableSubConditionPublisher;
         private static ObservableManager<short>.Publisher? dThrottleValveControlMode;
         private static ObservableManager<ushort>.Publisher? dPressureControlModeIssuer;
         private static ObservableManager<short>.Publisher? dThrottleValveStatusIssuer;
@@ -244,6 +249,8 @@ namespace SapphireXR_App.Models
         private static uint hOutputMode;
         private static uint hRecipeRunET;
         private static uint hTemperaturePV;
+        private static uint hUIInterlockCheckRecipeEnable;
+        private static uint hUIInterlockCheckReactorEnable;
         private static uint[] hInterlockEnable = new uint[NumAlarmWarningArraySize];
         private static uint[] hInterlockset = new uint[NumInterlockSet];
         private static uint[] hInterlock = new uint[NumInterlock];

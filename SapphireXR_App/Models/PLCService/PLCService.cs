@@ -179,6 +179,8 @@ namespace SapphireXR_App.Models
             hOutputSetType = Ads.CreateVariableHandle("P12_IQ_PLUS.nOutputSetType");
             hOutputMode = Ads.CreateVariableHandle("P12_IQ_PLUS.nTValveMode");
             hTemperaturePV = Ads.CreateVariableHandle("GVL_IO.aLineHeater_rTemperaturePV");
+            hUIInterlockCheckRecipeEnable = Ads.CreateVariableHandle("GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE");
+            hUIInterlockCheckReactorEnable = Ads.CreateVariableHandle("GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR");
             for (uint analogDevice = 0; analogDevice < NumControllers; ++analogDevice)
             {
                 hAControllerInput[analogDevice] = Ads.CreateVariableHandle("GVL_IO.aController[" + (analogDevice + 1)+ "].input");
@@ -236,6 +238,8 @@ namespace SapphireXR_App.Models
             temperatureTVPublisher = ObservableManager<float>.Get("TemperatureTV");
             pressureTVPublisher = ObservableManager<float>.Get("PressureTV");
             rotationTVPublisher = ObservableManager<float>.Get("RotationTV");
+            recipeEnableSubConditionPublisher = ObservableManager<BitArray>.Get("RecipeEnableSubCondition");
+            reactorEnableSubConditionPublisher = ObservableManager<BitArray>.Get("ReactorEnableSubCondition");
         }
 
         public static void AddPLCStateUpdateTask(Action task)
