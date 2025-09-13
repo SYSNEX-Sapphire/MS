@@ -296,7 +296,6 @@ namespace SapphireXR_App.ViewModels
         [RelayCommand]
         public void ToggleBuzzerOnOff()
         {
-           // bool onOff = BuzzerImage == BuzzerOffPath;
             bool onOff = BuzzerIcon == BuzzerOffIcon;
             if (ConfirmMessage.Show("Buzzer 상태 변경", "Buzzer" + (onOff == true ? " On" : " Off") + " 상태로 변경하시겠습니까?", WindowStartupLocation.Manual) == DialogResult.Ok)
             {
