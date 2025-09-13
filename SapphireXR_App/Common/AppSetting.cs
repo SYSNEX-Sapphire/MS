@@ -14,7 +14,7 @@ namespace SapphireXR_App.Common
                 JToken? appSettingRootToken = JToken.Parse(File.ReadAllText(AppSettingFilePath));
 
                 LogFileDirectory = (string?)Util.GetSettingValue(appSettingRootToken, "LogFileDirectory") ?? LogFileDirectory;
-                UnderFlowControlFallbackRatePercentage = (int?)(Int64?)Util.GetSettingValue(appSettingRootToken, "UnderFlowControlFallbackRatePercentage") ?? UnderFlowControlFallbackRatePercentage;
+                UnderFlowControlFallbackRatePercentage = (float?)(double?)Util.GetSettingValue(appSettingRootToken, "UnderFlowControlFallbackRatePercentage") ?? UnderFlowControlFallbackRatePercentage;
                 UnderFlowControlFallbackRate = UnderFlowControlFallbackRatePercentage / 100.0f;
                 FloatingPointMaxNumberDigit = (int?)(Int64?)Util.GetSettingValue(appSettingRootToken, "FloatingPointMaxNumberDigit") ?? FloatingPointMaxNumberDigit;
                 PLCAddress = (string?)Util.GetSettingValue(appSettingRootToken, "PLCAddress") ?? PLCAddress;
@@ -78,7 +78,7 @@ namespace SapphireXR_App.Common
 
         private static ObservableManager<int>.Publisher logIntervalInRecipeRunIssuer = ObservableManager<int>.Get("AppSetting.LogIntervalInRecipeRun");
         public static string LogFileDirectory = Util.GetAbsoluteFilePathFromAppRelativePath("Log");
-        private static readonly int UnderFlowControlFallbackRatePercentage = 1;
+        private static readonly float UnderFlowControlFallbackRatePercentage = 0.5f;
         public static readonly float UnderFlowControlFallbackRate;
         public static uint ConnectionRetryMilleseconds = 1000;
         public static uint MaxNumberOfRecipeSteps = 100;
