@@ -33,6 +33,7 @@ VAR
 	bSignalTower			: BYTE;
 	TimerSignalTower		: TON;
 	bBuzzer					: BOOL;
+	rTrigReactorDoorClose: R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -45,6 +46,13 @@ fTrigReactorCabinetMagnet(CLK:=GVL_IO_REACTOR_CABINET.DI_03_ReactorCabinetDoorCl
 IF rTrigReactorCabinetSwitch.Q OR rTrigReactorCabinetMagnet.Q OR fTrigReactorCabinetMagnet.Q THEN
 	bReactorCabinetLamp := NOT(bReactorCabinetLamp);
 END_IF
+
+rTrigReactorDoorClose(CLK:=GVL_IO_REACTOR_CABINET.DI_03_ReactorCabinetDoorClose);
+IF rTrigReactorDoorClose.Q THEN
+	bReactorCabinetLamp:=FALSE;
+END_IF
+
+
 // Gas Delivery Cabinet Lamp
 rTrigGasCabinetSwitch(CLK:= GVL_IO_GAS_CABINET.DI_01_GasCabinetLampButton);
 rTrigGasCabinetMagnet(CLK:= GVL_IO_GAS_CABINET.DI_01_GasCabinetDoorClose);
@@ -145,6 +153,11 @@ GVL_IO_REACTOR_CABINET.DO_04_SignalTowerBuzzer:=bBuzzer; //5:BUZZER-Alarm
       <LineId Id="547" Count="0" />
       <LineId Id="85" Count="1" />
       <LineId Id="80" Count="0" />
+      <LineId Id="681" Count="0" />
+      <LineId Id="679" Count="0" />
+      <LineId Id="684" Count="2" />
+      <LineId Id="682" Count="0" />
+      <LineId Id="678" Count="0" />
       <LineId Id="54" Count="0" />
       <LineId Id="106" Count="1" />
       <LineId Id="548" Count="0" />

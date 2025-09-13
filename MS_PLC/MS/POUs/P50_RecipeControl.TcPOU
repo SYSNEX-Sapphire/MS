@@ -7,7 +7,6 @@ VAR
 	eRecipeRun		: E_RecipeRun ; //레시피 상태
 	fbAnalogDeviceRampControl : FB_AnalogDeviceRampControl;
 	fbRecipeAnalogInputControlSequencer: FB_RecipeAnalogControlInputSequencer;
-	fbOnlyPVUpdate: FB_OnlyPVUpdate;
 	fbValveControl: FB_ValveControl;
 	
 	Pause_TON		: TON;
@@ -134,8 +133,7 @@ END_VAR
 		Rcp.cmd_RcpOperation := 10;
 		RCP.Pause_ET := T#0S;
 END_CASE
-RCP.iRcpStepN := nRcpIndex;
-fbOnlyPVUpdate();]]></ST>
+RCP.iRcpStepN := nRcpIndex;]]></ST>
     </Implementation>
     <LineIds Name="P50_RecipeControl">
       <LineId Id="1" Count="16" />
@@ -152,7 +150,6 @@ fbOnlyPVUpdate();]]></ST>
       <LineId Id="44" Count="47" />
       <LineId Id="140" Count="0" />
       <LineId Id="92" Count="16" />
-      <LineId Id="146" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

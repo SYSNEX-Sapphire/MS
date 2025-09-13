@@ -1,11 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
-  <POU Name="FB_OnlyPVUpdate" Id="{be8dea6c-02de-48fe-8c7a-f820ec1c1882}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_OnlyPVUpdate
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
+  <POU Name="P60_UpdatePV" Id="{d6a27823-c566-4b73-bf9c-5859236d8cc2}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM P60_UpdatePV
 VAR
 	i: INT;
 END_VAR
@@ -21,13 +17,9 @@ GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_Susceptor_Temp] := WORD_TO_REA
 GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_Reactor_Pressure] := WORD_TO_REAL(GVL_IO.wIqPlus_CDG2_PV);
 GVL_IO.aController_PV[E_aAnalogInputIO_Index.E_PV_susceptorRotation] := GVL_IO.nRotation_Converted_PV;]]></ST>
     </Implementation>
-    <LineIds Name="FB_OnlyPVUpdate">
-      <LineId Id="10" Count="1" />
-      <LineId Id="15" Count="2" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="9" Count="0" />
+    <LineIds Name="P60_UpdatePV">
+      <LineId Id="6" Count="7" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

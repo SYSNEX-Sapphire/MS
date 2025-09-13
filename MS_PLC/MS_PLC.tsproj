@@ -240,7 +240,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{A84422D3-8C21-43F6-98FB-1BD54377FD50}" Name="MS" PrjFilePath="MS\MS.plcproj" TmcFilePath="MS\MS.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="MS\MS.tmc" TmcHash="{15D11D2B-9285-70E6-A028-CBAB5DD28F36}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="MS\MS.tmc" TmcHash="{066612BF-E4B9-98AD-6C88-A36589D28DF4}">
 					<Name>MS Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
