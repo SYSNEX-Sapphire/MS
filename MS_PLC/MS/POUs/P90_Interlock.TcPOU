@@ -124,7 +124,7 @@ GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
  	(WarningTrig = FALSE) AND
  	(bMaintKey = FALSE ) AND
 	(GVL_IO.bDORState = TRUE) AND //DOR ON 상태
-//	(RCP.userState <> 10) AND //Not Recipe Run State
+	(RCP.userState <> 10) AND //Not Recipe Run State
  	(GVL_IO_REACTOR_CABINET.DI_03_ReactorDoorDownLimitSensor = TRUE ) AND //Cover Lower Limt
  	(bGasStateProcess = TRUE ) AND //Safety Process Gas : TRUE
  	(bGasStateSource = TRUE ) AND //Safety Source Gas : TRUE
@@ -132,11 +132,23 @@ GVL_IO.aDigitalOutputIO[2].4 := bUPSMode;
 	(GVL_IO_VALVE.DO_00_V21PumpByPass = TRUE) AND
  	GVL_IO.nE3508_nInputManAutoBytes.0 = FALSE AND //Temperature Controller Auto : false
 	GVL_DEVICE_NET_IQ_PLUS.nOutputSetType = 1 AND
-// 	P12_IQ_PLUS.ingPressureControl AND 
 	GVL_IO_REACTOR_CABINET.DI_03_CylinderAutoSwitch_Closed = TRUE ; 
- 
-	
-	 bRecipeStartAvailable:=TRUE;]]></ST>
+	 
+
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.0:=(AlarmTrig = FALSE); //알람 상태 아닐것
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.1:=(WarningTrig = FALSE); // 어닝 상태 사닐것
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.2:=(bMaintKey = FALSE); // 메인트키 
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.3:=(GVL_IO.bDORState = TRUE ); //DOR ON
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.4:=RCP.userState <> 10; // Recipe Not Running
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.5:=GVL_IO_REACTOR_CABINET.DI_03_ReactorDoorDownLimitSensor = TRUE;  //Chamber Close
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.6:=bGasStateProcess;  // Gas Valve Close
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.7:=bGasStateSource; // Source Valve Close
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.8:=bGasStateVent;//Vent Valve Close
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.9:=(GVL_IO_VALVE.DO_00_V21PumpByPass = TRUE);  // Valve 21 open
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.10:=GVL_IO.nE3508_nInputManAutoBytes.0 = FALSE;  // Temp Auto Mode
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.11:=GVL_DEVICE_NET_IQ_PLUS.nOutputSetType = 1;  // Temp Auto Mode
+GVL_IO.UI_INTERLOCK_CHECK_RECIPE_ENABLE.12:=GVL_IO_REACTOR_CABINET.DI_03_CylinderAutoSwitch_Closed = TRUE;  // Chamber Clamp Close
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="_02_Enable_Reactor_Open_Dor_Off" Id="{fd40fb3f-6f9b-44f1-ab24-bf988a26340f}">
@@ -170,7 +182,17 @@ bDorOffEnable:=
 	(GVL_IO.aInterlockEnable[1].4 = TRUE ); //Can Open Pressure Check
 
 
-
+	
+GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR.0 := (AlarmTrig = FALSE);  //알람 상태 아닐것
+GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR.1 := bOpenEnableTemp;  // Open Temp
+GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR.2 := bOpenEnablePress;// Open Pressure
+GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR.3 := GVL_IO.bDORState = FALSE; // Dor False
+GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR.4 := RCP.userState <> 10; // Recipe Not Running
+GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR.5 := bGasStateProcess;// Gas Valve Close
+GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR.6 := bGasStateSource;// Source Valve Close
+GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR.7 := bGasStateVent;// Vent Valve Close
+GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR.8 := GVL_IO.aInterlockEnable[1].3 = TRUE; // UI 에서 Temp Interlock 설정
+GVL_IO.UI_INTERLOCK_CHECK_OPEN_REACTOR.9 := GVL_IO.aInterlockEnable[1].4 = TRUE;// UI 에서 Pressure Interlock 설정
 ]]></ST>
       </Implementation>
     </Action>
@@ -644,10 +666,15 @@ bMainPowerMonitor := GVL_IO.aDigitalInputIO[7].5; /// ??????? 이게 뭐지 ?]]>
       <LineId Id="10" Count="2" />
       <LineId Id="20" Count="0" />
       <LineId Id="13" Count="0" />
-      <LineId Id="21" Count="1" />
+      <LineId Id="21" Count="0" />
       <LineId Id="15" Count="0" />
-      <LineId Id="1" Count="0" />
-      <LineId Id="23" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="31" Count="4" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="40" Count="4" />
+      <LineId Id="30" Count="0" />
     </LineIds>
     <LineIds Name="P90_Interlock._02_Enable_Reactor_Open_Dor_Off">
       <LineId Id="2" Count="5" />
@@ -659,8 +686,10 @@ bMainPowerMonitor := GVL_IO.aDigitalInputIO[7].5; /// ??????? 이게 뭐지 ?]]>
       <LineId Id="18" Count="1" />
       <LineId Id="29" Count="8" />
       <LineId Id="27" Count="0" />
-      <LineId Id="20" Count="2" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="38" Count="0" />
       <LineId Id="1" Count="0" />
+      <LineId Id="39" Count="10" />
     </LineIds>
     <LineIds Name="P90_Interlock._03_Enable_DOR_ON">
       <LineId Id="2" Count="1" />

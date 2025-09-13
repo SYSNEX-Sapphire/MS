@@ -40,7 +40,7 @@ VAR_GLOBAL
 	wIqPlus_CV				: WORD;
 	wIqPlus_CDG1_PV			: WORD;
 	wIqPlus_CDG2_PV			: WORD;
-	nRotation_Converted_PV	: INT;
+	nRotation_Converted_PV	: REAL;
 	rRotation_ControlValue	: REAL;
 	nIQPLUS_SetType 		: INT;
 	nIQPLUS_Mode			: INT;
@@ -48,6 +48,10 @@ VAR_GLOBAL
 	nE3508_nInputManAutoBytes : USINT;
 	isCoverClosed 			: BOOL;
 	isPumpRunning 			: BOOL;
+	
+	UI_INTERLOCK_CHECK_RECIPE_ENABLE:WORD;(**)
+	UI_INTERLOCK_CHECK_OPEN_REACTOR:WORD;(**)
+	
 END_VAR
 ]]></Declaration>
   </GVL>
