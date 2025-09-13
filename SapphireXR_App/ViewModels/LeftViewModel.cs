@@ -7,6 +7,7 @@ using SapphireXR_App.WindowServices;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using TwinCAT.Ads;
@@ -55,8 +56,8 @@ namespace SapphireXR_App.ViewModels
             {
                 valveStateSubscsribePostfix = valveStateSubscsribePostfixStr;
                 valveStateSubscrbers = [
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) {  Gas3Source = vm.Gas3; Gas3SourceColor = Gas1Color; } else { Gas3Source = vm.Gas1; Gas3SourceColor = GasColor; }  }, "V03"),
-                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Gas4Source = vm.Gas4; Gas4SourceColor = Gas1Color; } else { Gas4Source = vm.Gas1; Gas4SourceColor = GasColor; }  }, "V04"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Gas3Source = vm.Gas3; Gas3SourceColor = GasColor;  } else { Gas3Source = vm.Gas1;Gas3SourceColor = Gas1Color; }  }, "V03"),
+                    new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Gas4Source = vm.Gas4; Gas4SourceColor = GasColor; } else { Gas4Source = vm.Gas1; Gas4SourceColor = Gas1Color; }  }, "V04"),
                     new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source1Carrier = vm.Gas2; Source1CarrierColor = GasColor; } else { Source1Carrier = vm.Gas1; Source1CarrierColor = Gas1Color; }  }, "V05"),
                     new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source1Source = "Run"; Source1SourceColor = RunColor; } else { Source1Source = "Bypass"; Source1SourceColor = VentBypassColor; } }, "V06"),
                     new ValveStateSubscriber(this, (bool nextValveState) => { if (nextValveState == true) { Source2Carrier = vm.Gas2;  Source2CarrierColor = GasColor;} else { Source2Carrier = vm.Gas1; Source2CarrierColor = Gas1Color; }  }, "V07"),
@@ -276,7 +277,8 @@ namespace SapphireXR_App.ViewModels
                     try
                     {
                         bool onOff = PLCService.ReadBuzzerOnOff();
-                        BuzzerImage = onOff == true ? BuzzerOnPath : BuzzerOffPath;
+                        BuzzerIcon = onOff == true ? BuzzerOnIcon : BuzzerOffIcon;
+
                         PLCService.WriteInterlockEnableState(onOff, PLCService.InterlockEnableSetting.Buzzer);
                     }
                     catch(Exception)
@@ -293,11 +295,12 @@ namespace SapphireXR_App.ViewModels
         [RelayCommand]
         public void ToggleBuzzerOnOff()
         {
-            bool onOff = BuzzerImage == BuzzerOffPath;
-            if(ConfirmMessage.Show("Buzzer 상태 변경", "Buzzer" + (onOff == true ? " On" : " Off") + " 상태로 변경하시겠습니까?", WindowStartupLocation.Manual) == DialogResult.Ok)
+           // bool onOff = BuzzerImage == BuzzerOffPath;
+            bool onOff = BuzzerIcon == BuzzerOffIcon;
+            if (ConfirmMessage.Show("Buzzer 상태 변경", "Buzzer" + (onOff == true ? " On" : " Off") + " 상태로 변경하시겠습니까?", WindowStartupLocation.Manual) == DialogResult.Ok)
             {
                 PLCService.WriteBuzzerOnOff(onOff);
-                BuzzerImage = (onOff == true) ? BuzzerOnPath : BuzzerOffPath;
+                BuzzerIcon = onOff == true ? BuzzerOnIcon : BuzzerOffIcon;
             }
             
         }
@@ -343,9 +346,6 @@ namespace SapphireXR_App.ViewModels
 
         private static readonly Brush PLCConnectedFontColor = Application.Current.Resources.MergedDictionaries[0]["Sapphire_Blue"] as Brush ?? new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x60, 0xCD, 0xFF));
         private static readonly Brush PLCDisconnectedFontColor = Application.Current.Resources.MergedDictionaries[0]["Alert_Red_02"] as Brush ?? new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xEC, 0x3D, 0x3F));
-
-        private static readonly string BuzzerOnPath = "/Resources/icons/icon=buzzeron.png";
-        private static readonly string BuzzerOffPath = "/Resources/icons/icon=buzzeroff.png";
 
         private static readonly string SignalTowerRedPath = "/Resources/icons/icon=ani_signal_red.gif";
         private static readonly string SignalTowerBluePath = "/Resources/icons/icon=ani_signal_blue.gif";
@@ -422,8 +422,6 @@ namespace SapphireXR_App.ViewModels
         private string _pLCConnectionStatus = "Diconnected";
         [ObservableProperty]
         private Brush _pLCConnectionStatusColor = PLCDisconnectedFontColor;
-        [ObservableProperty]
-        private string _buzzerImage = BuzzerOffPath;
 
         [ObservableProperty]
         private SourceStatusViewModel _currentSourceStatusViewModel;
@@ -433,6 +431,12 @@ namespace SapphireXR_App.ViewModels
 
         [ObservableProperty]
         private double buzzerOnOffRectOpacity = 0.0;
+
+        [ObservableProperty]
+        private object? buzzerIcon = null;
+
+        private static readonly Canvas? BuzzerOffIcon = App.Current.Resources.MergedDictionaries[4]["buzzer_off"] as Canvas;
+        private static readonly Canvas? BuzzerOnIcon = App.Current.Resources.MergedDictionaries[5]["buzzer_on"] as Canvas;
 
         private readonly CoolingWaterValueSubscriber showerHeaderTempSubscriber;
         private readonly HardWiringInterlockStateSubscriber hardWiringInterlockStateSubscriber;

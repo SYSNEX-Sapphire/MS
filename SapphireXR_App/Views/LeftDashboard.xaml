@@ -83,12 +83,14 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Rectangle>
-                        
-                        <Image Grid.Column="0" Source="{Binding BuzzerImage}" Width="12" Height="12" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Image.Margin>
+                        <Border Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                            <Border.Margin>
                                 <Thickness Left="{StaticResource p_1}" Top="{StaticResource p_1}" />
-                            </Image.Margin>
-                        </Image>
+                            </Border.Margin>
+                            <ContentControl Content="{Binding BuzzerIcon}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        </Border>
+                    
+
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
