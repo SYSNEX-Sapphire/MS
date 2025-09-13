@@ -7,6 +7,7 @@ VAR
 	eRecipeRun		: E_RecipeRun ; //레시피 상태
 	fbAnalogDeviceRampControl : FB_AnalogDeviceRampControl;
 	fbRecipeAnalogInputControlSequencer: FB_RecipeAnalogControlInputSequencer;
+	fbOnlyPVUpdate: FB_OnlyPVUpdate;
 	fbValveControl: FB_ValveControl;
 	
 	Pause_TON		: TON;
@@ -89,6 +90,7 @@ END_VAR
 			E_RecipeRun.CheckHoldTemp:
 				Hold_TON(PAUSE:=TRUE);
 		END_CASE
+		fbOnlyPVUpdate();
 		
 		Pause_TON(IN:=TRUE, PT:= Pause_MAX, ET=>RCP.Pause_ET); //최대 홀드 시간이 지나면 다음 스텝으로 넘거감
 		IF Pause_TON.Q THEN
@@ -136,7 +138,9 @@ END_CASE
 RCP.iRcpStepN := nRcpIndex;]]></ST>
     </Implementation>
     <LineIds Name="P50_RecipeControl">
-      <LineId Id="1" Count="22" />
+      <LineId Id="1" Count="16" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="19" Count="4" />
       <LineId Id="118" Count="0" />
       <LineId Id="120" Count="0" />
       <LineId Id="24" Count="5" />
@@ -145,7 +149,9 @@ RCP.iRcpStepN := nRcpIndex;]]></ST>
       <LineId Id="112" Count="0" />
       <LineId Id="38" Count="4" />
       <LineId Id="117" Count="0" />
-      <LineId Id="44" Count="47" />
+      <LineId Id="44" Count="20" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="65" Count="26" />
       <LineId Id="140" Count="0" />
       <LineId Id="92" Count="16" />
     </LineIds>
