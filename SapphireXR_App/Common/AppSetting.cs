@@ -14,7 +14,24 @@ namespace SapphireXR_App.Common
                 JToken? appSettingRootToken = JToken.Parse(File.ReadAllText(AppSettingFilePath));
 
                 LogFileDirectory = (string?)Util.GetSettingValue(appSettingRootToken, "LogFileDirectory") ?? LogFileDirectory;
-                UnderFlowControlFallbackRatePercentage = (float?)(double?)Util.GetSettingValue(appSettingRootToken, "UnderFlowControlFallbackRatePercentage") ?? UnderFlowControlFallbackRatePercentage;
+
+                object? underFlowControlFallbackRatePercentage = Util.GetSettingValue(appSettingRootToken, "UnderFlowControlFallbackRatePercentage");
+                if(underFlowControlFallbackRatePercentage != null)
+                {
+                    if(underFlowControlFallbackRatePercentage is double)
+                    {
+                        UnderFlowControlFallbackRatePercentage = (float)(double)underFlowControlFallbackRatePercentage;
+                    }
+                    else if(underFlowControlFallbackRatePercentage is Int64)
+                    {
+                        UnderFlowControlFallbackRatePercentage = (float)(Int64)underFlowControlFallbackRatePercentage;
+                    }
+                    else
+                    {
+                        throw new FormatException("UnderFlowControlFallbackRatePercentage의 값이 숫자값이 아닙니다.");
+                    }
+                }
+                
                 UnderFlowControlFallbackRate = UnderFlowControlFallbackRatePercentage / 100.0f;
                 FloatingPointMaxNumberDigit = (int?)(Int64?)Util.GetSettingValue(appSettingRootToken, "FloatingPointMaxNumberDigit") ?? FloatingPointMaxNumberDigit;
                 PLCAddress = (string?)Util.GetSettingValue(appSettingRootToken, "PLCAddress") ?? PLCAddress;
