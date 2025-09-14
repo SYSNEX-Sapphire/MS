@@ -242,7 +242,7 @@ namespace SapphireXR_App.ViewModels
                 new SubConditionViewModel("Source Valve Close", OffLampColor), new SubConditionViewModel("Vent Valve Close", OffLampColor), new SubConditionViewModel("Valve 21 Open", OffLampColor), 
                 new SubConditionViewModel("Temp Auto Mode", OffLampColor), new SubConditionViewModel("Pressure Mode", OffLampColor), new SubConditionViewModel(" Chamber Clamp Close", OffLampColor) ];
             ReactorEnableConditions = [ new SubConditionViewModel("Not Alarm Triggered", OffLampColor), new SubConditionViewModel("Open Temp", OffLampColor),new SubConditionViewModel("Open Pressure", OffLampColor),
-                new SubConditionViewModel("DOR Off", OffLampColor), new SubConditionViewModel("Recipe Running", OffLampColor), new SubConditionViewModel("Gas Valve Close", OffLampColor), 
+                new SubConditionViewModel("DOR Off", OffLampColor), new SubConditionViewModel("Recipe Not Running", OffLampColor), new SubConditionViewModel("Gas Valve Close", OffLampColor), 
                 new SubConditionViewModel("Source Valve Close", OffLampColor), new SubConditionViewModel("Vent Valve Close", OffLampColor), new SubConditionViewModel("Can Open Temperature(℃)", OffLampColor), 
                 new SubConditionViewModel("Can Open Reactor Pressure(Torr)", OffLampColor) ];
 
