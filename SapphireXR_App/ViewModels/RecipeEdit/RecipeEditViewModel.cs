@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace SapphireXR_App.ViewModels
 {
-    public partial class RecipeEditViewModel : ViewModelBase
+    public partial class RecipeEditViewModel : ViewModelBase, IObserver<RecipeRunViewModel.RecipeUserState>
     {
 #pragma warning disable CS8618 // null을 허용하지 않는 필드는 생성자를 종료할 때 null이 아닌 값을 포함해야 합니다. 'required' 한정자를 추가하거나 nullable로 선언하는 것이 좋습니다.
         public RecipeEditViewModel()
@@ -31,13 +31,14 @@ namespace SapphireXR_App.ViewModels
 
             loadToRecipeRunPublisher = ObservableManager<(string, IList<Recipe>)>.Get("RecipeEdit.LoadToRecipeRun");
             switchTabToDataRunPublisher = ObservableManager<int>.Get("SwitchTab");
+            ObservableManager<RecipeRunViewModel.RecipeUserState>.Subscribe("RecipeRun.State", this);
 
             RecipePLCLoadCommand = new RelayCommand(() =>
             {
                 loadToRecipeRunPublisher.Publish((RecipeFilePath ?? "", new RecipeObservableCollection(Recipes.Select(recipe => new Recipe(recipe)))));
                 switchTabToDataRunPublisher.Publish(1);
             },
-            () => Recipes != null && 0 < Recipes.Count);
+            () => Recipes != null && 0 < Recipes.Count && !RecipeRunning);
             var recipeSave = (string filePath) =>
             {
                 if (Recipes != null)
@@ -123,6 +124,10 @@ namespace SapphireXR_App.ViewModels
                 case nameof(RecipeFilePath):
                     RecipeSaveCommand.NotifyCanExecuteChanged();
                     break;
+
+                case nameof(RecipeRunning):
+                    RecipePLCLoadCommand.NotifyCanExecuteChanged();
+                    break;
             }
         }
 
@@ -185,6 +190,21 @@ namespace SapphireXR_App.ViewModels
 
         }
 
+        void IObserver<RecipeRunViewModel.RecipeUserState>.OnCompleted()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IObserver<RecipeRunViewModel.RecipeUserState>.OnError(Exception error)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IObserver<RecipeRunViewModel.RecipeUserState>.OnNext(RecipeRunViewModel.RecipeUserState value)
+        {
+            RecipeRunning = (RecipeRunViewModel.RecipeUserState.Run <= value) && (value <= RecipeRunViewModel.RecipeUserState.Pause);
+        }
+
         private static readonly CsvHelper.Configuration.CsvConfiguration Config = new CsvHelper.Configuration.CsvConfiguration(CultureInfo.InvariantCulture)
         {
             Delimiter = ",",
@@ -225,6 +245,8 @@ namespace SapphireXR_App.ViewModels
         private Visibility _showPasteMenu;
         [ObservableProperty]
         private bool _controlUIEnabled = false;
+        [ObservableProperty]
+        private bool recipeRunning = false;
 
         public TabDataGridViewModel ReactorDataGridContext { get; set; }
         public TabDataGridViewModel FlowDataGridContext { get; set; }
