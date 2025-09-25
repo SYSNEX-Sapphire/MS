@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using SapphireXR_App.Models;
 using System.IO;
+using static SapphireXR_App.Common.RecipeValidator;
 
 namespace SapphireXR_App.Common
 {
@@ -27,60 +28,39 @@ namespace SapphireXR_App.Common
             public HashSet<string> fcMaxValueExceeded { get; private set; } = new HashSet<string>();
         }
 
-        internal class OpenRecipeFileException : Exception
-        {
-            internal OpenRecipeFileException(string message) : base(message) { }
-        }
-
         public static (bool, string?, List<Recipe>?, HashSet<string>?) OpenRecipe(CsvHelper.Configuration.CsvConfiguration config, string? initialDirectory)
         {
+            OpenFileDialog openFile = new();
+            openFile.Multiselect = false;
+            openFile.Filter = "csv 파일(*.csv)|*.csv";
 
-            try
+            if (Path.Exists(initialDirectory) == false)
             {
-                OpenFileDialog openFile = new();
-                openFile.Multiselect = false;
-                openFile.Filter = "csv 파일(*.csv)|*.csv";
-
-                if(Path.Exists(initialDirectory) == false)
+                initialDirectory = AppDomain.CurrentDomain.BaseDirectory + "Recipe";
+                if (Path.Exists(initialDirectory) == false)
                 {
-                    initialDirectory = AppDomain.CurrentDomain.BaseDirectory + "Recipe";
-                    if (Path.Exists(initialDirectory) == false)
-                    {
-                        Directory.CreateDirectory(initialDirectory);
-                    }
-                }
-                openFile.InitialDirectory = initialDirectory;
-
-                if (openFile.ShowDialog() != true) return (false, null, null, null);
-                string recipeFilePath = openFile.FileName;
-
-                using (StreamReader streamReader = new(recipeFilePath))
-                {
-                    MaxValueExceedSubscriber maxValueExceedSubscriber;
-                    using (var csvReader = new CsvReader(streamReader, config))
-                    using (var unsubscriber = ObservableManager<string>.Subscribe("Recipe.MaxValueExceed", maxValueExceedSubscriber = new MaxValueExceedSubscriber()))
-                    {
-                        List<Recipe> recipe = csvReader.GetRecords<Recipe>().ToList();
-                        (bool success, string message) = RecipeValidator.Validate(recipe);
-                        if (success == false)
-                        {
-                            throw new OpenRecipeFileException(message);
-                        }
-
-
-                        return (true, recipeFilePath, recipe, maxValueExceedSubscriber.fcMaxValueExceeded);
-                    }
+                    Directory.CreateDirectory(initialDirectory);
                 }
             }
-            catch (Exception exception)
+            openFile.InitialDirectory = initialDirectory;
+
+            if (openFile.ShowDialog() != true) return (false, null, null, null);
+            string recipeFilePath = openFile.FileName;
+
+            using (StreamReader streamReader = new(recipeFilePath))
             {
-                throw new OpenRecipeFileException(exception.Message);
+                MaxValueExceedSubscriber maxValueExceedSubscriber;
+                using (var csvReader = new CsvReader(streamReader, config))
+                using (var unsubscriber = ObservableManager<string>.Subscribe("Recipe.MaxValueExceed", maxValueExceedSubscriber = new MaxValueExceedSubscriber()))
+                {
+                    return (true, recipeFilePath, csvReader.GetRecords<Recipe>().ToList(), maxValueExceedSubscriber.fcMaxValueExceeded);
+                }
             }
         }
 
         public static PlcRecipe[] ToPLCRecipe(IList<Recipe> recipes)
         {
-            (bool success, string message) = RecipeValidator.Validate(recipes);
+            (bool success, string message) = RecipeValidator.ValidOnLoadedFromDisk(recipes);
             if (success == false)
             {
                 throw new Exception(message);
@@ -123,25 +103,39 @@ namespace SapphireXR_App.Common
             return aRecipePLC;
         }
 
-        public static bool PLCLoad(IList<Recipe> recipes)
+        public static void PLCLoad(IList<Recipe> recipes)
         {
-            try
+            if (recipes.Count == 0)
             {
-                if(recipes.Count == 0)
-                {
-                    return false;
-                }
-
-                PlcRecipe[] aRecipePLC = ToPLCRecipe(recipes);
-                PLCService.WriteRecipe(aRecipePLC);
-                PLCService.WriteTotalStep((short)aRecipePLC.Length);
-
-                return true;
+                throw new InvalidOperationException("빈 Recipe 입니다.");
             }
-            catch 
+
+            PlcRecipe[] aRecipePLC = ToPLCRecipe(recipes);
+            PLCService.WriteRecipe(aRecipePLC);
+            PLCService.WriteTotalStep((short)aRecipePLC.Length);
+        }
+
+        public static void SetRecipeStepValidator(IList<Recipe> recipes, Action onValidChanged)
+        {
+            if (0 < recipes.Count)
             {
-                return false;
+                recipes[0].stepValidator = new FirstRecipeStepValidator(false);
+                recipes[0].stepValidator!.PropertyChanged += (sender, args) =>
+                {
+                    switch (args.PropertyName)
+                    {
+                        case nameof(RecipeStepValidator.Valid):
+                            onValidChanged();
+                            break;
+                    }
+                };
+                for (int recipe = 1; recipe < recipes.Count; ++recipe)
+                {
+                    recipes[recipe].stepValidator = DefaultRecipeStepValidator;
+                }
             }
         }
+
+        private static readonly NormalRecipeStepValidator DefaultRecipeStepValidator = new NormalRecipeStepValidator();
     }
 }

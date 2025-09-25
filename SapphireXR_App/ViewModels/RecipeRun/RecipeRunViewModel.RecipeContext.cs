@@ -307,12 +307,12 @@ namespace SapphireXR_App.ViewModels
 
             public void loadPLCSubRangeOfRecipes()
             {
-                if(initialized == false)
+                if (initialized == false)
                 {
                     return;
                 }
 
-                if (currentRecipe != null)
+                try
                 {
                     PlcRecipe[] plcRecipes = RecipeService.ToPLCRecipe(Recipes);
                     plcRecipes = modifiedRecipeIndice.Where((int recipeIndex) => currentRecipeIndex < recipeIndex).Select((int recipeIndex) => plcRecipes[recipeIndex]).ToArray();
@@ -321,6 +321,10 @@ namespace SapphireXR_App.ViewModels
                         PLCService.RefreshRecipe(plcRecipes);
                         modifiedRecipeIndice.Clear();
                     }
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show("PLC로 Recipe를 refresh 하는데 실패했습니다. 원인은 다음과 같습니다: " + exception.Message);
                 }
             }
 

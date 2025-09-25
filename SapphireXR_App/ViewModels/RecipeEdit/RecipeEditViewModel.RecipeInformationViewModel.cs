@@ -114,78 +114,53 @@ namespace SapphireXR_App.ViewModels
 
             private void refreshRampingRateTemp()
             {
-                try
+                if (currentStep != null)
                 {
-                    if (currentStep != null)
+                    float? sTempDiff = currentStep.STemp ?? findDefaultValue(currentStep, recipe => recipe.STemp);
+                    if (sTempDiff != null)
                     {
-                        float? sTempDiff = currentStep.STemp ?? findDefaultValue(currentStep, recipe => recipe.STemp);
-                        if (sTempDiff != null)
+                        if (prevStep != null)
                         {
-                            if (prevStep != null)
+                            float? prevSTemp = prevStep.STemp ?? findDefaultValue(prevStep, recipe => recipe.STemp);
+                            if (prevSTemp != null)
                             {
-                                float? prevSTemp = prevStep.STemp ?? findDefaultValue(prevStep, recipe => recipe.STemp);
-                                if (prevSTemp != null)
-                                {
-                                    RampingRateTemp = Math.Abs(sTempDiff.Value - prevSTemp.Value) / currentStep.RTime;
-                                    return;
-                                }
-                                else
-                                {
-                                    throw new InvalidOperationException("Error in RecipeInformationViewModel.refreshRampingRateTemp: Cannot find default STemp value from previous recipe steps for recipe" + prevStep.No + ", " + prevStep.Name);
-                                }
-                            }
-                            else
-                            {
-                                RampingRateTemp = sTempDiff / currentStep.RTime;
+                                RampingRateTemp = Math.Abs(sTempDiff.Value - prevSTemp.Value) / currentStep.RTime;
                                 return;
                             }
                         }
                         else
                         {
-                            throw new InvalidOperationException("Error in RecipeInformationViewModel.refreshRampingRateTemp: Cannot find default STemp value from previous recipe steps for recipe" + currentStep.No + ", " + currentStep.Name);
+                            RampingRateTemp = sTempDiff / currentStep.RTime;
+                            return;
                         }
                     }
                 }
-                catch { }
                 RampingRateTemp = null;
             }
 
             private void refreshRampingRatePress()
             {
-                try
+                if (currentStep != null)
                 {
-                    if (currentStep != null)
+                    float? rPressDiff = currentStep.RPress ?? findDefaultValue(currentStep, recipe => recipe.RPress);
+                    if (rPressDiff != null)
                     {
-                        float? rPressDiff = currentStep.RPress ?? findDefaultValue(currentStep, recipe => recipe.RPress);
-                        if (rPressDiff != null)
+                        if (prevStep != null)
                         {
-                            if (prevStep != null)
+                            float? prevRPress = prevStep.RPress ?? findDefaultValue(prevStep, recipe => recipe.RPress);
+                            if (prevRPress != null)
                             {
-                                float? prevRPress = prevStep.RPress ?? findDefaultValue(prevStep, recipe => recipe.RPress);
-                                if (prevRPress != null)
-                                {
-                                    RampingRatePress = Math.Abs(rPressDiff.Value - prevRPress.Value) / currentStep.RTime;
-                                    return;
-                                }
-                                else
-                                {
-                                    throw new InvalidOperationException("Error in RecipeInformationViewModel.refreshRampingRatePress: Cannot find default RPress value from previous recipe steps for recipe" + prevStep.No + ", " + prevStep.Name);
-                                }
-
-                            }
-                            else
-                            {
-                                RampingRatePress = rPressDiff / currentStep.RTime;
+                                RampingRatePress = Math.Abs(rPressDiff.Value - prevRPress.Value) / currentStep.RTime;
                                 return;
                             }
                         }
                         else
                         {
-                            throw new InvalidOperationException("Error in RecipeInformationViewModel.refreshRampingRatePress: Cannot find default RPress value from previous recipe steps for recipe" + currentStep.No + ", " + currentStep.Name);
+                            RampingRatePress = rPressDiff / currentStep.RTime;
+                            return;
                         }
                     }
                 }
-                catch { }
                 RampingRatePress = null;
             }
 
@@ -193,66 +168,104 @@ namespace SapphireXR_App.ViewModels
             {
                 if (currentStep != null)
                 {
-                    var getTargetValue = (Func<Recipe, float?> selector, string mfcName) =>
+                    var update = (Func<Recipe, float?> selector, string mfcName, float? totalFlowRate) =>
                     {
                         float? currentValue = selector(currentStep);
                         if (currentValue != null)
                         {
-                            return currentValue.Value;
+                            return currentValue + totalFlowRate;
                         }
                         else
                         {
                             float? defaultValue = findDefaultValue(currentStep, selector);
                             if (defaultValue != null)
                             {
-                                return defaultValue.Value;
+                                return defaultValue + totalFlowRate;
 
                             }
                             else
                             {
-                                throw new InvalidOperationException("Error in RecipeInformationViewModel.refreshTotalFlowRate: Cannot find default " + mfcName + " value from previous recipe steps for recipe" + currentStep.No + ", " + currentStep.Name);
+                                return null;
                             }
                         }
                     };
 
-                    try
+                    float? totalFlowRate = 0;
+                    if ((totalFlowRate = update(recipe => recipe.M01, "M01", totalFlowRate)) == null)
                     {
-                        float totalFlowRate = 0;
-                        totalFlowRate += getTargetValue(recipe => recipe.M01, "M01");
-                        totalFlowRate += getTargetValue(recipe => recipe.M02, "M02");
-                        if (currentStep.V17 == true)
-                        {
-                            totalFlowRate += getTargetValue(recipe => recipe.M03, "M03");
-                        }
-                        if (currentStep.V18 == true)
-                        {
-                            totalFlowRate += getTargetValue(recipe => recipe.M04, "M04");
-                        }
-                        if (currentStep.V14 == true)
-                        {
-                            totalFlowRate += getTargetValue(recipe => recipe.M05, "M05");
-                        }
-                        if (currentStep.V15 == true)
-                        {
-                            totalFlowRate += getTargetValue(recipe => recipe.M06, "M06");
-                        }
-                        if (currentStep.V16 == true)
-                        {
-                            totalFlowRate += getTargetValue(recipe => recipe.M07, "M07");
-                        }
-                        if (currentStep.V19 == true)
-                        {
-                            totalFlowRate += getTargetValue(recipe => recipe.M08, "M08");
-                        }
-                        totalFlowRate += getTargetValue(recipe => recipe.M09, "M09");
-                        totalFlowRate += getTargetValue(recipe => recipe.M10, "M10");
-
-                        TotalFlowRate = totalFlowRate;
+                        TotalFlowRate = null;
                         return;
                     }
-                    catch { }
+                    if ((totalFlowRate = update(recipe => recipe.M02, "M02", totalFlowRate)) == null)
+                    {
+                        TotalFlowRate = null;
+                        return;
+                    }
+                    if (currentStep.V17 == true)
+                    {
+                        if ((totalFlowRate = update(recipe => recipe.M03, "M03", totalFlowRate)) == null)
+                        {
+                            TotalFlowRate = null;
+                            return;
+                        }
+                    }
+                    if (currentStep.V18 == true)
+                    {
+                        if ((totalFlowRate = update(recipe => recipe.M04, "M04", totalFlowRate)) == null)
+                        {
+                            TotalFlowRate = null;
+                            return;
+                        }
+                    }
+                    if (currentStep.V14 == true)
+                    {
+                        if ((totalFlowRate = update(recipe => recipe.M05, "M05", totalFlowRate)) == null)
+                        {
+                            TotalFlowRate = null;
+                            return;
+                        }
+                    }
+                    if (currentStep.V15 == true)
+                    {
+                        if ((totalFlowRate = update(recipe => recipe.M06, "M06", totalFlowRate)) == null)
+                        {
+                            TotalFlowRate = null;
+                            return;
+                        }
+                    }
+                    if (currentStep.V16 == true)
+                    {
+                        if ((totalFlowRate = update(recipe => recipe.M07, "M07", totalFlowRate)) == null)
+                        {
+                            TotalFlowRate = null;
+                            return;
+                        }
+                    }
+                    if (currentStep.V19 == true)
+                    {
+                        if ((totalFlowRate = update(recipe => recipe.M08, "M08", totalFlowRate)) == null)
+                        {
+                            TotalFlowRate = null;
+                            return;
+                        }
+                    }
+                    if ((totalFlowRate = update(recipe => recipe.M09, "M09", totalFlowRate)) == null)
+                    {
+                        TotalFlowRate = null;
+                        return;
+                    }
+                    if ((totalFlowRate = update(recipe => recipe.M10, "M10", totalFlowRate)) == null)
+                    {
+                        TotalFlowRate = null;
+                        return;
+                    }
+
+                    TotalFlowRate = totalFlowRate;
                 }
-                TotalFlowRate = null;
+                else
+                {
+                    TotalFlowRate = null;
+                }
             }
 
             public void setCurrentRecipe(Recipe? recipe)
