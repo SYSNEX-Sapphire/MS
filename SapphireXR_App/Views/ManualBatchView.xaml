@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SapphireXR_App.Views"
         xmlns:vc="clr-namespace:SapphireXR_App.ValueConverter"
-        xmlns:i="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
         mc:Ignorable="d"
         WindowStyle="None" Background="Transparent" AllowsTransparency="True" WindowStartupLocation="CenterScreen"
         Title="ManualBatchView" d:DesignWidth="400" d:DesignHeight="930" Height="930" Width="400" >
