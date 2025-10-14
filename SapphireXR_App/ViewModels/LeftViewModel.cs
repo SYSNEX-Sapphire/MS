@@ -207,6 +207,28 @@ namespace SapphireXR_App.ViewModels
         public class SourceStatusFromCurrentRecipeStepViewModel: SourceStatusViewModel
         {
             public SourceStatusFromCurrentRecipeStepViewModel(LeftViewModel vm) :base(vm, "CurrentRecipeStep") {  }
+
+            public void reset()
+            {
+                Gas3Carrier = string.Empty;
+                Gas3Source = string.Empty;
+                Gas3Vent = string.Empty;
+                Gas4Carrier = string.Empty;
+                Gas4Source = string.Empty;
+                Gas4Vent = string.Empty;
+                Source1Carrier = string.Empty;
+                Source1Source = string.Empty;
+                Source1Vent = string.Empty;
+                Source2Carrier = string.Empty;
+                Source2Source = string.Empty;
+                Source2Vent = string.Empty;
+                Source3Carrier = string.Empty;
+                Source3Source = string.Empty;
+                Source3Vent = string.Empty;
+                Source4Carrier = string.Empty;
+                Source4Source = string.Empty;
+                Source4Vent = string.Empty;
+            }
         }
 
         public partial class SubConditionViewModel: ObservableObject
@@ -236,7 +258,7 @@ namespace SapphireXR_App.ViewModels
             ObservableManager<BitArray>.Subscribe("RecipeEnableSubCondition", recipeEnableSubStateSubscriber = new RecipeEnableSubStateSubscriber(this));
             ObservableManager<BitArray>.Subscribe("ReactorEnableSubCondition", reactorEnableSubStateSubscriber = new ReactorEnableSubStateSubscriber(this));
 
-            CurrentSourceStatusViewModel = new SourceStatusFromCurrentPLCStateViewModel(this);
+            CurrentSourceStatusViewModel = SourceStatusFromCurrentPLCStateViewModelProp;
             RecipeEnableConditions = [ new SubConditionViewModel("Not Alarm Triggered", OffLampColor), new SubConditionViewModel("Not Warning Triggered", OffLampColor),new SubConditionViewModel("Not Main Key", OffLampColor), 
                 new SubConditionViewModel("DOR On", OffLampColor), new SubConditionViewModel("Chamber Close", OffLampColor), new SubConditionViewModel("Gas Valve Close", OffLampColor), 
                 new SubConditionViewModel("Source Valve Close", OffLampColor), new SubConditionViewModel("Vent Valve Close", OffLampColor), new SubConditionViewModel("Valve 21 Open", OffLampColor), 
@@ -246,15 +268,6 @@ namespace SapphireXR_App.ViewModels
                 new SubConditionViewModel("Source Valve Close", OffLampColor), new SubConditionViewModel("Vent Valve Close", OffLampColor), new SubConditionViewModel("Can Open Temperature(℃)", OffLampColor), 
                 new SubConditionViewModel("Can Open Reactor Pressure(Torr)", OffLampColor) ];
 
-            PropertyChanging += (object? sender, PropertyChangingEventArgs args) =>
-            {
-                switch (args.PropertyName)
-                {
-                    case nameof(CurrentSourceStatusViewModel):
-                        CurrentSourceStatusViewModel.dispose();
-                        break;
-                }
-            };
             PropertyChanged += (object? sender, PropertyChangedEventArgs args) =>
             {
                 switch (args.PropertyName)
@@ -365,6 +378,12 @@ namespace SapphireXR_App.ViewModels
         {
             BuzzerOnOffRectOpacity = 0.0;
         }
+
+        public SourceStatusFromCurrentPLCStateViewModel SourceStatusFromCurrentPLCStateViewModelProp { get { return (sourceStatusFromCurrentPLCStateViewModel ??= new SourceStatusFromCurrentPLCStateViewModel(this)); } }
+        public SourceStatusFromCurrentRecipeStepViewModel SourceStatusFromCurrentRecipeStepViewModelProp { get { return (sourceStatusFromCurrentRecipeStepViewModel ??= new SourceStatusFromCurrentRecipeStepViewModel(this)); } }
+
+        private SourceStatusFromCurrentPLCStateViewModel? sourceStatusFromCurrentPLCStateViewModel = null;
+        private SourceStatusFromCurrentRecipeStepViewModel? sourceStatusFromCurrentRecipeStepViewModel = null;
 
         [ObservableProperty]
         private static string _gas3 = Util.GetGasDeviceName("Gas3") ?? "";

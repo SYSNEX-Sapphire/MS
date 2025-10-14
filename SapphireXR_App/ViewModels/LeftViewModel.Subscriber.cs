@@ -136,11 +136,11 @@ namespace SapphireXR_App.ViewModels
                 {
                     case 0:
                     case 1:
-                        leftViewModel.CurrentSourceStatusViewModel = new SourceStatusFromCurrentPLCStateViewModel(leftViewModel);
+                        leftViewModel.CurrentSourceStatusViewModel = leftViewModel.SourceStatusFromCurrentPLCStateViewModelProp;
                         break;
 
                     case 2:
-                        leftViewModel.CurrentSourceStatusViewModel = new SourceStatusFromCurrentRecipeStepViewModel(leftViewModel);
+                        leftViewModel.CurrentSourceStatusViewModel = leftViewModel.SourceStatusFromCurrentRecipeStepViewModelProp;
                         break;
                 }
             }
@@ -265,10 +265,7 @@ namespace SapphireXR_App.ViewModels
 
             void IObserver<bool>.OnNext(bool value)
             {
-                if (leftViewModel.CurrentSourceStatusViewModel is SourceStatusFromCurrentRecipeStepViewModel)
-                {
-                    leftViewModel.CurrentSourceStatusViewModel = new SourceStatusFromCurrentRecipeStepViewModel(leftViewModel);
-                }
+               leftViewModel.SourceStatusFromCurrentRecipeStepViewModelProp.reset();
             }
 
             private LeftViewModel leftViewModel;
