@@ -392,3 +392,6 @@ FodyWeavers.xsd
 /MS_PLC/_Boot/TargetDescription.xml
 /MS_PLC/MS/MS.tmc
 /MS_PLC/MS/MS.tmc
+/Data/Recipes/InSe
+/Data/Recipes/TestRun
+/Data/Recipes/WSe2
