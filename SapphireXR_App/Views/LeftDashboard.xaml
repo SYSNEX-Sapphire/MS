@@ -344,7 +344,7 @@
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition />
-                                                            <ColumnDefinition Width="4" />
+                                                            <ColumnDefinition Width="8" />
                                                             <ColumnDefinition />
                                                         </Grid.ColumnDefinitions>
                                                         <Rectangle Grid.Column="0" Fill="{Binding StateColor}" Width="10" Height="10" RadiusX="99" RadiusY="96" Margin="0" />
@@ -376,7 +376,7 @@
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition />
-                                                            <ColumnDefinition Width="4" />
+                                                            <ColumnDefinition Width="8" />
                                                             <ColumnDefinition />
                                                         </Grid.ColumnDefinitions>
                                                         <Rectangle Grid.Column="0" Fill="{Binding StateColor}" Width="10" Height="10" RadiusX="99" RadiusY="96" Margin="0" />
