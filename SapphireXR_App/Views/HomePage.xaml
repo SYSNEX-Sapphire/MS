@@ -49,7 +49,7 @@
                 <Line X1="777" Y1="475" X2="777" Y2="487" Stroke="{StaticResource N2_LineColor}" StrokeThickness="2" />
                 <Line X1="431" Y1="125" X2="431" Y2="137" Stroke="{StaticResource N2_LineColor}" StrokeThickness="2" />
                 <Line X1="621" Y1="125" X2="621" Y2="137" Stroke="{StaticResource N2_LineColor}" StrokeThickness="2" />
-                
+
                 <!--  Hydrogen(H2) Gas Line -->
                 <Polyline Points="40,84 40,455 921,455 921,333" Stroke="{StaticResource H2_LineColor}"  StrokeThickness="2" />
                 <Line X1="40" Y1="273" X2="78" Y2="273" Stroke="{StaticResource H2_LineColor}" StrokeThickness="2" />
@@ -61,11 +61,11 @@
 
                 <!-- Hydrogen sulfide(H2S) Gas Line -->
                 <Line X1="455" Y1="84" X2="455" Y2="137" Stroke="{StaticResource H2S_LineColor}" StrokeThickness="2" />
-                
+
                 <!-- Hydrogen selenide(H2Se) Gas Line -->
                 <Line X1="645" Y1="84" X2="645" Y2="137" Stroke="{StaticResource H2Se_LineColor}" StrokeThickness="2" />
 
-                                
+
                 <!-- Drawing Chamber -->
                 <Rectangle Width="120" Height="20"
                             Stroke="MidnightBlue" StrokeThickness="1"
@@ -134,18 +134,18 @@
                 <Line X1="945" Y1="228" X2="967" Y2="228" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
                 <Line X1="1037" Y1="184" X2="1080" Y2="184" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
                 <Line X1="1037" Y1="228" X2="1080" Y2="228" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
-                
+
                 <!-- MO-Source #1 -->
                 <Line X1="231" Y1="511" X2="231" Y2="575" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
                 <Line X1="231" Y1="609" X2="231" Y2="629" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
                 <Line X1="231" Y1="665" X2="231" Y2="705" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
                 <Line X1="231" Y1="697" X2="231" Y2="705" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
-          
+
                 <Line X1="265" Y1="665" X2="265" Y2="705" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
                 <Line X1="265" Y1="565" X2="265" Y2="629" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
                 <Line X1="265" Y1="431" X2="265" Y2="531" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
                 <Line X1="265" Y1="371" X2="265" Y2="407" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
-                
+
                 <!-- MO-Source #2 -->
                 <Line X1="421" Y1="511" X2="421" Y2="575" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
                 <Line X1="421" Y1="609" X2="421" Y2="629" Stroke="{StaticResource ProcessLineColor}" StrokeThickness="2"/>
@@ -205,11 +205,11 @@
 
                 <!-- Leak Test -->
                 <Line X1="60" Y1="740" X2="60" Y2="760" Stroke="{StaticResource LeakTestLineColor}" Visibility="{Binding DataContext.OnLeakTestVisibility, ElementName=homePage}" StrokeThickness="6" />
-                <Line X1="60" Y1="750" X2="1084" Y2="750" Stroke="{StaticResource LeakTestLineColor}" Visibility="{Binding DataContext.OnLeakTestVisibility, ElementName=homePage}" StrokeThickness="2" />              
-               
+                <Line X1="60" Y1="750" X2="1084" Y2="750" Stroke="{StaticResource LeakTestLineColor}" Visibility="{Binding DataContext.OnLeakTestVisibility, ElementName=homePage}" StrokeThickness="2" />
+
                 <Polyline Points="193,750 193,685 201,685" Stroke="{StaticResource LeakTestLineColor}" Visibility="{Binding DataContext.OnLeakTestVisibility, ElementName=homePage}"  StrokeThickness="2"/>
                 <Polyline Points="303,750 303,685 295,685" Stroke="{StaticResource LeakTestLineColor}" Visibility="{Binding DataContext.OnLeakTestVisibility, ElementName=homePage}"  StrokeThickness="2"/>
-                
+
                 <Polyline Points="383,750 383,685 391,685" Stroke="{StaticResource LeakTestLineColor}" Visibility="{Binding DataContext.OnLeakTestVisibility, ElementName=homePage}"  StrokeThickness="2"/>
                 <Polyline Points="493,750 493,685 485,685" Stroke="{StaticResource LeakTestLineColor}" Visibility="{Binding DataContext.OnLeakTestVisibility, ElementName=homePage}"  StrokeThickness="2"/>
 
@@ -242,8 +242,8 @@
                             </PathFigure>
                         </PathGeometry>
                     </Path.Data>
-                </Path>           
-                
+                </Path>
+
                 <!-- 스크러버 화살표  -->
                 <Path Canvas.Left="1056" Canvas.Top="649" Fill="{StaticResource Vent_LineColor}">
                     <Path.Data>
@@ -254,8 +254,8 @@
                             </PathFigure>
                         </PathGeometry>
                     </Path.Data>
-                </Path>                
-               
+                </Path>
+
                 <!-- 진공펌프 출력 화살표  -->
                 <Path Canvas.Left="1260" Canvas.Top="664" Fill="{StaticResource Vent_LineColor}">
                     <Path.Data>
@@ -280,7 +280,7 @@
                         </PathGeometry>
                     </Path.Data>
                 </Path>
-                
+
                 <!-- Vacuum Pump -->
                 <Canvas Canvas.Left="1148" Canvas.Top="692">
                     <Rectangle Canvas.Left="2" Canvas.Top="2" Width="90" Height="40" Stroke="{StaticResource ExhaustLineColor}" StrokeThickness="3"/>
@@ -293,7 +293,7 @@
                 <Border Canvas.Left="1137" Canvas.Top="470" BorderThickness="1" BorderBrush="{StaticResource ExhaustLineColor}" Width="46" Height="24">
                     <TextBlock Foreground="White" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">Filter</TextBlock>
                 </Border>
-                <!--#endregion-->               
+                <!--#endregion-->
 
                 <!-- #Region 4. 상태 모니터링(가스압력, 항온조, 반응기) -->
                 <!-- 공정가스 압력 모니터링 -->
@@ -313,23 +313,23 @@
 
                 <Label Canvas.Left="758" Canvas.Top="33" Foreground="{StaticResource PrimaryFontColor}" Content="Temperature"
                 Width="80" HorizontalContentAlignment="Center"/>
-            <control:HomeFlowController x:Name="susceptorTemperature" Canvas.Left="763" Canvas.Top="60" ControllerID="Temperature" Type="Reactor"/>
-            <control:MonitoringMeter x:Name="heaterPowerRate" Canvas.Left="763" Canvas.Top="102" Type="HeaterPowerRate" />
+                <control:HomeFlowController x:Name="susceptorTemperature" Canvas.Left="763" Canvas.Top="60" ControllerID="Temperature" Type="Reactor"/>
+                <control:MonitoringMeter x:Name="heaterPowerRate" Canvas.Left="763" Canvas.Top="102" Type="HeaterPowerRate" />
 
                 <Label Canvas.Left="848" Canvas.Top="33" Foreground="{StaticResource PrimaryFontColor}" Content="Pressure"
                 Width="80" HorizontalContentAlignment="Center"/>
-            <control:HomeFlowController x:Name="reactorPressure" Canvas.Left="853" Canvas.Top="60" ControllerID="Pressure" Type="Reactor"/>
-            <control:MonitoringMeter x:Name="ultimatePressure" Canvas.Left="853" Canvas.Top="102" Type="UltimatePressure" />
+                <control:HomeFlowController x:Name="reactorPressure" Canvas.Left="853" Canvas.Top="60" ControllerID="Pressure" Type="Reactor"/>
+                <control:MonitoringMeter x:Name="ultimatePressure" Canvas.Left="853" Canvas.Top="102" Type="UltimatePressure" />
 
                 <Label Canvas.Left="938" Canvas.Top="33" Foreground="{StaticResource PrimaryFontColor}" Content="Rotation"
                 Width="80" HorizontalContentAlignment="Center"/>
-            <control:HomeFlowController x:Name="susceptorRotation" Canvas.Left="943" Canvas.Top="60" ControllerID="Rotation" Type="Reactor"/>
+                <control:HomeFlowController x:Name="susceptorRotation" Canvas.Left="943" Canvas.Top="60" ControllerID="Rotation" Type="Reactor"/>
 
                 <!-- Total Flow 계산된 값 -->
                 <Label Canvas.Left="710" Canvas.Top="160" Foreground="{StaticResource SecondaryFontColor}" Content="Total Flow / Chalco"
                HorizontalContentAlignment="Center"/>
                 <control:MonitoringMeter x:Name="totalFlow_Chalco" Canvas.Left="740" Canvas.Top="185" Type="TotalFlow_CAL" />
-                
+
                 <Label Canvas.Left="710" Canvas.Top="216" Foreground="{StaticResource SecondaryFontColor}" Content="Total Flow / MO"
                HorizontalContentAlignment="Center"/>
                 <control:MonitoringMeter x:Name="totalFlow_MO" Canvas.Left="740" Canvas.Top="241" Type="TotalFlow_MO" />
@@ -338,21 +338,21 @@
                 <Label Canvas.Left="281" Canvas.Top="302" Foreground="{StaticResource SecondaryFontColor}" Content="D. Pressure Chalco"
                HorizontalContentAlignment="Center"/>
                 <control:MonitoringMeter x:Name="dpPressure_Chalco" Canvas.Left="391" Canvas.Top="307" Type="DP1_Chalcogen" />
-                <Label Canvas.Left="281" Canvas.Top="341" Foreground="{StaticResource SecondaryFontColor}" Content="D. Pressure MO"
-               HorizontalContentAlignment="Center"/>
+                <Label Canvas.Left="291" Canvas.Top="341" Foreground="{StaticResource SecondaryFontColor}" Content="D. Pressure MO"
+               HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <control:MonitoringMeter x:Name="dpPressure_MO" Canvas.Left="391" Canvas.Top="346" Type="DP2_MODP" />
 
 
                 <Label Canvas.Left="1220" Canvas.Top="92" Foreground="{StaticResource PrimaryFontColor}" Content="DOR"
                 Width="40" HorizontalContentAlignment="Center"/>
-            <control:MonitoringMeter x:Name="dorPressure" Canvas.Left="1205" Canvas.Top="74" Type="DorPressure"/>
-            <control:OnSwitch x:Name="dorState" Canvas.Left="1228" Canvas.Top="118"/>
+                <control:MonitoringMeter x:Name="dorPressure" Canvas.Left="1205" Canvas.Top="74" Type="DorPressure"/>
+                <control:OnSwitch x:Name="dorState" Canvas.Left="1228" Canvas.Top="118"/>
 
                 <Label Canvas.Left="1168" Canvas.Top="511" Foreground="{StaticResource PrimaryFontColor}" Content="Ext. Pressure"
                 Width="80" HorizontalContentAlignment="Center"/>
-            <control:MonitoringMeter x:Name="extPressure" Canvas.Left="1173" Canvas.Top="536"  Type="ExtPressure"/>
+                <control:MonitoringMeter x:Name="extPressure" Canvas.Left="1173" Canvas.Top="536"  Type="ExtPressure"/>
                 <!--#endregion-->
-                                
+
                 <!-- #Region 5. 가스제어용 밸브 -->
                 <!-- Button for Valve Control -->
                 <control:SwitchingValve  x:Name="V01" Canvas.Left="78" Canvas.Top="309" ValveID="V01" 
@@ -374,10 +374,10 @@
                 </control:SwitchingValve>
                 <control:SwitchingValve x:Name="V03" Canvas.Left="419" Canvas.Top="137" ValveID="V03"/>
                 <control:SwitchingValve x:Name="V04" Canvas.Left="609" Canvas.Top="137" ValveID="V04"/>
-                
+
                 <control:SwitchingValve x:Name="V05" Canvas.Left="195" Canvas.Top="487" ValveID="V05"/>
                 <control:BypassValve x:Name="V06" Canvas.Left="222" Canvas.Top="629" ValveID="V06" />
-                
+
                 <control:SwitchingValve x:Name="V07" Canvas.Left="385" Canvas.Top="487" ValveID="V07"/>
                 <control:BypassValve x:Name="V08" Canvas.Left="412" Canvas.Top="629" ValveID="V08" />
 
@@ -388,7 +388,7 @@
                 <control:BypassValve x:Name="V12" Canvas.Left="792" Canvas.Top="629" ValveID="V12"/>
 
                 <control:SwitchingValve x:Name="V13" Canvas.Left="909" Canvas.Top="309" ValveID="V13"/>
-                
+
                 <control:SwitchingValve x:Name="V14" Canvas.Left="229" Canvas.Top="407" ValveID="V14"/>
                 <control:SwitchingValve x:Name="V15" Canvas.Left="419" Canvas.Top="407" ValveID="V15"/>
                 <control:SwitchingValve x:Name="V16" Canvas.Left="609" Canvas.Top="407" ValveID="V16"/>
@@ -399,8 +399,8 @@
 
                 <control:SingleValve x:Name="V21" Canvas.Left="1096" Canvas.Top="534" ValveID="V21" />
                 <control:SingleValve x:Name="V22" Canvas.Left="1228" Canvas.Top="178" ValveID="V22" />
-                <control:SingleValve x:Name="V23" Canvas.Left="1257" Canvas.Top="178" ValveID="V23" />             
-                
+                <control:SingleValve x:Name="V23" Canvas.Left="1257" Canvas.Top="178" ValveID="V23" />
+
                 <!-- Button for Leak Test Valve -->
                 <Canvas Visibility="{Binding DataContext.OnLeakTestVisibility, ElementName=homePage}">
                     <control:LeakTestValve x:Name="V24" Canvas.Left="200" Canvas.Top="673" ValveID="V24" />
@@ -437,7 +437,7 @@
                     </control:LeakTestValve>
                     <control:SingleValve x:Name="V32" Canvas.Left="1084" Canvas.Top="738" ValveID="V32" />
                 </Canvas>
-                
+
                 <control:ButterflyValve x:Name="ButterflyValve" Canvas.Left="1145" Canvas.Top="599" ValveID="V54" />
                 <!--#endregion-->
 
@@ -455,7 +455,7 @@
                 <control:HomeFlowController x:Name="MFC10" Canvas.Left="967" Canvas.Top="167" ControllerID="MFC10" Type="MFC" />
                 <control:HomeFlowController x:Name="MFC11" Canvas.Left="126" Canvas.Top="246" ControllerID="MFC11" Type="MFC" />
                 <control:HomeFlowController x:Name="MFC12" Canvas.Left="126" Canvas.Top="388" ControllerID="MFC12" Type="MFC" />
- 
+
                 <!--EPC Contol Box!-->
                 <control:HomeFlowController x:Name="EPC01" Canvas.Left="184" Canvas.Top="575" ControllerID="EPC01" Type="EPC"/>
                 <control:HomeFlowController x:Name="EPC02" Canvas.Left="374" Canvas.Top="575" ControllerID="EPC02" Type="EPC"/>
@@ -474,7 +474,7 @@
                 <Label Canvas.Left="860" Canvas.Top="204" Foreground="{StaticResource SecondaryFontColor}" Content="Heater Purge"
                HorizontalContentAlignment="Center"/>
 
-                
+
                 <Border Canvas.Left="1027" Canvas.Top="286" BorderThickness="1" BorderBrush="{StaticResource ProcessLineColor}" Width="22" Height="22">
                     <TextBlock  Foreground="{StaticResource PrimaryFontColor}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">A</TextBlock>
                 </Border>
@@ -569,8 +569,8 @@
                     <Label Canvas.Left="858" Canvas.Top="660" Foreground="{StaticResource SecondaryFontColor}" Content="V31"
                 Width="40" HorizontalContentAlignment="Center" Visibility="{Binding OnLeakTestVisibility}"/>
                     <Label Canvas.Left="1076" Canvas.Top="715" Foreground="{StaticResource SecondaryFontColor}" Content="V32"
-                Width="40" HorizontalContentAlignment="Center" Visibility="{Binding OnLeakTestVisibility}"/>                
-                   
+                Width="40" HorizontalContentAlignment="Center" Visibility="{Binding OnLeakTestVisibility}"/>
+
                     <Label Canvas.Left="190" Canvas.Top="304" Foreground="DimGray" Content="M01" Width="40" HorizontalContentAlignment="Center" />
                     <Label Canvas.Left="190" Canvas.Top="339" Foreground="DimGray" Content="M02" Width="40" HorizontalContentAlignment="Center" />
                     <Label Canvas.Left="448" Canvas.Top="186" Foreground="DimGray" Content="M03" Width="40" HorizontalContentAlignment="Center" />
@@ -582,12 +582,12 @@
                     <Label Canvas.Left="1032" Canvas.Top="224" Foreground="DimGray" Content="M09" Width="40" HorizontalContentAlignment="Center" />
                     <Label Canvas.Left="1032" Canvas.Top="180" Foreground="DimGray" Content="M10" Width="40" HorizontalContentAlignment="Center" />
                     <Label Canvas.Left="190" Canvas.Top="241" Foreground="DimGray" Content="M11" Width="40" HorizontalContentAlignment="Center" />
-                    <Label Canvas.Left="190" Canvas.Top="402" Foreground="DimGray" Content="M12" Width="40" HorizontalContentAlignment="Center" />                    
+                    <Label Canvas.Left="190" Canvas.Top="402" Foreground="DimGray" Content="M12" Width="40" HorizontalContentAlignment="Center" />
 
                     <Label Canvas.Left="150" Canvas.Top="570" Foreground="DimGray" Content="E01" Width="40" HorizontalContentAlignment="Center" />
                     <Label Canvas.Left="340" Canvas.Top="570" Foreground="DimGray" Content="E02" Width="40" HorizontalContentAlignment="Center" />
                     <Label Canvas.Left="530" Canvas.Top="570" Foreground="DimGray" Content="E03" Width="40" HorizontalContentAlignment="Center" />
-                    <Label Canvas.Left="720" Canvas.Top="570" Foreground="DimGray" Content="E04" Width="40" HorizontalContentAlignment="Center" />                    
+                    <Label Canvas.Left="720" Canvas.Top="570" Foreground="DimGray" Content="E04" Width="40" HorizontalContentAlignment="Center" />
                 </Canvas>
                 <!--#endregion-->
 
@@ -622,7 +622,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    
+
                     <!-- User Status-->
                     <Grid Grid.Row="0">
                         <Border BorderThickness="0 0 0 1" BorderBrush="{StaticResource Gray_300}">
@@ -657,7 +657,7 @@
                             </Border>
                         </Border>
                     </Grid>
-                    
+
                     <!-- Susceptor Temperature Control Current Status -->
                     <Grid Grid.Row="1">
                         <Grid.Margin>
@@ -734,7 +734,7 @@
                             </StackPanel>
                         </Border>
                     </Grid>
-                    
+
                     <!-- Reactor Pressure Control Current Status -->
                     <Grid Grid.Row="2">
                         <Grid.Margin>
@@ -872,9 +872,9 @@
                                     </Border>
                                 </StackPanel>
                             </StackPanel>
-                        </Border>                       
+                        </Border>
                     </Grid>
-                    
+
                     <!-- Susceptor Rotation Current Status -->
                     <Grid Grid.Row="3">
                         <Grid.Margin>
@@ -966,7 +966,7 @@
                                     </Border>
                                 </StackPanel>
                             </StackPanel>
-                        </Border>                      
+                        </Border>
                     </Grid>
                     <!-- Event Log -->
                     <Grid Grid.Row="4" >
