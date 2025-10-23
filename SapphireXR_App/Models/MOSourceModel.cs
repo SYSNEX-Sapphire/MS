@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SapphireXR_App.Common;
-using System.Text.Json.Serialization;
 
 namespace SapphireXR_App.Models
 {
@@ -86,13 +85,33 @@ namespace SapphireXR_App.Models
             MFC = mFC;
             EPC = ePC;
             Valve = valve;
-
+            Material = material;
 
             connectedMFCPVSubscriberDisposer = ObservableManager<float>.Subscribe("FlowControl." + MFC + ".CurrentValue", connectedMFCPVSubscriber = new ConnectedMFCPVSubscriber(this));
             connectedEPCPVSubscriberDisposer = ObservableManager<float>.Subscribe("FlowControl." + EPC + ".CurrentValue", connectedEPCPVSubscriber = new ConnectedEPCPVSubscriber(this));
             connectedValveStateSubscriberDisposer = ObservableManager<bool>.Subscribe("Valve.OnOff." + Valve + ".CurrentPLCState", connectedValveStateSubscriber = new ConnectedValveStateSubscriber(this));
-            update = PLCService.ReadValveState(Valve);
+            if (PLCConnectionState.Instance.Online == true)
+            {
+                try
+                {
+                    update = PLCService.ReadValveState(Valve);
+                }
+                catch { }
+            }
 
+            PLCConnectionState.Instance.PropertyChanged += (sender, args) =>
+            {
+                switch(args.PropertyName)
+                {
+                    case nameof(PLCConnectionState.Instance.Online):
+                        try
+                        {
+                            update = PLCService.ReadValveState(Valve);
+                        }
+                        catch { }
+                        break;
+                }
+            };
             PropertyChanged += (sender, args) =>
             {
                 switch (args.PropertyName)
@@ -184,16 +203,20 @@ namespace SapphireXR_App.Models
                     case nameof(RemainWeight):
                         if (0.0f < RemainWeight)
                         {
-                            Task.Delay(TimeSpan.FromSeconds(1)).ContinueWith(_ =>
+                            try
                             {
-                                if (UsedWeight == null || weightDelta == null || update == false)
+                                Task.Delay(TimeSpan.FromSeconds(1)).ContinueWith(_ =>
                                 {
-                                    return;
-                                }
+                                    if (UsedWeight == null || weightDelta == null || update == false)
+                                    {
+                                        return;
+                                    }
 
-                                UsedWeight += weightDelta;
+                                    UsedWeight += weightDelta;
 
-                            }, TaskScheduler.FromCurrentSynchronizationContext());
+                                }, TaskScheduler.FromCurrentSynchronizationContext());
+                            }
+                            catch { }
                         }
                         break;
 
