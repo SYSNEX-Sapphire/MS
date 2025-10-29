@@ -1,4 +1,5 @@
 ﻿using SapphireXR_App.Common;
+using SapphireXR_App.ViewModels;
 using System.Collections;
 using System.Windows;
 
@@ -46,22 +47,13 @@ namespace SapphireXR_App.Models
                 }
 
                 float[] maxValue = new float[analogDeviceIOs.Count];
-                int index = 0;
                 foreach (AnalogDeviceIO entry in analogDeviceIOs)
                 {
                     if (entry.ID == null)
                     {
                         throw new Exception("entry ID is null for AnalogDeviceIO");
                     }
-                    if (index < 3)
-                    {
-                        maxValue[index + 16] = entry.MaxValue;
-                    }
-                    else
-                    {
-                        maxValue[index - 3] = entry.MaxValue;
-                    }
-                    index++;
+                    maxValue[dIndexController[SettingViewModel.AnalogDeviceIDNameMap[entry.ID]]] = entry.MaxValue;
                 }
                 Ads.WriteAny(hDeviceMaxValuePLC, maxValue, [dIndexController.Count]);
 
@@ -79,7 +71,7 @@ namespace SapphireXR_App.Models
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                throw new InvalidOperationException("PLC로 Max Value를 쓰는데, 문제가 발생하였습니다. 애플리케이션을 종료합니다. 원인은 다음과 같습니다: " + ex.Message);
             }
         }
 

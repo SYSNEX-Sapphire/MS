@@ -224,6 +224,12 @@ namespace SapphireXR_App.ViewModels
             { "MFC09", "M09" }, { "MFC10", "M10" }, { "MFC11", "M11" }, { "MFC12", "M12" },  { "EPC01", "E01" },  { "EPC02", "E02" }, { "EPC03", "E03" }, { "EPC04", "E04" }, 
             { "Temperature", "R01"  }, { "Pressure", "R02"  }, { "Rotation", "R03"  }
         };
+        public static readonly Dictionary<string, string> AnalogDeviceIDNameMap = new Dictionary<string, string>
+        {
+            { "M01", "MFC01" }, { "M02", "MFC02"  }, { "M03", "MFC03"   }, { "M04", "MFC04"  }, {  "M05", "MFC05" }, { "M06", "MFC06"  }, { "M07", "MFC07"  }, { "M08", "MFC08" },
+            { "M09", "MFC09"  }, { "M10", "MFC10"  }, { "M11", "MFC11"  }, { "M12", "MFC12"  },  { "E01", "EPC01" },  { "E02", "EPC02"  }, { "E03", "EPC03" }, { "E04", "EPC04" },
+            { "R01", "Temperature"  }, { "R02", "Pressure"  }, { "R03", "Rotation"  }
+        };
         private static readonly Dictionary<string, PLCService.InterlockEnableSetting> InterlockSettingNameToPLCInterlockEnableSettingEnum = new ()
         {
             { "CanOpenSusceptorTemperature", PLCService.InterlockEnableSetting.CanOpenSusceptorTemperature },
