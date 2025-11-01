@@ -56,18 +56,6 @@ namespace SapphireXR_App.Models
                     maxValue[dIndexController[SettingViewModel.AnalogDeviceIDNameMap[entry.ID]]] = entry.MaxValue;
                 }
                 Ads.WriteAny(hDeviceMaxValuePLC, maxValue, [dIndexController.Count]);
-
-                float KL3464MaxValueH = Ads.ReadAny<float>(Ads.CreateVariableHandle("GVL_CONSTANT.EL3064MaxValueH"));
-                for(uint mapping = 0; mapping < (aTargetValueMappingFactor.Length - 3); ++mapping)
-                {
-                    aTargetValueMappingFactor[mapping] = KL3464MaxValueH / maxValue[mapping];
-                }
-                for(uint mapping = (uint)(aTargetValueMappingFactor.Length - 3); mapping < aTargetValueMappingFactor.Length; ++mapping)
-                {
-                    aTargetValueMappingFactor[mapping] = 1.0f;
-                }
-
-                // List Analog Device Input / Output
             }
             catch (Exception ex)
             {
@@ -320,25 +308,19 @@ namespace SapphireXR_App.Models
         public static void WriteFlowControllerTargetValue(string controllerID, float targetValue, short rampTime)
         {
             int controllerIDIndex = dIndexController[controllerID];
-            float? targetValueMappingFactor = aTargetValueMappingFactor[controllerIDIndex];
-            if (targetValueMappingFactor == null)
-            {
-                throw new Exception("KL3464MaxValueH is null in WriteFlowControllerTargetValue");
-            }
-            float actualTargetValue = targetValue * targetValueMappingFactor.Value;
-            Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = actualTargetValue });
+            Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = targetValue });
             switch (controllerIDIndex)
             {
                 case 16:
-                    temperatureTVPublisher?.Publish(actualTargetValue);
+                    temperatureTVPublisher?.Publish(targetValue);
                     break;
 
                 case 17:
-                    pressureTVPublisher?.Publish(actualTargetValue);
+                    pressureTVPublisher?.Publish(targetValue);
                     break;
 
                 case 18:
-                    rotationTVPublisher?.Publish(actualTargetValue);
+                    rotationTVPublisher?.Publish(targetValue);
                     break;
             }
         }

@@ -17,7 +17,7 @@ END_VAR
 	IF 0.0 < GVL_IO.aMaxValueController[i] THEN
 		GVL_IO.aController[i].input.restart := TRUE;
 		GVL_IO.aController[i].input.rampTime := rampTime; 
-		GVL_IO.aController[i].input.targetValue := rRecipe[i] / GVL_IO.aMaxValueController[i] * GVL_CONSTANT.EL3064MaxValueH;
+		GVL_IO.aController[i].input.targetValue := rRecipe[i];
 	END_IF
 END_FOR
 
