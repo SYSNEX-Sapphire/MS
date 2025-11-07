@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.12">
   <GVL Name="GVL_IO" Id="{a5f3292d-798a-4b6c-af88-b59309d83086}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
@@ -15,11 +15,9 @@ VAR_GLOBAL
 	(*Solenoid Valve*)
 	aOutputSolValve AT %Q* 	: DWORD; //Solenoid Valve
 	
-	(* Read and Write of Device Control Value*)
-	aMaxValueController		: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF REAL ; //Device Max Value from UI
 	aController 			: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF FB_ControlRampGenerator; //MFC, EPC 0 ~ 5V
 	aController_PV 			: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF REAL; //Present Value from Device
-	aController_CV 			: ARRAY[1..GVL_CONSTANT.NumAnalogController] OF REAL; //Current Value from RampingController
+	aReactorMaxValue		: ARRAY[1..GVL_CONSTANT.NumReactor] OF REAL;
 	
 	(* Present Value Meter Display*)
 	aMonitoring_PV 			: ARRAY[1..18] OF REAL; //Gauge Monitoring Value to UI
@@ -52,6 +50,8 @@ VAR_GLOBAL
 	UI_INTERLOCK_CHECK_RECIPE_ENABLE:WORD;(**)
 	UI_INTERLOCK_CHECK_OPEN_REACTOR:WORD;(**)
 	
+	aController_CV: INT;
+	aMaxValueController: INT;
 END_VAR
 ]]></Declaration>
   </GVL>

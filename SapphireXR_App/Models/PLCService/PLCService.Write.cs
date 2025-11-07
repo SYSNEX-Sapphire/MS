@@ -1,7 +1,6 @@
 ﻿using SapphireXR_App.Common;
 using SapphireXR_App.ViewModels;
 using System.Collections;
-using System.Windows;
 
 namespace SapphireXR_App.Models
 {
@@ -33,45 +32,6 @@ namespace SapphireXR_App.Models
                     baReadValveStatePLC[bit] = valveUpdate[bit];
                 }
                 DoWriteValveState(baReadValveStatePLC);
-            }
-        }
-
-        public static void WriteDeviceMaxValue(List<AnalogDeviceIO>? analogDeviceIOs)
-        {
-            // Device Max. Value Write
-            try
-            {
-                if (analogDeviceIOs == null)
-                {
-                    throw new Exception("AnalogDeviceIO is null in WriteDeviceMaxValue");
-                }
-
-                float[] maxValue = new float[analogDeviceIOs.Count];
-                foreach (AnalogDeviceIO entry in analogDeviceIOs)
-                {
-                    if (entry.ID == null)
-                    {
-                        throw new Exception("entry ID is null for AnalogDeviceIO");
-                    }
-                    maxValue[dIndexController[SettingViewModel.AnalogDeviceIDNameMap[entry.ID]]] = entry.MaxValue;
-                }
-                Ads.WriteAny(hDeviceMaxValuePLC, maxValue, [dIndexController.Count]);
-
-                float KL3464MaxValueH = Ads.ReadAny<float>(Ads.CreateVariableHandle("GVL_CONSTANT.EL3064MaxValueH"));
-                for(uint mapping = 0; mapping < (aTargetValueMappingFactor.Length - 3); ++mapping)
-                {
-                    aTargetValueMappingFactor[mapping] = KL3464MaxValueH / maxValue[mapping];
-                }
-                for(uint mapping = (uint)(aTargetValueMappingFactor.Length - 3); mapping < aTargetValueMappingFactor.Length; ++mapping)
-                {
-                    aTargetValueMappingFactor[mapping] = 1.0f;
-                }
-
-                // List Analog Device Input / Output
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("PLC로 Max Value를 쓰는데, 문제가 발생하였습니다. 애플리케이션을 종료합니다. 원인은 다음과 같습니다: " + ex.Message);
             }
         }
 
@@ -320,25 +280,30 @@ namespace SapphireXR_App.Models
         public static void WriteFlowControllerTargetValue(string controllerID, float targetValue, short rampTime)
         {
             int controllerIDIndex = dIndexController[controllerID];
-            float? targetValueMappingFactor = aTargetValueMappingFactor[controllerIDIndex];
-            if (targetValueMappingFactor == null)
+            int? maxValue = SettingViewModel.ReadMaxValue(controllerID);
+            if (maxValue == null)
             {
-                throw new Exception("KL3464MaxValueH is null in WriteFlowControllerTargetValue");
+                throw new ArgumentException(controllerID + " is invalid");
             }
-            float actualTargetValue = targetValue * targetValueMappingFactor.Value;
-            Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = actualTargetValue });
             switch (controllerIDIndex)
             {
                 case 16:
-                    temperatureTVPublisher?.Publish(actualTargetValue);
+                    Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = targetValue });
+                    temperatureTVPublisher?.Publish(targetValue);
                     break;
 
                 case 17:
-                    pressureTVPublisher?.Publish(actualTargetValue);
+                    Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = targetValue });
+                    pressureTVPublisher?.Publish(targetValue);
                     break;
 
                 case 18:
-                    rotationTVPublisher?.Publish(actualTargetValue);
+                    Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = targetValue });
+                    rotationTVPublisher?.Publish(targetValue);
+                    break;
+
+                default:
+                    Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = ((float)targetValue / (float)maxValue * AnalogControllerOutputVoltage) });
                     break;
             }
         }
@@ -346,6 +311,20 @@ namespace SapphireXR_App.Models
         public static void WriteLineHeaterTargetValue(int lineHeaterNum, float targetValue)
         {
             Ads.WriteAny(hInterlockset[lineHeaterNum + 11], targetValue);
+        }
+
+        public static void WriteReactorMaxValue(Reactor reactor, float maxValue)
+        {
+            ReactorMaxValueToCommit[reactor] = maxValue;
+        }
+
+        public static void CommitReactorMaxValueToPLC()
+        {
+            foreach ((Reactor reactor, float maxValue) in ReactorMaxValueToCommit)
+            {
+                Ads.WriteAny(hReactorMaxValue[(int)reactor], maxValue);
+            }
+            ReactorMaxValueToCommit.Clear();
         }
     }
 }
