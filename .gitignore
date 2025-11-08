@@ -367,16 +367,6 @@ FodyWeavers.xsd
 /MS_PLC/MS_PLC.project.~u
 /MS_PLC/_Boot
 /MS_PLC/MS/_CompileInfo_Upload
-/MS_PLC/MS/_Libraries/beckhoff automation gmbh/Tc2_ControllerToolbox/3.6.1.0/Tc2_ControllerToolbox.compiled-library-ge33
-/MS_PLC/MS/_Libraries/beckhoff automation gmbh/Tc2_ModbusRTU/3.6.1.0/Tc2_ModbusRTU.compiled-library-ge33
-/MS_PLC/MS/_Libraries/beckhoff automation gmbh/Tc2_SerialCom/3.4.6.0/Tc2_SerialCom.compiled-library-ge33
-/MS_PLC/MS/_Libraries/beckhoff automation gmbh/tc2_standard/3.4.5.0/tc2_standard.compiled-library
-/MS_PLC/MS/_Libraries/beckhoff automation gmbh/tc2_standard/3.4.5.0/Tc2_Standard.compiled-library-ge33
-/MS_PLC/MS/_Libraries/beckhoff automation gmbh/tc2_system/3.6.4.0/Tc2_System.compiled-library-ge33
-/MS_PLC/MS/_Libraries/beckhoff automation gmbh/Tc2_Utilities/3.9.2.0/Tc2_Utilities.compiled-library-ge33
-/MS_PLC/MS/_Libraries/beckhoff automation gmbh/Tc3_EventLogger/3.3.13.0/Tc3_EventLogger.compiled-library-ge33
-/MS_PLC/MS/_Libraries/beckhoff automation gmbh/tc3_module/3.4.5.0/tc3_module.compiled-library
-/MS_PLC/MS/_Libraries/beckhoff automation gmbh/tc3_module/3.4.5.0/Tc3_Module.compiled-library-ge33
 /MS_PLC/_Boot/TargetDescription.xml
 /MS_PLC/_Boot/TwinCAT RT (x64)/CurrentConfig
 /MS_PLC/_Boot/TwinCAT RT (x64)/Plc
