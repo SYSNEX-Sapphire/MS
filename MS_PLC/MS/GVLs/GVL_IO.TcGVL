@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
   <GVL Name="GVL_IO" Id="{a5f3292d-798a-4b6c-af88-b59309d83086}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
@@ -49,9 +49,6 @@ VAR_GLOBAL
 	
 	UI_INTERLOCK_CHECK_RECIPE_ENABLE:WORD;(**)
 	UI_INTERLOCK_CHECK_OPEN_REACTOR:WORD;(**)
-	
-	aController_CV: INT;
-	aMaxValueController: INT;
 END_VAR
 ]]></Declaration>
   </GVL>
