@@ -1,4 +1,5 @@
 ﻿using SapphireXR_App.Enums;
+using SapphireXR_App.ViewModels;
 using System.Collections;
 using System.Windows;
 
@@ -87,10 +88,6 @@ namespace SapphireXR_App.Models
                 }
 
                 string exceptionStr = string.Empty;
-                if (aDeviceControlValues == null)
-                {
-                    exceptionStr += "aDeviceControlValues is null in OnTick PLCService";
-                }
                 if (aDeviceCurrentValues == null)
                 {
                     if (exceptionStr != string.Empty)
@@ -167,7 +164,29 @@ namespace SapphireXR_App.Models
         private static void ReadCurrentValueFromPLC()
         {
             aDeviceCurrentValues = Ads.ReadAny<float[]>(hDeviceCurrentValuePLC, [NumControllers]);
-            aDeviceControlValues = Ads.ReadAny<float[]>(hDeviceControlValuePLC, [NumControllers]);
+            foreach (KeyValuePair<string, int> kv in dIndexController)
+            {
+                switch (kv.Key)
+                {
+                    case "Temperature":
+                    case "Pressure":
+                    case "Rotation":
+                        aDeviceControlValues[kv.Value] = (float)Ads.ReadAny<double>(hAControllerControlValue[kv.Value]);
+                        aDeviceCurrentValues[kv.Value] = aDeviceCurrentValues[kv.Value];
+                        break;
+
+                    default:
+                        float? maxValue = SettingViewModel.ReadMaxValue(kv.Key);
+                        if (maxValue == null)
+                        {
+                            throw new ArgumentException(kv.Key + "is not valid analog device ID");
+                        }
+                        aDeviceControlValues[kv.Value] = (float)Ads.ReadAny<double>(hAControllerControlValue[kv.Value]) / AnalogControllerOutputVoltage * maxValue.Value;
+                        aDeviceCurrentValues[kv.Value] = aDeviceCurrentValues[kv.Value] / AnalogControllerOutputVoltage * maxValue.Value;
+                        break;
+
+                }
+            }
             aMonitoring_PVs = Ads.ReadAny<float[]>(hMonitoring_PV, [18]);
             aInputState = Ads.ReadAny<short[]>(hInputState, [6]);
             ReadValveStateFromPLC();
@@ -177,7 +196,21 @@ namespace SapphireXR_App.Models
         {
             if (aDeviceCurrentValues != null)
             {
-                return aDeviceCurrentValues[dIndexController[controllerID]];
+                switch (controllerID)
+                {
+                    case "Temperature":
+                    case "Pressure":
+                    case "Rotation":
+                        return aDeviceCurrentValues[dIndexController[controllerID]];
+
+                    default:
+                        float? maxValue = SettingViewModel.ReadMaxValue(controllerID);
+                        if (maxValue == null)
+                        {
+                            throw new ArgumentException(controllerID + "is not valid analog device ID");
+                        }
+                        return aDeviceCurrentValues[dIndexController[controllerID]] / AnalogControllerOutputVoltage * maxValue.Value;
+                }
             }
             else
             {
@@ -266,7 +299,21 @@ namespace SapphireXR_App.Models
 
         public static float ReadFlowControllerTargetValue(string controllerID)
         {
-            return Ads.ReadAny<RampGeneratorInput>(hAControllerInput[dIndexController[controllerID]]).targetValue;
+            switch (controllerID)
+            {
+                case "Temperature":
+                case "Pressure":
+                case "Rotation":
+                    return Ads.ReadAny<RampGeneratorInput>(hAControllerInput[dIndexController[controllerID]]).targetValue;
+
+                default:
+                    float? maxValue = SettingViewModel.ReadMaxValue(controllerID);
+                    if (maxValue == null)
+                    {
+                        throw new ArgumentException(controllerID + "is not valid analog device ID");
+                    }
+                    return Ads.ReadAny<RampGeneratorInput>(hAControllerInput[dIndexController[controllerID]]).targetValue / AnalogControllerOutputVoltage * maxValue.Value;
+            }
         }
 
         public static short ReadCurrentStep()

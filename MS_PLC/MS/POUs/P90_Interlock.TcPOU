@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.12">
   <POU Name="P90_Interlock" Id="{c8b81d81-de46-4c7a-a894-4387b2cd9bf7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P90_Interlock
 VAR
@@ -321,8 +321,8 @@ FOR i := 1 TO 16 DO
 			bAlarmEnable := wDeviceAlarmEnable.0,
 			bWarningEnable := wDeviceWarningEnable.0,
 			fCurrentValue := GVL_IO.aController_PV[i],
-			fControlValue := GVL_IO.aController_CV[i],
-			fMaxValue := GVL_IO.aMaxValueController[i],
+			fControlValue := LREAL_TO_REAL(GVL_IO.aController[i].rControlValue),
+			fMaxValue := GVL_CONSTANT.AnalogControllerOutputVoltage,
 			fAlarmTreshold := GVL_IO.aInterlockSet[1],
 			fWarningTreshold := GVL_IO.aInterlockSet[2],
 			tAlarmDelay := tAlarmDelay_A,
@@ -368,8 +368,8 @@ FOR i := 1 TO 3 DO
 			bAlarmEnable := wDeviceAlarmEnable.0,
 			bWarningEnable := wDeviceWarningEnable.0,
 			fCurrentValue := GVL_IO.aController_PV[i+16],
-			fControlValue := GVL_IO.aController_CV[i+16],
-			fMaxValue := GVL_IO.aMaxValueController[i+16],
+			fControlValue := LREAL_TO_REAL(GVL_IO.aController[i+16].rControlValue),
+			fMaxValue := GVL_IO.aReactorMaxValue[i],
 			fAlarmTreshold := GVL_IO.aInterlockSet[1],
 			fWarningTreshold := GVL_IO.aInterlockSet[2],
 			tAlarmDelay := tAlarmDelay_A,

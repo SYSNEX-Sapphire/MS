@@ -1,7 +1,6 @@
 ﻿using SapphireXR_App.Common;
 using SapphireXR_App.ViewModels;
 using System.Collections;
-using System.Windows;
 
 namespace SapphireXR_App.Models
 {
@@ -33,33 +32,6 @@ namespace SapphireXR_App.Models
                     baReadValveStatePLC[bit] = valveUpdate[bit];
                 }
                 DoWriteValveState(baReadValveStatePLC);
-            }
-        }
-
-        public static void WriteDeviceMaxValue(List<AnalogDeviceIO>? analogDeviceIOs)
-        {
-            // Device Max. Value Write
-            try
-            {
-                if (analogDeviceIOs == null)
-                {
-                    throw new Exception("AnalogDeviceIO is null in WriteDeviceMaxValue");
-                }
-
-                float[] maxValue = new float[analogDeviceIOs.Count];
-                foreach (AnalogDeviceIO entry in analogDeviceIOs)
-                {
-                    if (entry.ID == null)
-                    {
-                        throw new Exception("entry ID is null for AnalogDeviceIO");
-                    }
-                    maxValue[dIndexController[SettingViewModel.AnalogDeviceIDNameMap[entry.ID]]] = entry.MaxValue;
-                }
-                Ads.WriteAny(hDeviceMaxValuePLC, maxValue, [dIndexController.Count]);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("PLC로 Max Value를 쓰는데, 문제가 발생하였습니다. 애플리케이션을 종료합니다. 원인은 다음과 같습니다: " + ex.Message);
             }
         }
 
@@ -308,19 +280,30 @@ namespace SapphireXR_App.Models
         public static void WriteFlowControllerTargetValue(string controllerID, float targetValue, short rampTime)
         {
             int controllerIDIndex = dIndexController[controllerID];
-            Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = targetValue });
+            int? maxValue = SettingViewModel.ReadMaxValue(controllerID);
+            if (maxValue == null)
+            {
+                throw new ArgumentException(controllerID + " is invalid");
+            }
             switch (controllerIDIndex)
             {
                 case 16:
+                    Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = targetValue });
                     temperatureTVPublisher?.Publish(targetValue);
                     break;
 
                 case 17:
+                    Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = targetValue });
                     pressureTVPublisher?.Publish(targetValue);
                     break;
 
                 case 18:
+                    Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = targetValue });
                     rotationTVPublisher?.Publish(targetValue);
+                    break;
+
+                default:
+                    Ads.WriteAny(hAControllerInput[controllerIDIndex], new RampGeneratorInput { restart = true, rampTime = (ushort)rampTime, targetValue = ((float)targetValue / (float)maxValue * AnalogControllerOutputVoltage) });
                     break;
             }
         }
@@ -328,6 +311,20 @@ namespace SapphireXR_App.Models
         public static void WriteLineHeaterTargetValue(int lineHeaterNum, float targetValue)
         {
             Ads.WriteAny(hInterlockset[lineHeaterNum + 11], targetValue);
+        }
+
+        public static void WriteReactorMaxValue(Reactor reactor, float maxValue)
+        {
+            ReactorMaxValueToCommit[reactor] = maxValue;
+        }
+
+        public static void CommitReactorMaxValueToPLC()
+        {
+            foreach ((Reactor reactor, float maxValue) in ReactorMaxValueToCommit)
+            {
+                Ads.WriteAny(hReactorMaxValue[(int)reactor], maxValue);
+            }
+            ReactorMaxValueToCommit.Clear();
         }
     }
 }

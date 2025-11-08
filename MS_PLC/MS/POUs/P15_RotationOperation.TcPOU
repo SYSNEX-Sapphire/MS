@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.12">
   <POU Name="P15_RotationOperation" Id="{7f828812-d1bb-49a4-a03d-f3e347855c39}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P15_RotationOperation
 VAR
@@ -62,7 +62,7 @@ bRotationCP := GVL_IO_GAS_CABINET.DI_02_RotationMotorCP;
 
 //from Device Value
 isRotationFault := NOT(GVL_IO_REACTOR_CABINET.DI_02_SusceptorRotationMotorFault);
-wRotaion_PV := UINT_TO_WORD(GVL_IO_REACTOR_CABINET.AI_08_R01SusceptorRotationPV);]]></ST>
+wRotaion_PV := INT_TO_WORD(GVL_IO_REACTOR_CABINET.AI_08_R01SusceptorRotationPV);]]></ST>
       </Implementation>
     </Action>
     <Action Name="_DigitalOutput" Id="{b7f936ee-b5d8-4792-8a4c-a2f45c591fba}">
