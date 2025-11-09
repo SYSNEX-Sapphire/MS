@@ -34,11 +34,11 @@ namespace SapphireXR_App.Models
                     }
                 }
 
-                if (aMonitoring_PVs != null)
+                if (aMonitoring_PVs_FromPLC != null)
                 {
-                    foreach (KeyValuePair<string, int> kv in dMonitoringMeterIndex)
+                    foreach (KeyValuePair<string, int> kv in dMonitoringMeterFromPLCIndex)
                     {
-                        aMonitoringCurrentValueIssuers?[kv.Key].Publish(aMonitoring_PVs[kv.Value]);
+                        aMonitoringCurrentValueIssuers?[kv.Key].Publish(aMonitoring_PVs_FromPLC[kv.Value]);
                     }
                 }
 
@@ -96,7 +96,7 @@ namespace SapphireXR_App.Models
                     }
                     exceptionStr += "aDeviceCurrentValues is null in OnTick PLCService";
                 }
-                if (aMonitoring_PVs == null)
+                if (aMonitoring_PVs_FromPLC == null)
                 {
                     if (exceptionStr != string.Empty)
                     {
@@ -187,9 +187,56 @@ namespace SapphireXR_App.Models
 
                 }
             }
-            aMonitoring_PVs = Ads.ReadAny<float[]>(hMonitoring_PV, [18]);
+            aMonitoring_PVs_FromPLC = Ads.ReadAny<float[]>(hMonitoring_PV, [16]);
             aInputState = Ads.ReadAny<short[]>(hInputState, [6]);
             ReadValveStateFromPLC();
+            UpdateTotalFlow();
+        }
+
+        private static void UpdateTotalFlow()
+        {
+            if (aDeviceCurrentValues == null || baReadValveStatePLC == null || aMonitoringCurrentValueIssuers == null)
+            {
+                return;
+            }
+            UpdateTotalFlowChalco();
+            UpdateTotalFlowMO();
+        }
+
+        private static void UpdateTotalFlowChalco()
+        {
+            float totalFlow = aDeviceCurrentValues![0];
+            if (baReadValveStatePLC![16] == true)
+            {
+                totalFlow += aDeviceCurrentValues[2];
+            }
+            if(baReadValveStatePLC[17] == true)
+            {
+                totalFlow += aDeviceCurrentValues[3];
+            }
+            if(baReadValveStatePLC[18] == true)
+            {
+                totalFlow += aDeviceCurrentValues[7];
+            }
+            aMonitoringCurrentValueIssuers!["TotalFlow_CAL"].Publish(totalFlow);
+        }
+
+        private static void UpdateTotalFlowMO()
+        {
+            float totalFlow = aDeviceCurrentValues![1];
+            if (baReadValveStatePLC![13] == true)
+            {
+                totalFlow += aDeviceCurrentValues[4];
+            }
+            if (baReadValveStatePLC[14] == true)
+            {
+                totalFlow += aDeviceCurrentValues[5];
+            }
+            if (baReadValveStatePLC[15] == true)
+            {
+                totalFlow += aDeviceCurrentValues[6];
+            }
+            aMonitoringCurrentValueIssuers!["TotalFlow_MO"].Publish(totalFlow);
         }
 
         public static float ReadCurrentValue(string controllerID)

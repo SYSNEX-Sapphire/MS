@@ -134,6 +134,14 @@ namespace SapphireXR_App.Models
             { "DP2_MODP", 9 }, { "HeaterPowerRate", 10 }, { "ValvePosition", 11 }, { "Source1", 12}, { "Source2", 13},  { "Source3", 14},  { "Source4", 15}, { "TotalFlow_CAL", 16 }, 
             { "TotalFlow_MO", 17 }
         };
+        public static readonly Dictionary<string, int> dMonitoringMeterFromPLCIndex = new Dictionary<string, int>
+        {
+            { "UltimatePressure", 0 },  { "ExtPressure", 1},  { "DorPressure", 2}, { "Gas1", 3}, { "Gas2", 4}, { "Gas3", 5}, { "Gas4", 6}, { "ShowerHeadTemp", 7}, { "DP1_Chalcogen", 8 },
+            { "DP2_MODP", 9 }, { "HeaterPowerRate", 10 }, { "ValvePosition", 11 }, { "Source1", 12}, { "Source2", 13},  { "Source3", 14},  { "Source4", 15}
+        };
+        public static readonly Dictionary<string, int> dLocalMonitoringMeterIndex = new Dictionary<string, int>
+        {   { "TotalFlow_CAL", 16 }, { "TotalFlow_MO", 17 }
+        };
 
         private static readonly Dictionary<string, int> dAnalogDeviceAlarmWarningBit = new Dictionary<string, int>
         {
@@ -162,7 +170,7 @@ namespace SapphireXR_App.Models
         private static BitArray? baReadValveStatePLC = null;
         private static float[]? aDeviceCurrentValues = null;
         private static float[] aDeviceControlValues = new float[NumAnalogDevice];
-        private static float[]? aMonitoring_PVs = null;
+        private static float[]? aMonitoring_PVs_FromPLC = null;
         private static short[]? aInputState = null;
         private static BitArray? bOutputCmd1 = null;
         private static int[] InterlockEnables = Enumerable.Repeat<int>(0, (int)NumAlarmWarningArraySize).ToArray();
